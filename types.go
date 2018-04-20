@@ -35,19 +35,53 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_types"
 
 	"sync"
 )
 
 type 대기_항목_C32 struct {
-	ch회신 chan interface{}
-	TR코드 string
-	대기값  interface{}
+	sync.Mutex
+	식별번호   int
+	ch회신   chan interface{}
+	TR코드   string
+	대기값    interface{}
+	데이터_수신 bool
+	응답_완료  bool
+	에러_발생  bool
+
+	// 메시지
+	코드  string
+	메시지 string
+}
+
+func (s *대기_항목_C32) G회신값() interface{} {
+	switch 변환값 := s.대기값.(type) {
+	case *xt.S주문_응답_일반형:
+		return 변환값.G값(s.TR코드)
+	case *xt.S헤더_반복값_일반형:
+		return 변환값.G값(s.TR코드)
+	default:
+		return s.대기값
+	}
+}
+
+func (s *대기_항목_C32) S회신() {
+	if s.에러_발생 {
+		lib.F체크포인트()
+		s.ch회신 <- lib.New에러("'%v' : '%v'", s.코드, s.메시지)
+	} else {
+		lib.F체크포인트()
+		s.ch회신 <- s.G회신값()
+		lib.F체크포인트()
+	}
 }
 
 func new대기_TR_저장소_C32() *대기_TR_저장소_C32 {
 	s := new(대기_TR_저장소_C32)
 	s.저장소 = make(map[int]*대기_항목_C32)
+
+	return s
 }
 
 // xing_C32  응답을 기다리는 TR 저장.
@@ -66,6 +100,7 @@ func (s *대기_TR_저장소_C32) G값(식별번호 int) *대기_항목_C32 {
 
 func (s *대기_TR_저장소_C32) S추가(식별번호 int, TR코드 string) chan interface{} {
 	대기_항목 := new(대기_항목_C32)
+	대기_항목.식별번호 = 식별번호
 	대기_항목.ch회신 = make(chan interface{}, 1)
 	대기_항목.TR코드 = TR코드
 
@@ -78,7 +113,7 @@ func (s *대기_TR_저장소_C32) S추가(식별번호 int, TR코드 string) cha
 
 func (s *대기_TR_저장소_C32) S회신(식별번호 int) {
 	대기_항목 := s.G값(식별번호)
-	대기_항목.ch회신 <- 대기_항목.대기값
+	대기_항목.S회신()
 
 	s.Lock()
 	delete(s.저장소, 식별번호)

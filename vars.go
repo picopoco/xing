@@ -36,12 +36,16 @@ package xing
 import (
 	"github.com/ghts/lib"
 	"github.com/go-mangos/mangos"
+
 	"sync"
 	"time"
 )
 
 var (
-	소켓SUB_콜백, 소켓SUB_실시간_정보 mangos.Socket
+	ch초기화_완료_C32   = make(chan lib.T신호, 1)
+	ch초기화_소켓PUB_확인 = make(chan lib.T신호, 1)
+
+	소켓SUB_콜백 mangos.Socket
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
@@ -49,8 +53,7 @@ var (
 	영업일_기준_전일, 영업일_기준_당일 time.Time
 
 	xing_C32_실행_잠금 sync.Mutex
-	go실행파일_경로      = lib.F_GOROOT() + `\bin\go.exe`
-	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/xing32.go`
+	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`
 
 	접속유지_실행중 = lib.New안전한_bool(false)
 )

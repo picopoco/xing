@@ -34,10 +34,11 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
-	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
 	"testing"
 	"time"
+
+	"github.com/ghts/lib"
+	"github.com/ghts/xing_types"
 )
 
 func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
@@ -74,7 +75,7 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 		case xt.P당일전일구분_전일:
 			lib.F테스트_같음(t, 값.M시각.Format(일자_포맷_문자열), 전일_문자열)
 		default:
-			panic(lib.F2문자열("예상하지 못한 경우. '%v'", 값.M시각))
+			panic(lib.New에러("예상하지 못한 경우. '%v'", 값.M시각))
 		}
 
 		lib.F테스트_참임(t, 값.M시각.After(종료시각.AddDate(0, 0, -1)))

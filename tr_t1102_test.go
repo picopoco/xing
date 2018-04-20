@@ -150,7 +150,7 @@ func f현물_시세조회_테스트_도우미(t *testing.T, 종목코드 string)
 	lib.F테스트_같음(t, len(값.M매도비율_모음), 5)
 	lib.F테스트_같음(t, len(값.M매수비율_모음), 5)
 
-	for i, _ := range 값.M매도증권사코드_모음 {
+	for i := range 값.M매도증권사코드_모음 {
 		if 값.M매도증권사코드_모음[i] == "" {
 			lib.F테스트_같음(t, strings.TrimSpace(값.M매도증권사명_모음[i]), "")
 			lib.F테스트_같음(t, 값.M총매도수량_모음[i], 0)
@@ -248,7 +248,7 @@ func f현물_시세조회_테스트_도우미(t *testing.T, 종목코드 string)
 	lib.F테스트_같음(t, len(값.M총매도평단가_모음), 5)
 	lib.F테스트_같음(t, len(값.M총매수평단가_모음), 5)
 
-	for i, _ := range 값.M총매도대금_모음 {
+	for i := range 값.M총매도대금_모음 {
 		lib.F테스트_참임(t, 값.M총매도대금_모음[i] >= 0)
 		lib.F테스트_참임(t, 값.M총매수대금_모음[i] >= 0)
 		lib.F테스트_참임(t, 값.M총매도평단가_모음[i] >= 0)

@@ -34,9 +34,10 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"testing"
+
 	"github.com/ghts/lib"
 	"github.com/ghts/xing_types"
-	"testing"
 )
 
 func TestF기간별_주가_조회_t1305(t *testing.T) {
@@ -46,7 +47,7 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 
 	종목코드 := lib.F임의_종목().G코드()
 	일주월_구분 := ([]xt.T일주월_구분{xt.P일주월_일, xt.P일주월_주, xt.P일주월_월})[lib.F임의_범위_이내_정수값(0, 2)]
-	값_모음, 에러 := F기간별_주가_조회_t1305(종목코드, 일주월_구분, 200)
+	값_모음, 에러 := F기간별_주가_조회_t1305(종목코드, 일주월_구분)
 	lib.F테스트_에러없음(t, 에러)
 
 	for i, 값 := range 값_모음 {
@@ -67,7 +68,7 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 			case xt.P일주월_월:
 				lib.F테스트_참임(t, 차이 >= 20 && 차이 < 45, 종목코드, 값_모음[i-1].M일자, 값.M일자, 차이)
 			default:
-				panic(lib.F2문자열("예상하지 못한 일주월 구분값 : '%v'", 일주월_구분))
+				panic(lib.New에러("예상하지 못한 일주월 구분값 : '%v'", 일주월_구분))
 			}
 		}
 

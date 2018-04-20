@@ -59,9 +59,8 @@ func TestCSPAT00600현물_정상주문(t *testing.T) {
 	p1분전 := time.Now().Add(-1 * lib.P1분)
 	p1분후 := time.Now().Add(lib.P1분)
 
-	계좌번호_모음, 에러 := F계좌번호_모음()
+	계좌번호, 에러 := F계좌_번호(0)
 	lib.F테스트_에러없음(t, 에러)
-	계좌번호 := 계좌번호_모음[0]
 
 	var 값 *xt.S현물_정상주문_응답
 

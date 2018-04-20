@@ -35,12 +35,22 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_types"
 )
 
-func init() {
+func F초기화() {
 	f초기화_xing_C32()
-	f초기화_소켓()
-	f초기화_영업일_기준_전일_당일()
+	f초기화_소켓SUB()
+	f초기화_Go루틴_콜백()
+	f초기화_작동_확인()
+
+	lib.F문자열_출력("f접속유지_실행() 임시 보류")
+	//f접속유지_실행()
+
+	lib.F문자열_출력("f초기화_영업일_기준_전일_당일() 임시 보류")
+	//f초기화_영업일_기준_전일_당일()
+
+	lib.F문자열_출력("\n\n*** 초기화 완료 ***\n\n")
 }
 
 func f초기화_xing_C32() (에러 error) {
@@ -57,24 +67,108 @@ func f초기화_xing_C32() (에러 error) {
 		return nil
 	}
 
-	pid, 에러 := lib.F외부_프로세스_실행(go실행파일_경로, "run", xing_C32_경로)
+	pid, 에러 := lib.F외부_프로세스_실행(xing_C32_경로)
 	lib.F조건부_패닉(pid <= 0, "예상하지 못한 PID값. %v", pid)
 	lib.F에러체크(에러)
-
-	f접속유지_실행()
 
 	return nil
 }
 
-func f초기화_소켓() (에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행()
+func f초기화_소켓SUB() (에러 error) {
+	주소_모음 := []lib.T주소{lib.P주소_Xing_C함수_콜백}
+	ch회신 := make(chan []interface{}, len(주소_모음))
 
-	소켓SUB_콜백 = lib.New소켓SUB_단순형(lib.P주소_Xing_C함수_콜백)
-	소켓SUB_실시간_정보 = lib.New소켓SUB_단순형(lib.P주소_Xing_실시간)
+	for _, 주소 := range 주소_모음 {
+		go f초기화_소켓_도우미(주소, ch회신)
+	}
+
+	for _, _ = range 주소_모음 {
+		결과값_모음 := <-ch회신
+
+		주소 := 결과값_모음[0].(lib.T주소)
+		성공_여부 := 결과값_모음[1].(bool)
+
+		if !성공_여부 {
+			return lib.New에러with출력("소켓SUB 초기화 실패. '%v'", 주소)
+		}
+	}
 
 	return nil
+}
+
+func f초기화_소켓_도우미(주소 lib.T주소, ch회신 chan []interface{}) {
+	var 에러 error
+
+	for i := 0; i < 100; i++ {
+		switch 주소 {
+		case lib.P주소_Xing_C함수_콜백:
+			소켓SUB_콜백, 에러 = lib.New소켓SUB(주소)
+		default:
+			panic("예상하지 못한 주소.")
+		}
+
+		if 에러 != nil {
+			lib.F문자열_출력(에러.Error())
+			lib.F대기(lib.P1초)
+			continue
+		}
+
+		ch회신 <- []interface{}{주소, true}
+	}
+
+	ch회신 <- []interface{}{주소, false}
+}
+
+func f초기화_Go루틴_콜백() {
+	ch초기화 := make(chan lib.T신호, 1)
+	go go루틴_콜백_처리(ch초기화)
+	<-ch초기화
 }
 
 func f초기화_영업일_기준_전일_당일() (에러 error) {
 	panic("TODO")
+}
+
+func f초기화_작동_확인() {
+	ch초기화_소켓REP_확인 := make(chan lib.T신호, 1)
+
+	go F소켓REP_TR_확인_클라이언트(ch초기화_소켓REP_확인)
+
+	소켓PUB_확인, 소켓REP_확인 := false, false
+
+	for {
+		select {
+		case <-ch초기화_소켓PUB_확인:
+			소켓PUB_확인 = true
+		case <-ch초기화_소켓REP_확인:
+			소켓REP_확인 = true
+		}
+
+		if 소켓PUB_확인 && 소켓REP_확인 {
+			lib.F체크포인트("작동 확인 완료")
+			return
+		}
+	}
+}
+
+func F소켓REP_TR_확인_클라이언트(ch완료 chan lib.T신호) {
+	defer func() {
+		//lib.F체크포인트("F소켓REP_TR_확인_클라이언트() 종료")
+		ch완료 <- lib.P신호_종료
+	}()
+
+	//lib.F체크포인트("F소켓REP_TR_확인_클라이언트() 시작")
+
+	for i := 0; i < 1000; i++ {
+		if i > 0 && (i%20) == 0 {
+			lib.F체크포인트(i)
+		}
+
+		소켓_질의 := lib.New소켓_질의_단순형(lib.P주소_Xing_C함수_호출, lib.F임의_변환_형식(), lib.P3초)
+		응답 := 소켓_질의.S질의(xt.S호출_인수_기본형{M함수: xt.P함수_접속됨}).G응답()
+
+		if 응답.G에러() == nil && 응답.G해석값_단순형(0).(bool) {
+			return
+		}
+	}
 }

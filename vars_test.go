@@ -40,6 +40,5 @@ import (
 )
 
 func TestV파일경로(t *testing.T) {
-	lib.F테스트_참임(t, lib.F파일_존재함(go실행파일_경로))
 	lib.F테스트_참임(t, lib.F파일_존재함(xing_C32_경로))
 }

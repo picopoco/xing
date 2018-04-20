@@ -35,28 +35,28 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-
 	"github.com/ghts/xing_types"
 	"github.com/go-mangos/mangos"
-	"os"
+
 	"testing"
 )
 
 func TestMain(m *testing.M) {
+	f테스트_준비()
+	defer f테스트_정리()
+
+	m.Run()
+}
+
+func f테스트_준비() {
 	lib.F테스트_모드_시작()
-	테스트_실행결과 := m.Run()
-	f테스트_정리()
-	os.Exit(테스트_실행결과)
+	F초기화()
 }
 
 func f테스트_정리() {
-	호출_인수 := xt.New호출_인수_기본형(xt.P함수_종료)
+	F질의by호출_인수(xt.New호출_인수_기본형(xt.P함수_종료))
 
-	lib.New소켓_질의_단순형(lib.P주소_Xing_C함수_호출, lib.P변환형식_기본값, lib.P10초).S질의(호출_인수).G응답()
-	lib.F대기(lib.P1초)
-
-	소켓_모음 := []mangos.Socket{소켓SUB_콜백, 소켓SUB_실시간_정보}
-
+	소켓_모음 := []mangos.Socket{소켓SUB_콜백}
 	for _, 소켓 := range 소켓_모음 {
 		if 소켓 != nil {
 			소켓.Close()
@@ -64,4 +64,5 @@ func f테스트_정리() {
 	}
 
 	lib.F테스트_모드_종료()
+	lib.F공통_종료_채널_닫기()
 }
