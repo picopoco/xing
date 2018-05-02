@@ -49,6 +49,7 @@ type 대기_항목_C32 struct {
 	데이터_수신 bool
 	응답_완료  bool
 	에러_발생  bool
+	회신_완료 bool
 
 	// 메시지
 	코드  string
@@ -67,14 +68,18 @@ func (s *대기_항목_C32) G회신값() interface{} {
 }
 
 func (s *대기_항목_C32) S회신() {
+	if s.회신_완료 {
+		return
+	}
+
 	if s.에러_발생 {
 		lib.F체크포인트()
 		s.ch회신 <- lib.New에러("'%v' : '%v'", s.코드, s.메시지)
 	} else {
-		lib.F체크포인트()
 		s.ch회신 <- s.G회신값()
-		lib.F체크포인트()
 	}
+
+	s.회신_완료 = true
 }
 
 func new대기_TR_저장소_C32() *대기_TR_저장소_C32 {
@@ -123,10 +128,10 @@ func (s *대기_TR_저장소_C32) S회신(식별번호 int) {
 // (xing_C32가 아닌) 모듈로부터 소켓으로 들어오는 TR질의 저장
 type s소켓_메시지_대기_저장소 struct {
 	sync.Mutex
-	저장소 map[lib.I소켓_메시지](chan lib.I소켓_메시지)
+	저장소 map[*lib.S바이트_변환_모음](chan *lib.S바이트_변환_모음)
 }
 
-func (s *s소켓_메시지_대기_저장소) S추가(메시지 lib.I소켓_메시지, ch수신 chan lib.I소켓_메시지) {
+func (s *s소켓_메시지_대기_저장소) S추가(메시지 *lib.S바이트_변환_모음, ch수신 chan *lib.S바이트_변환_모음) {
 	s.Lock()
 	defer s.Unlock()
 	s.저장소[메시지] = ch수신
@@ -141,7 +146,7 @@ func (s *s소켓_메시지_대기_저장소) S재전송() {
 	}
 }
 
-func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 lib.I소켓_메시지, ch수신 chan lib.I소켓_메시지) {
+func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 *lib.S바이트_변환_모음, ch수신 chan *lib.S바이트_변환_모음) {
 	// 채널이 이미 닫힌 경우 송신할 때 패닉이 발생함.
 	// 그럴 경우에는 해당 메시지를 대기목록에서 삭제함.
 	defer lib.S에러패닉_처리기{M함수: func() { delete(s.저장소, 메시지) }}.S실행()
@@ -157,7 +162,7 @@ func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 lib.
 
 func new대기_중_데이터_저장소() *s소켓_메시지_대기_저장소 {
 	s := new(s소켓_메시지_대기_저장소)
-	s.저장소 = make(map[lib.I소켓_메시지](chan lib.I소켓_메시지))
+	s.저장소 = make(map[*lib.S바이트_변환_모음](chan *lib.S바이트_변환_모음))
 
 	return s
 }

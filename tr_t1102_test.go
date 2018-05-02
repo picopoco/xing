@@ -66,7 +66,10 @@ func f현물_시세조회_테스트_도우미(t *testing.T, 종목코드 string)
 	질의값.TR코드 = xt.TR현물_시세_조회
 	질의값.M종목코드 = 종목코드
 
-	응답 := lib.New소켓_질의_단순형(lib.P주소_Xing_TR, lib.F임의_변환_형식(), lib.P1분).S질의(질의값).G응답_검사()
+	소켓REQ := lib.NewNano소켓REQ_단순형(lib.P주소_Xing_TR, lib.P1분)
+	defer 소켓REQ.Close()
+
+	응답 := 소켓REQ.G질의_응답_검사(lib.P변환형식_기본값, 질의값)
 
 	ETF종목_여부 := etf종목_여부(질의값.M종목코드)
 

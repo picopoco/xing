@@ -49,7 +49,7 @@ func TestCSPAT00800현물_취소주문(t *testing.T) {
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)
 
-	ch실시간_정보 := make(chan lib.I소켓_메시지, 100)
+	ch실시간_정보 := make(chan *lib.S바이트_변환_모음, 100)
 	lib.F테스트_에러없음(t, F주문_응답_실시간_정보_구독(ch실시간_정보))
 
 	const 수량_정상주문 = int64(25)

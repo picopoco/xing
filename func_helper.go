@@ -42,35 +42,27 @@ import (
 	"time"
 )
 
-func F질의(질의값 lib.I질의값, 타임아웃 ...time.Duration) (회신_메시지 lib.I소켓_메시지) {
-	defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) { 회신_메시지, _ = lib.New소켓_메시지_에러(r) }}.S실행()
+func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S바이트_변환_모음) {
+	defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) {
+		값 = lib.New바이트_변환_모음_단순형(lib.P변환형식_기본값, lib.New에러(r)) }}.S실행()
 
-	바이트_변환값, 에러 := lib.New바이트_변환_매개체(lib.P변환형식_기본값, 질의값)
+	바이트_변환값, 에러 := lib.New바이트_변환(lib.P변환형식_기본값, 질의값)
 	에러체크(에러)
 
 	호출_인수 := xt.New호출_인수_질의(바이트_변환값)
 
-	return F질의by호출_인수(호출_인수, 타임아웃...)
+	return F질의by호출_인수(호출_인수, 옵션_모음...)
 }
 
-func F질의by호출_인수(호출_인수 xt.I호출_인수, 타임아웃 ...time.Duration) (회신_메시지 lib.I소켓_메시지) {
-	defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) { 회신_메시지, _ = lib.New소켓_메시지_에러(r) }}.S실행()
+func F질의by호출_인수(호출_인수 xt.I호출_인수, 옵션_모음 ...interface{}) (값 *lib.S바이트_변환_모음) {
+	소켓REQ := 소켓REQ_저장소.G소켓()
+	defer 소켓REQ_저장소.S회수(소켓REQ)
 
-	lib.F조건부_패닉(len(타임아웃) > 1, "타임아웃 값 수량은 0 또는 1만 가능함 : '%v'", len(타임아웃))
+	if len(옵션_모음) > 0 {
+		소켓REQ.S옵션(옵션_모음...)
+	}
 
-	소켓_질의 := lib.New소켓_질의_단순형(lib.P주소_Xing_C함수_호출, lib.P변환형식_기본값, lib.P30초)
-
-	return 소켓_질의.S질의(호출_인수).G응답_검사()
-}
-
-func F질의by호출_인수No검사(호출_인수 xt.I호출_인수, 타임아웃 ...time.Duration) (회신_메시지 lib.I소켓_메시지) {
-	defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) { 회신_메시지, _ = lib.New소켓_메시지_에러(r) }}.S실행()
-
-	lib.F조건부_패닉(len(타임아웃) > 1, "타임아웃 값 수량은 0 또는 1만 가능함 : '%v'", len(타임아웃))
-
-	소켓_질의 := lib.New소켓_질의_단순형(lib.P주소_Xing_C함수_호출, lib.P변환형식_기본값, lib.P30초)
-
-	return 소켓_질의.S질의(호출_인수).G응답()
+	return 소켓REQ.G질의_응답_검사(lib.P변환형식_기본값, 호출_인수)
 }
 
 func F접속됨() (접속됨 bool, 에러 error) {
@@ -205,19 +197,19 @@ func etf종목_여부(종목코드 string) bool {
 	return false
 }
 
-func xing_C32_실행_중() (실행_중 bool) {
-	defer lib.S에러패닉_처리기{M함수: func() { 실행_중 = false }}.S실행()
+func xing_C32_실행_중() (프로세스ID int) {
+	defer lib.S에러패닉_처리기{M함수: func() { 프로세스ID = -1 }}.S실행()
 
 	프로세스_모음, 에러 := ps.Processes()
 	lib.F에러체크(에러)
 
 	for _, 프로세스 := range 프로세스_모음 {
 		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_C32_경로, 실행화일명) {
-			return true
+			return 프로세스.Pid()
 		}
 	}
 
-	return false
+	return -1
 }
 
 func f접속유지_실행() {
@@ -249,10 +241,6 @@ func f접속유지_도우미() {
 			return
 		}
 	}
-}
-
-func 바이트_모음_해석(바이트_모음 []byte, 값_포인터 interface{}) error {
-	return lib.New소켓_메시지by바이트_모음(바이트_모음).G값(0, 값_포인터)
 }
 
 func f콜백_데이터_식별번호(값 xt.I콜백) (식별번호 int, 대기_항목 *대기_항목_C32, TR코드 string) {
@@ -297,40 +285,51 @@ func f에러_발생(TR코드, 코드, 내용 string) bool {
 	}
 }
 
-func f데이터_복원(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환_매개체) error {
-	대기_항목.Lock()
-	defer 대기_항목.Unlock()
+func f데이터_복원(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환) error {
+	lib.F체크포인트(대기_항목.식별번호)
 
 	switch 대기_항목.TR코드 {
 	case xt.TR시간_조회, xt.TR현물_호가_조회, xt.TR현물_시세_조회, xt.TR_ETF_시세_조회:
+		lib.F체크포인트(대기_항목.식별번호)
+
 		대기_항목.대기값 = 수신값.G해석값_단순형() // 단순 질의
+
+		lib.F체크포인트(대기_항목.식별번호)
+
 		대기_항목.데이터_수신 = true
 
 		lib.F체크포인트(대기_항목.TR코드, 대기_항목.대기값)
 	case xt.TR현물_정상주문, xt.TR현물_정정주문, xt.TR현물_취소주문:
+		lib.F체크포인트(대기_항목.식별번호)
+
 		f데이터_복원_현물_주문(대기_항목, 수신값) // 주문 질의
 
 		lib.F체크포인트()
 	case xt.TR현물_시간대별_체결_조회, xt.TR현물_기간별_조회, xt.TR현물_당일_전일_분틱_조회,
 		xt.TR_ETF_시간별_추이, xt.TR증시_주변_자금_추이:
+		lib.F체크포인트(대기_항목.식별번호)
+
 		f데이터_복원_반복_조회(대기_항목, 수신값) // 반복 조회
 
 		lib.F체크포인트()
 	case xt.TR현물_종목_조회:
+		lib.F체크포인트(대기_항목.식별번호)
+
 		대기_항목.대기값 = 수신값.G해석값_단순형().(*xt.S주식종목조회_응답_반복값_모음)
 		대기_항목.데이터_수신 = true
 
-		lib.F체크포인트()
+		lib.F체크포인트(대기_항목.식별번호)
 	default:
+		lib.F체크포인트(대기_항목.식별번호)
 		return lib.New에러("구현되지 않은 TR코드. %v", 대기_항목.TR코드)
 	}
 
-	lib.F체크포인트()
+	lib.F체크포인트(대기_항목.식별번호)
 
 	return nil
 }
 
-func f데이터_복원_현물_주문(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환_매개체) {
+func f데이터_복원_현물_주문(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환) {
 	완전값 := new(xt.S주문_응답_일반형)
 
 	if 대기_항목.대기값 != nil {
@@ -371,7 +370,7 @@ func f데이터_복원_현물_주문(대기_항목 *대기_항목_C32, 수신값
 	}
 }
 
-func f데이터_복원_반복_조회(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환_매개체) {
+func f데이터_복원_반복_조회(대기_항목 *대기_항목_C32, 수신값 *lib.S바이트_변환) {
 	완전값 := new(xt.S헤더_반복값_일반형)
 
 	if 대기_항목.대기값 != nil {

@@ -40,24 +40,28 @@ import (
 	"time"
 )
 
-func F단일TR(질의값 lib.I질의값) (값 interface{}, 에러 error) {
+func F단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 값 = nil }}.S실행()
 
-	회신_메시지 := 에러체크(F질의(질의값)).(lib.I소켓_메시지)
-	식별번호 := 에러체크(회신_메시지.G해석값(0)).(int)
-
-	lib.F체크포인트(식별번호)
-
+	식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0).(int)
 	ch회신 := 대기소_C32.S추가(식별번호, 질의값.G_TR코드())
-	lib.F체크포인트()
 
 	var 회신값 interface{}
 
+	타임아웃 := lib.P30초
+
+	for _, 옵션 := range 옵션_모음 {
+		switch 변환값 := 옵션.(type) {
+		case time.Duration:
+			타임아웃 = 변환값
+		}
+	}
+
 	select {
 	case 회신값 = <-ch회신:
-		lib.F체크포인트(식별번호, 회신값)
-	case <-time.After(lib.P30초):
-		panic(lib.New에러("타임아웃. '%v'", 식별번호))
+		// PASS
+	case <-time.After(타임아웃):
+		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
 	}
 
 	return 회신값, nil
@@ -65,17 +69,11 @@ func F단일TR(질의값 lib.I질의값) (값 interface{}, 에러 error) {
 
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
 func F시각_조회_t0167() (시각 time.Time, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 시각 = time.Time{} }}.S실행()
+	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 시각 = time.Time{} }}.S실행_No출력()
 
 	질의값 := lib.S질의값_기본형{TR구분: lib.TR조회, TR코드: xt.TR시간_조회}
-	lib.F체크포인트()
-
-	i값, 에러 := F단일TR(질의값)
-	lib.F체크포인트(에러)
-	에러체크(에러)
-
+	i값 := 에러체크(F단일TR(질의값, lib.P20초))
 	시각, ok := i값.(time.Time)
-	lib.F체크포인트(ok)
 	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T' '%v'", i값, i값)
 
 	return 시각, nil

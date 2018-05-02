@@ -35,17 +35,19 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/go-mangos/mangos"
-
+	"github.com/ghts/xing_types"
 	"sync"
 	"time"
 )
 
 var (
-	ch초기화_완료_C32   = make(chan lib.T신호, 1)
-	ch초기화_소켓PUB_확인 = make(chan lib.T신호, 1)
+	소켓REQ_저장소 = lib.New소켓_저장소(20, func() lib.I소켓 {
+		return lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P30초)
+	})
 
-	소켓SUB_콜백 mangos.Socket
+	소켓REP_TR콜백 lib.I소켓_Raw
+
+	ch초기화_신호_C32_모음 []chan xt.T신호_C32
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
