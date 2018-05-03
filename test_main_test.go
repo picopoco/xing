@@ -40,11 +40,13 @@ import (
 )
 
 func TestMain(m *testing.M) {
+	var 테스트_결과 int
+	defer os.Exit(테스트_결과)
+
 	f테스트_준비()
 	defer f테스트_정리()
 
-	테스트_결과 := m.Run()
-	defer os.Exit(테스트_결과)
+	테스트_결과 = m.Run()
 }
 
 func f테스트_준비() {

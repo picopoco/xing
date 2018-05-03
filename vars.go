@@ -47,7 +47,7 @@ var (
 
 	소켓REP_TR콜백 lib.I소켓_Raw
 
-	ch초기화_신호_C32_모음 []chan xt.T신호_C32
+	ch신호_C32_모음 []chan xt.T신호_C32
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
@@ -63,4 +63,5 @@ var (
 //	재선언
 var (
 	에러체크 = lib.F에러체크
+	체크 = lib.F체크포인트
 )

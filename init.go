@@ -40,10 +40,10 @@ import (
 )
 
 func init() {
-	ch초기화_신호_C32_모음 = make([]chan xt.T신호_C32, 2)
+	ch신호_C32_모음 = make([]chan xt.T신호_C32, 3)
 
-	for i:=0 ; i<len(ch초기화_신호_C32_모음) ; i++ {
-		ch초기화_신호_C32_모음[i] = make(chan xt.T신호_C32, 1)
+	for i:=0 ; i<len(ch신호_C32_모음) ; i++ {
+		ch신호_C32_모음[i] = make(chan xt.T신호_C32, 1)
 	}
 }
 
@@ -86,7 +86,7 @@ func f초기화_xing_C32() (에러 error) {
 
 func f초기화_Go루틴() {
 	ch초기화 := make(chan lib.T신호, 1)
-	go go루틴_콜백_처리(ch초기화)
+	go go_TR콜백_처리(ch초기화)
 	<-ch초기화
 }
 
@@ -99,7 +99,7 @@ func f초기화_작동_확인() bool {
 	ch타임아웃 := time.After(lib.P10분)
 
 	select {
-	case <-ch초기화_신호_C32_모음[xt.P신호_C32_Ready]:	// 서버 접속된 상태임.
+	case <-ch신호_C32_모음[xt.P신호_C32_로그인]: // 서버 접속된 상태임.
 	case <-ch타임아웃:
 		return false
 	}
@@ -109,7 +109,7 @@ func f초기화_작동_확인() bool {
 	lib.F대기(lib.P10초)
 
 	// 소켓REP_TR수신 동작 테스트
-	go F소켓REP_TR수신_동작_여부_확인(ch확인)
+	go tr수신_소켓_동작_확인(ch확인)
 
 	select {
 	case <-ch확인:
@@ -119,7 +119,7 @@ func f초기화_작동_확인() bool {
 	}
 
 	// F접속됨() 테스트
-	go F접속됨_확인(ch확인)
+	go f접속_확인(ch확인)
 
 	select {
 	case <-ch확인:
@@ -129,7 +129,7 @@ func f초기화_작동_확인() bool {
 	}
 
 	// F시각_조회_t0167() 테스트
-	go F시각_조회_t0167_확인(ch확인)
+	go tr동작_확인(ch확인)
 
 	select {
 	case <-ch확인:
@@ -143,7 +143,7 @@ func f초기화_작동_확인() bool {
 	return true
 }
 
-func F소켓REP_TR수신_동작_여부_확인(ch완료 chan lib.T신호) {
+func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
 	테스트_질의값 := xt.New호출_인수_정수값(xt.P함수_신호, xt.P신호_Go_소켓REP_TR수신_테스트)
@@ -158,7 +158,7 @@ func F소켓REP_TR수신_동작_여부_확인(ch완료 chan lib.T신호) {
 	}
 }
 
-func F접속됨_확인(ch완료 chan lib.T신호) {
+func f접속_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
 	호출_인수 := xt.New호출_인수_기본형(xt.P함수_접속됨)
@@ -177,7 +177,7 @@ func F접속됨_확인(ch완료 chan lib.T신호) {
 	}
 }
 
-func F시각_조회_t0167_확인(ch완료 chan lib.T신호) {
+func tr동작_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
 	for i := 0; i < 100; i++ {
@@ -191,22 +191,21 @@ func F시각_조회_t0167_확인(ch완료 chan lib.T신호) {
 
 		return
 	}
-
-
 }
 
 func f리소스_정리() {
-	lib.F패닉억제_호출(F질의by호출_인수, xt.New호출_인수_정수값(xt.P함수_신호, xt.P신호_C32_종료), lib.P10초)
-	lib.F패닉억제_호출(소켓REP_TR콜백.Close)
+	lib.F패닉억제_호출(F질의by호출_인수, xt.New호출_인수_정수값(xt.P함수_신호, xt.P신호_Go_종료), lib.P10초)
+	<-ch신호_C32_모음[xt.P신호_C32_종료]
 
 	for {
 		if 프로세스ID := xing_C32_실행_중(); 프로세스ID < 0 {
 			break
 		} else {
-			lib.F대기(lib.P1초)
+			lib.F대기(lib.P500밀리초)
 		}
 	}
 
 	lib.F공통_종료_채널_닫기()
+	lib.F패닉억제_호출(소켓REP_TR콜백.Close)
 }
 

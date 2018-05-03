@@ -39,7 +39,7 @@ import (
 	"github.com/go-mangos/mangos"
 )
 
-func go루틴_콜백_처리(ch초기화 chan lib.T신호) {
+func go_TR콜백_처리(ch초기화 chan lib.T신호) {
 	콜백_처리_루틴_수량 := 10
 
 	ch종료 := lib.F공통_종료_채널()
@@ -96,7 +96,17 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 		case <-ch종료:
 			return
 		default:
-			수신_메시지 = 소켓REP_TR콜백.G수신_Raw_단순형()
+			수신_메시지, 에러 = 소켓REP_TR콜백.G수신_Raw()
+			if 에러 != nil {
+				select {
+				case <-ch종료:
+					에러 = nil
+					return
+				default:
+					lib.F에러_출력(lib.New에러(에러))
+					continue
+				}
+			}
 
 			func() {
 				defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) {
@@ -118,8 +128,6 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 					에러체크(f콜백_신호_처리기(값))
 				case xt.P콜백_타임아웃:
 					panic("TODO") // 변환값 := 값.(*xt.S콜백_정수값)
-				case xt.P콜백_접속해제:
-					panic("TODO") // 변환값 := 값.(*xt.S콜백_기본형)
 				case xt.P콜백_링크_데이터:
 					panic("TODO") // 변환값 := 값.(*xt.S콜백_기본형)
 				case xt.P콜백_실시간_차트_데이터:
@@ -145,9 +153,9 @@ func f콜백_신호_처리기(콜백 xt.I콜백) (에러 error) {
 	신호 := xt.T신호_C32(정수값)
 
 	switch 신호 {
-	case xt.P신호_C32_Ready, xt.P신호_C32_종료:
+	case xt.P신호_C32_로그인, xt.P신호_C32_종료:
 		select {
-		case ch초기화_신호_C32_모음[정수값] <- 신호:
+		case ch신호_C32_모음[정수값] <- 신호:
 		default:
 		}
 	default:
@@ -202,7 +210,7 @@ func f콜백_TR데이터_처리기(값 xt.I콜백) (에러 error) {
 		lib.F체크포인트(값.G콜백(), 대기_항목.식별번호, "에러 회신")
 		대기소_C32.S회신(식별번호)
 	default:
-		lib.F체크포인트(값.G콜백(), 대기_항목.식별번호, "TR조합 완료 : '%v'", 식별번호)
+		lib.F체크포인트(값.G콜백(), 대기_항목.식별번호, "TR조합 완료")
 		대기소_C32.S회신(식별번호)
 	}
 
