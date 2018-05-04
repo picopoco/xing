@@ -51,8 +51,9 @@ var (
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
-	영업일_기준_전일_당일_설정_잠금   sync.Mutex
-	영업일_기준_전일, 영업일_기준_당일 time.Time
+	전일_당일_설정_잠금 = new(sync.Mutex)
+	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
+	전일, 당일 = lib.New안전한_시각(time.Time{}), lib.New안전한_시각(time.Time{})
 
 	xing_C32_실행_잠금 sync.Mutex
 	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`

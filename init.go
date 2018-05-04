@@ -37,6 +37,7 @@ import (
 	"github.com/ghts/lib"
 	"github.com/ghts/xing_types"
 	"time"
+	"fmt"
 )
 
 func init() {
@@ -54,13 +55,13 @@ func F초기화() {
 	f초기화_Go루틴()
 	f초기화_xing_C32()	// xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
-	//
-	//lib.F체크포인트()
-	//
+	f전일_당일_설정()
+
 	//lib.F메모("f접속유지_실행() 보류")	//f접속유지_실행()
-	//lib.F메모("f초기화_영업일_기준_전일_당일() 보류")	//f초기화_영업일_기준_전일_당일()
-	//
-	//lib.F문자열_출력("\n\n*** 초기화 완료 ***\n\n")
+
+	fmt.Println("**************************")
+	fmt.Println("*       초기화 완료      *")
+	fmt.Println("**************************")
 }
 
 func f초기화_소켓() {
@@ -90,16 +91,13 @@ func f초기화_Go루틴() {
 	<-ch초기화
 }
 
-func f초기화_영업일_기준_전일_당일() (에러 error) {
-	panic("TODO")
-}
-
 func f초기화_작동_확인() bool {
 	ch확인 := make(chan lib.T신호, 1)
 	ch타임아웃 := time.After(lib.P10분)
 
 	select {
 	case <-ch신호_C32_모음[xt.P신호_C32_로그인]: // 서버 접속된 상태임.
+		lib.F체크포인트("C32 초기화 확인.")
 	case <-ch타임아웃:
 		return false
 	}
@@ -113,6 +111,7 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
+		lib.F체크포인트("TR수신 REP소켓 동작 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F소켓REP_TR수신_동작_여부_확인() 타임아웃.")
 		return false
@@ -123,6 +122,7 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
+		lib.F체크포인트("서버 접속 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F접속됨_확인() 타임아웃.")
 		return false
@@ -133,12 +133,11 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
+		lib.F체크포인트("서버 시각 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F시각_조회_t0167_확인() 타임아웃.")
 		return false
 	}
-
-	lib.F체크포인트("정상 작동 확인 완료.")
 
 	return true
 }
@@ -146,13 +145,8 @@ func f초기화_작동_확인() bool {
 func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
-	테스트_질의값 := xt.New호출_인수_정수값(xt.P함수_신호, xt.P신호_Go_소켓REP_TR수신_테스트)
-	소켓 := lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P5초)
-
 	for i := 0; i < 100; i++ {
-		응답 := 소켓.G질의_응답_검사(lib.P변환형식_기본값, 테스트_질의값)
-
-		if 응답.G에러() == nil && 응답.G해석값_단순형(0).(bool) {
+		if 응답 := F질의(lib.New질의값_기본형(lib.TR소켓_테스트, ""), lib.P5초); 응답.G에러() == nil {
 			return
 		}
 	}
@@ -161,14 +155,10 @@ func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 func f접속_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
-	호출_인수 := xt.New호출_인수_기본형(xt.P함수_접속됨)
-
 	for i := 0; i < 100; i++ {
-		if 응답 := F질의by호출_인수(호출_인수, lib.P10초); 응답.G에러() != nil {
-			lib.F에러_출력(응답.G에러())
+		if 접속됨, 에러 := F접속됨(); 에러 != nil {
+			lib.F에러_출력(에러)
 			continue
-		} else if 접속됨, ok := 응답.G해석값_단순형(0).(bool); !ok {
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", 응답.G해석값_단순형(0)))
 		} else if !접속됨 {
 			panic(lib.New에러("이 시점에 접속되어 있어야 함."))
 		}
@@ -194,7 +184,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 }
 
 func f리소스_정리() {
-	lib.F패닉억제_호출(F질의by호출_인수, xt.New호출_인수_정수값(xt.P함수_신호, xt.P신호_Go_종료), lib.P10초)
+	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(lib.TR종료, ""), lib.P10초)
 	<-ch신호_C32_모음[xt.P신호_C32_종료]
 
 	for {
