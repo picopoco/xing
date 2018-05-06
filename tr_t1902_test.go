@@ -41,6 +41,8 @@ import (
 )
 
 func TestETF_시간별_추이_t1902(t *testing.T) {
+	t.Parallel()
+
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)

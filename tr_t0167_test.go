@@ -41,6 +41,8 @@ import (
 )
 
 func TestF시각_조회_t0167(t *testing.T) {
+	t.Parallel()
+
 	lib.F테스트_참임(t, 에러체크(F접속됨()).(bool))
 
 	시각, 에러 := F시각_조회_t0167()

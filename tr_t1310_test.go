@@ -42,6 +42,8 @@ import (
 )
 
 func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
+	t.Parallel()
+
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)
@@ -52,9 +54,9 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 	var 종료시각 time.Time
 
 	if 당일전일_구분 == xt.P당일전일구분_당일 {
-		종료시각 = lib.F2금일_시각_단순형("15:04:05", "00:00:00").AddDate(0, 0, 1).Add(-1 * lib.P1초)
+		종료시각 = F2당일_시각_단순형("15:04:05", "00:00:00").AddDate(0, 0, 1).Add(-1 * lib.P1초)
 	} else {
-		종료시각 = lib.F2금일_시각_단순형("15:04:05", "00:00:00").Add(-1 * lib.P1초)
+		종료시각 = F2전일_시각_단순형("15:04:05", "00:00:00").Add(-1 * lib.P1초)
 	}
 
 	값_모음, 에러 := F현물_당일전일_분틱_조회_t1310(종목코드, 당일전일_구분, 분틱_구분, 종료시각)
@@ -72,15 +74,16 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 		switch 당일전일_구분 {
 		case xt.P당일전일구분_당일:
 			lib.F테스트_같음(t, 값.M시각.Format(일자_포맷_문자열), 당일_문자열)
+			lib.F테스트_같음(t, 값.M시각.Location(), 당일.G값().Location())
 		case xt.P당일전일구분_전일:
 			lib.F테스트_같음(t, 값.M시각.Format(일자_포맷_문자열), 전일_문자열)
+			lib.F테스트_같음(t, 값.M시각.Location(), 전일.G값().Location())
 		default:
 			panic(lib.New에러("예상하지 못한 경우. '%v'", 값.M시각))
 		}
 
 		lib.F테스트_참임(t, 값.M시각.After(종료시각.AddDate(0, 0, -1)))
-		lib.F테스트_참임(t, 값.M시각.Before(종료시각.Add(lib.P3분)),
-			값.M시각, 종료시각.Add(lib.P3분))
+		lib.F테스트_참임(t, 값.M시각.Before(종료시각.Add(lib.P3분)), 값.M시각, 종료시각.Add(lib.P3분))
 
 		lib.F테스트_참임(t, 값.M현재가 > 0)
 		lib.F테스트_같음(t, 값.M전일대비구분,

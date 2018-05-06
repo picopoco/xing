@@ -41,6 +41,8 @@ import (
 )
 
 func TestCSPAT00700현물_정정주문(t *testing.T) {
+	t.Parallel()
+
 	if !lib.F한국증시_정규시장_거래시간임() {
 		t.SkipNow()
 	}

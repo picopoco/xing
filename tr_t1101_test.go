@@ -41,6 +41,8 @@ import (
 )
 
 func TestF현물_호가_조회_t1101(t *testing.T) {
+	t.Parallel()
+
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)

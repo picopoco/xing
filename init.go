@@ -41,7 +41,7 @@ import (
 )
 
 func init() {
-	ch신호_C32_모음 = make([]chan xt.T신호_C32, 3)
+	ch신호_C32_모음 = make([]chan xt.T신호_C32, 2)
 
 	for i:=0 ; i<len(ch신호_C32_모음) ; i++ {
 		ch신호_C32_모음[i] = make(chan xt.T신호_C32, 1)
@@ -54,7 +54,9 @@ func F초기화() {
 	f초기화_소켓()
 	f초기화_Go루틴()
 	f초기화_xing_C32()	// xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
+	lib.F체크포인트()
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
+
 	f전일_당일_설정()
 
 	//lib.F메모("f접속유지_실행() 보류")	//f접속유지_실행()
@@ -95,10 +97,12 @@ func f초기화_작동_확인() bool {
 	ch확인 := make(chan lib.T신호, 1)
 	ch타임아웃 := time.After(lib.P10분)
 
+	lib.F체크포인트()
+
 	select {
-	case <-ch신호_C32_모음[xt.P신호_C32_로그인]: // 서버 접속된 상태임.
-		lib.F체크포인트("C32 초기화 확인.")
+	case <-ch신호_C32_모음[xt.P신호_C32_READY]: // 서버 접속된 상태임.
 	case <-ch타임아웃:
+		lib.F체크포인트("C32 초기화 타임아웃")
 		return false
 	}
 

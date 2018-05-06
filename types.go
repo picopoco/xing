@@ -46,14 +46,10 @@ type 대기_항목_C32 struct {
 	ch회신   chan interface{}
 	TR코드   string
 	대기값    interface{}
+	에러  	error
 	데이터_수신 bool
 	응답_완료  bool
-	에러_발생  bool
 	회신_완료 bool
-
-	// 메시지
-	코드  string
-	메시지 string
 }
 
 func (s *대기_항목_C32) G회신값() interface{} {
@@ -72,9 +68,9 @@ func (s *대기_항목_C32) S회신() {
 		return
 	}
 
-	if s.에러_발생 {
+	if s.에러 != nil {
 		lib.F체크포인트()
-		s.ch회신 <- lib.New에러("'%v' : '%v'", s.코드, s.메시지)
+		s.ch회신 <- s.에러
 	} else {
 		s.ch회신 <- s.G회신값()
 	}

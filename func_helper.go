@@ -53,6 +53,37 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 	return 소켓REQ.G질의_응답_검사(lib.P변환형식_기본값, 질의값)
 }
 
+func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
+	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 값 = nil }}.S실행()
+
+	식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0).(int)
+	ch회신 := 대기소_C32.S추가(식별번호, 질의값.G_TR코드())
+
+	var 회신값 interface{}
+
+	타임아웃 := lib.P30초
+
+	for _, 옵션 := range 옵션_모음 {
+		switch 변환값 := 옵션.(type) {
+		case time.Duration:
+			타임아웃 = 변환값
+		}
+	}
+
+	select {
+	case 회신값 = <-ch회신:
+		// PASS
+	case <-time.After(타임아웃):
+		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
+	}
+
+	return 회신값, nil
+}
+
+func F질의_단일TR_단순형(질의값 lib.I질의값, 옵션_모음 ...interface{}) interface{} {
+	return 에러체크(F질의_단일TR(질의값, 옵션_모음...))
+}
+
 func F접속됨() (접속됨 bool, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 접속됨 = false }}.S실행()
 
@@ -161,6 +192,28 @@ func F전일() time.Time {
 	}
 
 	return 전일.G값()
+}
+
+func F2전일_시각(포맷 string, 값 interface{}) (time.Time, error) {
+	if strings.Contains(포맷, "2") {
+		return time.Time{}, lib.New에러("포맷에 이미 날짜가 포함되어 있습니다. %v", 포맷)
+	}
+
+	시각, 에러 := lib.F2포맷된_시각(포맷, 값)
+	if 에러 != nil {
+		return time.Time{}, 에러
+	}
+
+	전일 := F전일()
+
+	전일_시각 := time.Date(전일.Year(), 전일.Month(), 전일.Day(),
+		시각.Hour(), 시각.Minute(), 시각.Second(), 0, 시각.Location())
+
+	return 전일_시각, nil
+}
+
+func F2전일_시각_단순형(포맷 string, 값 interface{}) time.Time {
+	return 에러체크(F2전일_시각(포맷, 값)).(time.Time)
 }
 
 func F당일() time.Time {
