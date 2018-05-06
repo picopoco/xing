@@ -143,6 +143,10 @@ func f초기화_작동_확인() bool {
 		return false
 	}
 
+	fmt.Println("**************************")
+	fmt.Println("*   C32 동작 확인 완료    *")
+	fmt.Println("**************************")
+
 	return true
 }
 

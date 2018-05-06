@@ -42,6 +42,9 @@ import (
 )
 
 func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
+	lib.F문자열_출력("t1310 테스트 일단 보류")
+	t.SkipNow()
+
 	t.Parallel()
 
 	접속됨, 에러 := F접속됨()

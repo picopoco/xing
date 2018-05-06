@@ -61,21 +61,24 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 
 	var 회신값 interface{}
 
-	타임아웃 := lib.P30초
 
-	for _, 옵션 := range 옵션_모음 {
-		switch 변환값 := 옵션.(type) {
-		case time.Duration:
-			타임아웃 = 변환값
-		}
-	}
+	//타임아웃 := lib.P30초
+	//
+	//for _, 옵션 := range 옵션_모음 {
+	//	switch 변환값 := 옵션.(type) {
+	//	case time.Duration:
+	//		타임아웃 = 변환값
+	//	}
+	//}
+	//
+	//select {
+	//case 회신값 = <-ch회신:
+	//	// PASS
+	//case <-time.After(타임아웃):
+	//	return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
+	//}
 
-	select {
-	case 회신값 = <-ch회신:
-		// PASS
-	case <-time.After(타임아웃):
-		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
-	}
+	회신값 = <-ch회신
 
 	return 회신값, nil
 }
@@ -176,6 +179,8 @@ func f전일_당일_설정() (에러 error) {
 		당일.S값(응답값.M반복값_모음.M배열[1].M일자)
 		전일.S값(응답값.M반복값_모음.M배열[0].M일자)
 	}
+
+	체크("전일 당일 설정 완료.")
 
 	return nil
 }
@@ -473,13 +478,12 @@ func f처리_가능한_TR코드(TR코드 string) bool {
 	case xt.TR시간_조회, xt.TR계좌_번호, xt.TR현물_정상주문, xt.TR현물_정정주문, xt.TR현물_취소주문,
 		xt.TR계좌_거래_내역, xt.TR현물_호가_조회, xt.TR현물_시세_조회, xt.TR현물_시간대별_체결_조회,
 		xt.TR현물_기간별_조회, xt.TR현물_당일_전일_분틱_조회, xt.TR_ETF_시세_조회, xt.TR_ETF_시간별_추이,
-		xt.TR현물_종목_조회:
+		xt.TR현물_종목_조회, xt.TR증시_주변_자금_추이:
 		return true
 	case xt.TR주식_매매일지_수수료_금일, xt.TR주식_매매일지_수수료_날짜_지정, xt.TR주식_잔고_2,
 		xt.TR주식_체결_미체결, xt.TR종목별_증시_일정, xt.TR해외_실시간_지수, xt.TR해외_지수_조회,
-		xt.TR증시_주변_자금_추이, xt.TR현물계좌_예수금_주문가능금액_총평가, xt.TR현물계좌_잔고내역,
-		xt.TR현물계좌_주문체결내역, xt.TR계좌별_신용한도, xt.TR현물계좌_증거금률별_주문가능수량,
-		xt.TR주식계좌_기간별_수익률_상세:
+		xt.TR현물계좌_예수금_주문가능금액_총평가, xt.TR현물계좌_잔고내역, xt.TR현물계좌_주문체결내역,
+		xt.TR계좌별_신용한도, xt.TR현물계좌_증거금률별_주문가능수량, xt.TR주식계좌_기간별_수익률_상세:
 		return false
 	default:
 		return false

@@ -41,6 +41,9 @@ import (
 )
 
 func TestETF_시간별_추이_t1902(t *testing.T) {
+	lib.F문자열_출력("t1902 테스트 일단 보류")
+	t.SkipNow()
+
 	t.Parallel()
 
 	접속됨, 에러 := F접속됨()
