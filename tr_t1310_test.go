@@ -86,8 +86,7 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 		lib.F테스트_참임(t, 값.M시각.Before(종료시각.Add(lib.P3분)), 값.M시각, 종료시각.Add(lib.P3분))
 
 		lib.F테스트_참임(t, 값.M현재가 > 0)
-		lib.F테스트_같음(t, 값.M전일대비구분,
-			xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
+		lib.F테스트_같음(t, 값.M전일대비구분, xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
 
 		switch 값.M전일대비구분 {
 		case xt.P구분_상한, xt.P구분_상승:

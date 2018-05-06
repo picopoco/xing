@@ -134,7 +134,7 @@ func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
 	return 계좌_이름, nil
 }
 
-func F계좌_상세명(계좌_번호  string) (계좌_상세명 string, 에러 error) {
+func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_상세명 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_문자열(lib.TR계좌_상세명, "", 계좌_번호))

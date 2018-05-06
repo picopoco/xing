@@ -46,10 +46,10 @@ type 대기_항목_C32 struct {
 	ch회신   chan interface{}
 	TR코드   string
 	대기값    interface{}
-	에러  	error
+	에러     error
 	데이터_수신 bool
 	응답_완료  bool
-	회신_완료 bool
+	회신_완료  bool
 }
 
 func (s *대기_항목_C32) G회신값() interface{} {
@@ -124,7 +124,7 @@ func (s *대기_TR_저장소_C32) S회신(식별번호 int) {
 // (xing_C32가 아닌) 모듈로부터 소켓으로 들어오는 TR질의 저장
 type s소켓_메시지_대기_저장소 struct {
 	sync.Mutex
-	저장소 map[*lib.S바이트_변환_모음](chan *lib.S바이트_변환_모음)
+	저장소 map[*lib.S바이트_변환_모음]chan *lib.S바이트_변환_모음
 }
 
 func (s *s소켓_메시지_대기_저장소) S추가(메시지 *lib.S바이트_변환_모음, ch수신 chan *lib.S바이트_변환_모음) {
@@ -158,7 +158,7 @@ func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 *lib
 
 func new대기_중_데이터_저장소() *s소켓_메시지_대기_저장소 {
 	s := new(s소켓_메시지_대기_저장소)
-	s.저장소 = make(map[*lib.S바이트_변환_모음](chan *lib.S바이트_변환_모음))
+	s.저장소 = make(map[*lib.S바이트_변환_모음]chan *lib.S바이트_변환_모음)
 
 	return s
 }

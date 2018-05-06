@@ -110,7 +110,8 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 
 			func() {
 				defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) {
-					소켓REP_TR콜백.S회신_Raw(수신_메시지, lib.JSON, 에러) }}.S실행()
+					소켓REP_TR콜백.S회신_Raw(수신_메시지, lib.JSON, 에러)
+				}}.S실행()
 
 				수신값 = lib.New바이트_변환_모음from바이트_배열_단순형(수신_메시지.Body)
 				lib.F조건부_패닉(수신값.G수량() != 1, "메시지 길이 : 예상값 1, 실제값 %v.", 수신값.G수량())
@@ -201,7 +202,7 @@ func f콜백_TR데이터_처리기(값 xt.I콜백) (에러 error) {
 }
 
 func f콜백_신호_처리기(콜백 xt.I콜백) (에러 error) {
-	defer lib.S에러패닉_처리기{ M에러_포인터:&에러 }.S실행()
+	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행()
 
 	콜백_정수값, ok := 콜백.(*xt.S콜백_정수값)
 	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", 콜백)

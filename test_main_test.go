@@ -35,8 +35,8 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"testing"
 	"os"
+	"testing"
 )
 
 func TestMain(m *testing.M) {

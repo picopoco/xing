@@ -34,16 +34,16 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"fmt"
 	"github.com/ghts/lib"
 	"github.com/ghts/xing_types"
 	"time"
-	"fmt"
 )
 
 func init() {
 	ch신호_C32_모음 = make([]chan xt.T신호_C32, 2)
 
-	for i:=0 ; i<len(ch신호_C32_모음) ; i++ {
+	for i := 0; i < len(ch신호_C32_모음); i++ {
 		ch신호_C32_모음[i] = make(chan xt.T신호_C32, 1)
 	}
 }
@@ -53,7 +53,7 @@ func F초기화() {
 
 	f초기화_소켓()
 	f초기화_Go루틴()
-	f초기화_xing_C32()	// xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
+	f초기화_xing_C32() // xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
 	lib.F체크포인트()
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
 
@@ -179,7 +179,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 
 		if 에러 != nil || 시각.Equal(time.Time{}) {
 			continue
-		} else if 차이 := time.Now().Sub(시각); 차이 < -1 * lib.P10분 || 차이 > lib.P10분 {
+		} else if 차이 := time.Now().Sub(시각); 차이 < -1*lib.P10분 || 차이 > lib.P10분 {
 			panic(lib.New에러("서버와 시스템 시각 불일치 : 차이 '%v'분", 차이.Minutes()))
 		}
 
@@ -202,4 +202,3 @@ func f리소스_정리() {
 	lib.F공통_종료_채널_닫기()
 	lib.F패닉억제_호출(소켓REP_TR콜백.Close)
 }
-
