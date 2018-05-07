@@ -41,9 +41,6 @@ import (
 )
 
 func TestETF_시간별_추이_t1902(t *testing.T) {
-	lib.F문자열_출력("t1902 테스트 일단 보류")
-	t.SkipNow()
-
 	t.Parallel()
 
 	접속됨, 에러 := F접속됨()
@@ -56,7 +53,6 @@ func TestETF_시간별_추이_t1902(t *testing.T) {
 	lib.F테스트_에러없음(t, 에러)
 
 	당일 := F당일()
-	lib.F테스트_에러없음(t, 에러)
 
 	초기값 := time.Time{}
 	이전_시각 := 초기값

@@ -214,7 +214,6 @@ func f콜백_신호_처리기(콜백 xt.I콜백) (에러 error) {
 	case xt.P신호_C32_READY, xt.P신호_C32_종료:
 		select {
 		case ch신호_C32_모음[정수값] <- 신호:
-			lib.F체크포인트(신호.String())
 		default:
 		}
 	default:

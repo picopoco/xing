@@ -53,7 +53,7 @@ var (
 
 	전일_당일_설정_잠금 = new(sync.Mutex)
 	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
-	전일, 당일      = lib.New안전한_시각(time.Time{}), lib.New안전한_시각(time.Time{})
+	전일, 당일 lib.I안전한_시각
 
 	xing_C32_실행_잠금 sync.Mutex
 	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`

@@ -35,23 +35,21 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"os"
 	"testing"
 )
 
 func TestMain(m *testing.M) {
-	var 테스트_결과 int
-	defer os.Exit(테스트_결과)
+	defer lib.S에러패닉_처리기{}.S실행()
 
-	f테스트_준비()
+	에러체크(f테스트_준비())
 	defer f테스트_정리()
 
-	테스트_결과 = m.Run()
+	m.Run()
 }
 
-func f테스트_준비() {
+func f테스트_준비() error {
 	lib.F테스트_모드_시작()
-	F초기화()
+	return F초기화()
 }
 
 func f테스트_정리() {

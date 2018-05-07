@@ -41,6 +41,8 @@ import (
 )
 
 func init() {
+	lib.TR구분_String = xt.TR구분_String
+
 	ch신호_C32_모음 = make([]chan xt.T신호_C32, 2)
 
 	for i := 0; i < len(ch신호_C32_모음); i++ {
@@ -48,15 +50,13 @@ func init() {
 	}
 }
 
-func F초기화() {
-	defer lib.S에러패닉_처리기{}.S실행()
+func F초기화() (에러 error) {
+	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행()
 
 	f초기화_소켓()
 	f초기화_Go루틴()
 	f초기화_xing_C32() // xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
-	lib.F체크포인트()
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
-
 	f전일_당일_설정()
 
 	//lib.F메모("f접속유지_실행() 보류")	//f접속유지_실행()
@@ -64,6 +64,8 @@ func F초기화() {
 	fmt.Println("**************************")
 	fmt.Println("*       초기화 완료      *")
 	fmt.Println("**************************")
+
+	return nil
 }
 
 func f초기화_소켓() {
@@ -97,8 +99,6 @@ func f초기화_작동_확인() bool {
 	ch확인 := make(chan lib.T신호, 1)
 	ch타임아웃 := time.After(lib.P10분)
 
-	lib.F체크포인트()
-
 	select {
 	case <-ch신호_C32_모음[xt.P신호_C32_READY]: // 서버 접속된 상태임.
 	case <-ch타임아웃:
@@ -115,7 +115,6 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
-		lib.F체크포인트("TR수신 REP소켓 동작 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F소켓REP_TR수신_동작_여부_확인() 타임아웃.")
 		return false
@@ -126,7 +125,6 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
-		lib.F체크포인트("서버 접속 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F접속됨_확인() 타임아웃.")
 		return false
@@ -137,7 +135,6 @@ func f초기화_작동_확인() bool {
 
 	select {
 	case <-ch확인:
-		lib.F체크포인트("서버 시각 확인.")
 	case <-ch타임아웃:
 		lib.F체크포인트("F시각_조회_t0167_확인() 타임아웃.")
 		return false
@@ -154,7 +151,7 @@ func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
 	for i := 0; i < 100; i++ {
-		if 응답 := F질의(lib.New질의값_기본형(lib.TR소켓_테스트, ""), lib.P5초); 응답.G에러() == nil {
+		if 응답 := F질의(lib.New질의값_기본형(xt.TR소켓_테스트, ""), lib.P5초); 응답.G에러() == nil {
 			return
 		}
 	}
@@ -192,7 +189,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 }
 
 func f리소스_정리() {
-	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(lib.TR종료, ""), lib.P10초)
+	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(xt.TR종료, ""), lib.P10초)
 	<-ch신호_C32_모음[xt.P신호_C32_종료]
 
 	for {

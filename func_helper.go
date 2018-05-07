@@ -56,29 +56,31 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 값 = nil }}.S실행()
 
-	식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0).(int)
+	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
+	식별번호, ok := i식별번호.(int)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'\n" +
+		"Xing API에서 식별번호를 부여받고, 콜백을 통해서 응답이 있는 경우에만 사용할 것.\n" +
+		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호)
+
 	ch회신 := 대기소_C32.S추가(식별번호, 질의값.G_TR코드())
 
 	var 회신값 interface{}
 
+	타임아웃 := lib.P1분
 
-	//타임아웃 := lib.P30초
-	//
-	//for _, 옵션 := range 옵션_모음 {
-	//	switch 변환값 := 옵션.(type) {
-	//	case time.Duration:
-	//		타임아웃 = 변환값
-	//	}
-	//}
-	//
-	//select {
-	//case 회신값 = <-ch회신:
-	//	// PASS
-	//case <-time.After(타임아웃):
-	//	return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
-	//}
+	for _, 옵션 := range 옵션_모음 {
+		switch 변환값 := 옵션.(type) {
+		case time.Duration:
+			타임아웃 = 변환값
+		}
+	}
 
-	회신값 = <-ch회신
+	select {
+	case 회신값 = <-ch회신:
+		// PASS
+	case <-time.After(타임아웃):
+		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
+	}
 
 	return 회신값, nil
 }
@@ -90,7 +92,7 @@ func F질의_단일TR_단순형(질의값 lib.I질의값, 옵션_모음 ...inter
 func F접속됨() (접속됨 bool, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 접속됨 = false }}.S실행()
 
-	질의값 := lib.New질의값_기본형(lib.TR접속됨, "")
+	질의값 := lib.New질의값_기본형(xt.TR접속됨, "")
 	접속됨 = 에러체크(F질의(질의값, lib.P10초).G해석값(0)).(bool)
 
 	return 접속됨, nil
@@ -112,7 +114,7 @@ func F계좌번호_모음() (계좌번호_모음 []string, 에러 error) {
 func F계좌_수량() (계좌_수량 int, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_수량 = 0 }}.S실행()
 
-	회신_메시지 := F질의(lib.New질의값_기본형(lib.TR계좌_수량, ""))
+	회신_메시지 := F질의(lib.New질의값_기본형(xt.TR계좌_수량, ""))
 	계좌_수량 = 에러체크(회신_메시지.G해석값(0)).(int)
 	lib.F조건부_패닉(계좌_수량 == 0, "계좌 수량 0.")
 
@@ -122,7 +124,7 @@ func F계좌_수량() (계좌_수량 int, 에러 error) {
 func F계좌_번호(인덱스 int) (계좌_번호 string, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_번호 = "" }}.S실행()
 
-	회신_메시지 := F질의(lib.New질의값_정수(lib.TR계좌_번호, "", 인덱스))
+	회신_메시지 := F질의(lib.New질의값_정수(xt.TR계좌_번호, "", 인덱스))
 	계좌_번호 = 에러체크(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_번호, nil
@@ -131,7 +133,7 @@ func F계좌_번호(인덱스 int) (계좌_번호 string, 에러 error) {
 func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_이름 = "" }}.S실행()
 
-	회신_메시지 := F질의(lib.New질의값_문자열(lib.TR계좌_이름, "", 계좌_번호))
+	회신_메시지 := F질의(lib.New질의값_문자열(xt.TR계좌_이름, "", 계좌_번호))
 	계좌_이름 = 에러체크(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_이름, nil
@@ -140,7 +142,7 @@ func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
 func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 error) {
 	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_상세명 = "" }}.S실행()
 
-	회신_메시지 := F질의(lib.New질의값_문자열(lib.TR계좌_상세명, "", 계좌_번호))
+	회신_메시지 := F질의(lib.New질의값_문자열(xt.TR계좌_상세명, "", 계좌_번호))
 	계좌_상세명 = 에러체크(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_상세명, nil
@@ -150,47 +152,43 @@ func f전일_당일_설정() (에러 error) {
 	전일_당일_설정_잠금.Lock()
 	defer 전일_당일_설정_잠금.Unlock()
 
-	전일_당일_설정_일자값 := 전일_당일_설정_일자.G값()
-	금일 := f금일()
-
-	if 전일_당일_설정_일자값.Equal(금일) {
+	if 전일_당일_설정_일자.G값().Equal(lib.F금일()) {
 		return
 	}
 
-	defer 전일_당일_설정_일자.S값(lib.F2일자(time.Now()))
+	질의값_기간별_조회 := xt.New질의값_현물_기간별_조회()
+	질의값_기간별_조회.TR구분 = xt.TR조회
+	질의값_기간별_조회.TR코드 = xt.TR현물_기간별_조회
+	질의값_기간별_조회.M종목코드 = "069500"
+	질의값_기간별_조회.M일주월_구분 = xt.P일주월_일
+	질의값_기간별_조회.M연속키 = ""
+	질의값_기간별_조회.M수량 = 2
 
-	질의값 := xt.New질의값_현물_기간별_조회()
-	질의값.TR구분 = lib.TR조회
-	질의값.TR코드 = xt.TR현물_기간별_조회
-	질의값.M종목코드 = "069500"
-	질의값.M일주월_구분 = xt.P일주월_일
-	질의값.M연속키 = ""
-	질의값.M수량 = 2
-
-	응답값 := F질의_단일TR_단순형(질의값).(*xt.S현물_기간별_조회_응답)
+	응답값 := F질의_단일TR_단순형(질의값_기간별_조회).(*xt.S현물_기간별_조회_응답)
 
 	lib.F조건부_패닉(응답값.M헤더.M수량 != 2, "예상하지 못한 수량 : '%v'", 응답값.M헤더.M수량)
 	lib.F조건부_패닉(len(응답값.M반복값_모음.M배열) != 2, "예상하지 못한 수량 : '%v'", len(응답값.M반복값_모음.M배열))
 
+	defer 전일_당일_설정_일자.S값(lib.F금일())
+
 	if 응답값.M반복값_모음.M배열[0].M일자.After(응답값.M반복값_모음.M배열[1].M일자) {
-		당일.S값(응답값.M반복값_모음.M배열[0].M일자)
-		전일.S값(응답값.M반복값_모음.M배열[1].M일자)
+		당일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[0].M일자)
+		전일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[1].M일자)
 	} else {
-		당일.S값(응답값.M반복값_모음.M배열[1].M일자)
-		전일.S값(응답값.M반복값_모음.M배열[0].M일자)
+		당일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[1].M일자)
+		전일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[0].M일자)
 	}
 
-	체크("전일 당일 설정 완료.")
+	질의값_전일_당일 := lib.New질의값_바이트_변환_모음(xt.TR전일_당일, "", lib.F금일(), F전일(), F당일())
+	바이트_변환_모음 := F질의(질의값_전일_당일)
+	신호 := 바이트_변환_모음.G해석값_단순형(0).(lib.T신호)
+	lib.F조건부_패닉(신호 != lib.P신호_OK, "예상하지 못한 응답값 : '%v'", 신호)
 
 	return nil
 }
 
-func f금일() time.Time {
-	return lib.F2일자(time.Now())
-}
-
 func F전일() time.Time {
-	if !전일_당일_설정_일자.G값().Equal(f금일()) {
+	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
 		for f전일_당일_설정() != nil {
 			lib.F대기(lib.P1초)
 		}
@@ -222,43 +220,13 @@ func F2전일_시각_단순형(포맷 string, 값 interface{}) time.Time {
 }
 
 func F당일() time.Time {
-	if !전일_당일_설정_일자.G값().Equal(f금일()) {
+	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
 		for f전일_당일_설정() != nil {
 			lib.F대기(lib.P1초)
 		}
 	}
 
 	return 당일.G값()
-}
-
-func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
-	if strings.Contains(포맷, "2") {
-		return time.Time{}, lib.New에러("포맷에 이미 날짜가 포함되어 있습니다. %v", 포맷)
-	}
-
-	시각, 에러 := lib.F2포맷된_시각(포맷, 값)
-	if 에러 != nil {
-		return time.Time{}, 에러
-	}
-
-	당일 := F당일()
-
-	당일_시각 := time.Date(당일.Year(), 당일.Month(), 당일.Day(),
-		시각.Hour(), 시각.Minute(), 시각.Second(), 0, 시각.Location())
-
-	return 당일_시각, nil
-}
-
-func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
-	return 에러체크(F2당일_시각(포맷, 값)).(time.Time)
-}
-
-func F2당일_시각_단순형_공백은_초기값(포맷 string, 값 interface{}) time.Time {
-	if lib.F2문자열_공백제거(값) == "" {
-		return time.Time{}
-	}
-
-	return F2당일_시각_단순형(포맷, 값)
 }
 
 func etf종목_여부(종목코드 string) bool {
@@ -475,7 +443,7 @@ func f데이터_복원_반복_조회(대기_항목 *대기_항목_C32, 수신값
 
 func f처리_가능한_TR코드(TR코드 string) bool {
 	switch TR코드 {
-	case xt.TR시간_조회, xt.TR계좌_번호, xt.TR현물_정상주문, xt.TR현물_정정주문, xt.TR현물_취소주문,
+	case xt.TR시간_조회, xt.TR현물_정상주문, xt.TR현물_정정주문, xt.TR현물_취소주문,
 		xt.TR계좌_거래_내역, xt.TR현물_호가_조회, xt.TR현물_시세_조회, xt.TR현물_시간대별_체결_조회,
 		xt.TR현물_기간별_조회, xt.TR현물_당일_전일_분틱_조회, xt.TR_ETF_시세_조회, xt.TR_ETF_시간별_추이,
 		xt.TR현물_종목_조회, xt.TR증시_주변_자금_추이:
