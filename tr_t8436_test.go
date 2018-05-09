@@ -50,8 +50,6 @@ func TestF주식종목조회_API용_t8436(t *testing.T) {
 	lib.F테스트_참임(t, len(값_모음) > 0, len(값_모음))
 
 	for _, 응답값 := range 값_모음 {
-		체크(응답값.M종목코드)
-
 		종목, 에러 := lib.F종목by코드(응답값.M종목코드)
 		lib.F테스트_에러없음(t, 에러)
 
