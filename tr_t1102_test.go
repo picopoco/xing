@@ -35,7 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
+
 	"strings"
 	"testing"
 	"time"
@@ -70,13 +70,13 @@ func TestF현물_시세_조회_t1102(t *testing.T) {
 	f현물_시세조회_테스트_도우미(t, 응답값)
 }
 
-func f현물_시세조회_테스트_도우미(t *testing.T, 값 *xt.S현물_시세조회_응답) {
+func f현물_시세조회_테스트_도우미(t *testing.T, 값 *S현물_시세조회_응답) {
 	switch 값.M전일대비구분 { // 등락율 확인
-	case xt.P구분_상한, xt.P구분_상승:
+	case P구분_상한, P구분_상승:
 		lib.F테스트_참임(t, 값.M등락율 >= 0)
-	case xt.P구분_하한, xt.P구분_하락:
+	case P구분_하한, P구분_하락:
 		lib.F테스트_참임(t, 값.M등락율 <= 0)
-	case xt.P구분_보합:
+	case P구분_보합:
 		lib.F테스트_같음(t, 값.M등락율, 0)
 	}
 

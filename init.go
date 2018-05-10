@@ -34,19 +34,19 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
-	"fmt"
 	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
+
+	"fmt"
 	"time"
 )
 
 func init() {
-	lib.TR구분_String = xt.TR구분_String
+	lib.TR구분_String = TR구분_String
 
-	ch신호_C32_모음 = make([]chan xt.T신호_C32, 2)
+	ch신호_C32_모음 = make([]chan T신호_C32, 2)
 
 	for i := 0; i < len(ch신호_C32_모음); i++ {
-		ch신호_C32_모음[i] = make(chan xt.T신호_C32, 1)
+		ch신호_C32_모음[i] = make(chan T신호_C32, 1)
 	}
 }
 
@@ -101,7 +101,7 @@ func f초기화_작동_확인() bool {
 	ch타임아웃 := time.After(lib.P10분)
 
 	select {
-	case <-ch신호_C32_모음[xt.P신호_C32_READY]: // 서버 접속된 상태임.
+	case <-ch신호_C32_모음[P신호_C32_READY]: // 서버 접속된 상태임.
 	case <-ch타임아웃:
 		lib.F체크포인트("C32 초기화 타임아웃")
 		return false
@@ -152,7 +152,7 @@ func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 	defer func() { ch완료 <- lib.P신호_종료 }()
 
 	for i := 0; i < 100; i++ {
-		if 응답 := F질의(lib.New질의값_기본형(xt.TR소켓_테스트, ""), lib.P5초); 응답.G에러() == nil {
+		if 응답 := F질의(lib.New질의값_기본형(TR소켓_테스트, ""), lib.P5초); 응답.G에러() == nil {
 			return
 		}
 	}
@@ -190,8 +190,8 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 }
 
 func f리소스_정리() {
-	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(xt.TR종료, ""), lib.P10초)
-	<-ch신호_C32_모음[xt.P신호_C32_종료]
+	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(TR종료, ""), lib.P10초)
+	<-ch신호_C32_모음[P신호_C32_종료]
 
 	for {
 		if 프로세스ID := xing_C32_실행_중(); 프로세스ID < 0 {

@@ -12,7 +12,7 @@
 보다 자세한 사항에 대해서는 GNU LGPL 2.1판을 참고하시기 바랍니다.
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
-(자유 소프트웨어 재단 : Free Software Foundation, In,
+(자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
@@ -33,36 +33,28 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import (
-	"github.com/ghts/lib"
+import "testing"
 
-	"sync"
-	"time"
-)
+func TestI콜백(t *testing.T) {
+	값_모음 := []interface{}{
+		New콜백_기본형(T콜백(0)),
+		New콜백_정수값(T콜백(0), 0),
+		New콜백_문자열(T콜백(0), ""),
+		New콜백_TR데이터(0, nil),
+		New콜백_메시지("", ""),
+		New콜백_에러("", "")}
 
-var (
-	소켓REQ_저장소 = lib.New소켓_저장소(20, func() lib.I소켓 {
-		return lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P30초)
-	})
+	for _, 값 := range 값_모음 {
+		f콜백_테스트_도우미(t, 값)
+	}
+}
 
-	소켓REP_TR콜백 lib.I소켓_Raw
+func f콜백_테스트_도우미(t *testing.T, 값 interface{}) {
+	switch 값.(type) {
+	case I콜백:
+		return
+	}
 
-	ch신호_C32_모음 []chan T신호_C32
+	t.FailNow()
+}
 
-	대기소_C32 = new대기_TR_저장소_C32()
-
-	전일_당일_설정_잠금 = new(sync.Mutex)
-	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
-	전일, 당일 lib.I안전한_시각
-
-	xing_C32_실행_잠금 sync.Mutex
-	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`
-
-	접속유지_실행중 = lib.New안전한_bool(false)
-)
-
-//	재선언
-var (
-	에러체크 = lib.F에러체크
-	체크   = lib.F체크포인트
-)

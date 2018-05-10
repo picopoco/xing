@@ -35,7 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
+
 	"testing"
 	"time"
 )
@@ -69,15 +69,15 @@ func TestETF_시간별_추이_t1902(t *testing.T) {
 
 		lib.F테스트_참임(t, 값.M현재가 > 0)
 		lib.F테스트_같음(t, 값.M전일대비구분,
-			xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
+			P구분_상한, P구분_상승, P구분_보합, P구분_하한, P구분_하락)
 
 		switch 값.M전일대비구분 {
-		case xt.P구분_상한, xt.P구분_상승:
+		case P구분_상한, P구분_상승:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 > 0)
-		case xt.P구분_하한, xt.P구분_하락:
+		case P구분_하한, P구분_하락:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 < 0,
 				값.M전일대비구분, 값.M전일대비등락폭, 값)
-		case xt.P구분_보합:
+		case P구분_보합:
 			lib.F테스트_같음(t, 값.M전일대비등락폭, 0)
 		default:
 			lib.F문자열_출력("예상하지 못한 구분값 : '%v'", 값.M전일대비구분)

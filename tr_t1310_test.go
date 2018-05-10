@@ -34,11 +34,10 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"github.com/ghts/lib"
+
 	"testing"
 	"time"
-
-	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
 )
 
 func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
@@ -49,11 +48,11 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 	lib.F테스트_참임(t, 접속됨)
 
 	종목코드 := lib.F임의_종목().G코드()
-	당일전일_구분 := ([]xt.T당일전일_구분{xt.P당일전일구분_당일, xt.P당일전일구분_전일})[lib.F임의_범위_이내_정수값(0, 1)]
-	분틱_구분 := ([]xt.T분틱_구분{xt.P분틱구분_분, xt.P분틱구분_틱})[lib.F임의_범위_이내_정수값(0, 1)]
+	당일전일_구분 := ([]T당일전일_구분{P당일전일구분_당일, P당일전일구분_전일})[lib.F임의_범위_이내_정수값(0, 1)]
+	분틱_구분 := ([]T분틱_구분{P분틱구분_분, P분틱구분_틱})[lib.F임의_범위_이내_정수값(0, 1)]
 	var 종료시각 time.Time
 
-	if 당일전일_구분 == xt.P당일전일구분_당일 {
+	if 당일전일_구분 == P당일전일구분_당일 {
 		종료시각 = lib.F2일자별_시각_단순형(F당일(), "15:04:05", "00:00:00")
 		종료시각 = 종료시각.AddDate(0, 0, 1).Add(-1 * lib.P1초)
 	} else {
@@ -67,9 +66,9 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 
 	for _, 값 := range 값_모음 {
 		switch 당일전일_구분 {
-		case xt.P당일전일구분_당일:
+		case P당일전일구분_당일:
 			lib.F테스트_참임(t, lib.F2일자(값.M시각).Equal(F당일()), 값.M시각, F당일())
-		case xt.P당일전일구분_전일:
+		case P당일전일구분_전일:
 			lib.F테스트_참임(t, lib.F2일자(값.M시각).Equal(F전일()), 값.M시각, F전일())
 		default:
 			panic(lib.New에러("예상하지 못한 경우. '%v'", 값.M시각))
@@ -79,21 +78,21 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 		lib.F테스트_참임(t, 값.M시각.Before(종료시각.Add(lib.P3분)), 값.M시각, 종료시각.Add(lib.P3분))
 
 		lib.F테스트_참임(t, 값.M현재가 > 0)
-		lib.F테스트_같음(t, 값.M전일대비구분, xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
+		lib.F테스트_같음(t, 값.M전일대비구분, P구분_상한, P구분_상승, P구분_보합, P구분_하한, P구분_하락)
 
 		switch 값.M전일대비구분 {
-		case xt.P구분_상한, xt.P구분_상승:
+		case P구분_상한, P구분_상승:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 > 0)
 			lib.F테스트_참임(t, 값.M전일대비등락율 > 0)
 			lib.F테스트_참임(t, 값.M전일대비등락율 < 30)
-		case xt.P구분_하한, xt.P구분_하락:
+		case P구분_하한, P구분_하락:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 < 0,
 				값.M전일대비구분, uint8(값.M전일대비구분), 값.M전일대비등락폭, 값)
 			lib.F테스트_참임(t, 값.M전일대비등락율 < 0,
 				값.M전일대비구분, 값.M전일대비등락율)
 			lib.F테스트_참임(t, 값.M전일대비등락율 > -30,
 				값.M전일대비구분, 값.M전일대비등락율)
-		case xt.P구분_보합:
+		case P구분_보합:
 			lib.F테스트_같음(t, 값.M전일대비등락폭, 0)
 			lib.F테스트_참임(t, 값.M전일대비등락율 < 1)
 		default:

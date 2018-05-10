@@ -35,7 +35,6 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
 
 	"sync"
 )
@@ -55,9 +54,9 @@ type 대기_항목_C32 struct {
 
 func (s *대기_항목_C32) G회신값() interface{} {
 	switch 변환값 := s.대기값.(type) {
-	case *xt.S주문_응답_일반형:
+	case *S주문_응답_일반형:
 		return 변환값.G값(s.TR코드)
-	case *xt.S헤더_반복값_일반형:
+	case *S헤더_반복값_일반형:
 		return 변환값.G값(s.TR코드)
 	default:
 		return s.대기값

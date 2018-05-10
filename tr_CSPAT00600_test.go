@@ -35,7 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/ghts/xing_types"
+
 	"testing"
 	"time"
 )
@@ -67,9 +67,9 @@ func TestCSPAT00600현물_정상주문(t *testing.T) {
 	lib.F대기(lib.P300밀리초)
 
 	// 매수
-	질의값 := xt.New질의값_정상주문()
-	질의값.TR구분 = xt.TR주문
-	질의값.TR코드 = xt.TR현물_정상주문
+	질의값 := New질의값_정상주문()
+	질의값.TR구분 = TR주문
+	질의값.TR코드 = TR현물_정상주문
 	질의값.M계좌번호 = 계좌번호
 	질의값.M계좌_비밀번호 = "" // 모의투자에서는 계좌 비밀번호를 체크하지 않음.
 	질의값.M종목코드 = 종목.G코드()
@@ -100,9 +100,9 @@ func TestCSPAT00600현물_정상주문(t *testing.T) {
 	lib.F대기(lib.P1초)
 
 	// 매도 (매수에서 매도로 바뀐 것 빼고는 앞선 주문과 동일함.)
-	질의값 = xt.New질의값_정상주문()
-	질의값.TR구분 = xt.TR주문
-	질의값.TR코드 = xt.TR현물_정상주문
+	질의값 = New질의값_정상주문()
+	질의값.TR구분 = TR주문
+	질의값.TR코드 = TR현물_정상주문
 	질의값.M계좌번호 = 계좌번호
 	질의값.M계좌_비밀번호 = ""
 	질의값.M종목코드 = 종목.G코드()
