@@ -55,7 +55,6 @@ func TestCSPAT00800현물_취소주문(t *testing.T) {
 
 	const 수량_정상주문 = int64(25)
 	var 종목 = lib.New종목("069500", "KODEX 200", lib.P시장구분_ETF)
-	//var 서버_구분 Xing서버_구분
 	var 가격_정상주문 int64
 	var 수량_전량_취소주문 int64
 	var 반복_횟수 int
@@ -96,6 +95,8 @@ func TestCSPAT00800현물_취소주문(t *testing.T) {
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 정상주문_응답값.M응답2.M주문번호 > 0, 정상주문_응답값.M응답2.M주문번호)
 
+	lib.F대기(lib.P300밀리초)
+
 	예상_잔량 := 수량_정상주문
 	수량_일부_취소주문 := int64(1)
 
@@ -115,6 +116,8 @@ func TestCSPAT00800현물_취소주문(t *testing.T) {
 		취소주문_응답값, 에러 := F현물_취소주문_CSPAT00800(질의값_취소주문)
 		lib.F테스트_에러없음(t, 에러)
 		lib.F테스트_참임(t, 취소주문_응답값.M응답2.M주문번호 > 0, 취소주문_응답값.M응답2.M주문번호)
+
+		lib.F대기(lib.P300밀리초)
 	}
 
 	// 전량 취소주문 TR 실행
