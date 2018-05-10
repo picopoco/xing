@@ -48,6 +48,7 @@ type 대기_항목_C32 struct {
 	대기값    interface{}
 	에러     error
 	데이터_수신 bool
+	메시지_수신 bool
 	응답_완료  bool
 	회신_완료  bool
 }
