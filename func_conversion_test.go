@@ -34,21 +34,21 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
-	"testing"
 	"github.com/ghts/lib"
 	"strings"
+	"testing"
 )
 
 func TestF바이트_변환값_해석(t *testing.T) {
 	변환_형식_모음 := []lib.T변환{lib.JSON, lib.MsgPack}
 
 	원본값_모음 := []interface{}{
-		new(S질의값_정상주문), new(S질의값_정정주문), new(S질의값_취소주문), new(S질의값_현물_전일당일_분틱_조회),
+		new(S질의값_정상_주문), new(S질의값_정정_주문), new(S질의값_취소_주문), new(S질의값_현물_전일당일_분틱_조회),
 		new(S질의값_현물_기간별_조회), new(S질의값_단일종목_연속키), new(S질의값_증시주변자금추이),
 		new(S콜백_기본형), New콜백_정수값_기본형(), new(S콜백_문자열), new(S콜백_TR데이터), new(S콜백_메시지_및_에러),
-		new(S현물_정상주문_응답), new(S현물_정상주문_응답1), new(S현물_정상주문_응답2),
-		new(S현물_정정주문_응답), new(S현물_정정주문_응답1), new(S현물_정정주문_응답2),
-		new(S현물_취소주문_응답), new(S현물_취소주문_응답1), new(S현물_취소주문_응답2),
+		new(S현물_정상_주문_응답), new(S현물_정상_주문_응답1), new(S현물_정상_주문_응답2),
+		new(S현물_정정_주문_응답), new(S현물_정정_주문_응답1), new(S현물_정정_주문_응답2),
+		new(S현물_취소_주문_응답), new(S현물_취소_주문_응답1), new(S현물_취소_주문_응답2),
 		new(S현물_호가조회_응답), new(S현물_시세조회_응답), new(S_ETF_현재가_조회_응답),
 		new(S현물_시간대별_체결_응답), new(S현물_시간대별_체결_응답_헤더), new(S현물_시간대별_체결_응답_반복값),
 		new(S현물_시간대별_체결_응답_반복값_모음),
@@ -71,7 +71,7 @@ func TestF바이트_변환값_해석(t *testing.T) {
 			lib.F테스트_에러없음(t, 에러)
 
 			자료형_문자열 := strings.Replace(f자료형_문자열(해석값), "*", "", -1)
-			lib.F테스트_같음(t, 자료형_문자열 , 매개체.G자료형_문자열())
+			lib.F테스트_같음(t, 자료형_문자열, 매개체.G자료형_문자열())
 		}
 	}
 }

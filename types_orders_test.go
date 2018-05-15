@@ -39,12 +39,12 @@ import (
 )
 
 func TestI주문응답(t *testing.T) {
-	_, ok := interface{}(new(S현물_정상주문_응답)).(I주문_응답)
+	_, ok := interface{}(new(S현물_정상_주문_응답)).(I주문_응답)
 	lib.F테스트_참임(t, ok)
 
-	_, ok = interface{}(new(S현물_정정주문_응답)).(I주문_응답)
+	_, ok = interface{}(new(S현물_정정_주문_응답)).(I주문_응답)
 	lib.F테스트_참임(t, ok)
 
-	_, ok = interface{}(new(S현물_취소주문_응답)).(I주문_응답)
+	_, ok = interface{}(new(S현물_취소_주문_응답)).(I주문_응답)
 	lib.F테스트_참임(t, ok)
 }

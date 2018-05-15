@@ -41,11 +41,10 @@ import (
 )
 
 var (
-	소켓REQ_저장소 = lib.New소켓_저장소(20, func() lib.I소켓 {
+	소켓REP_TR콜백 lib.I소켓_Raw
+	소켓REQ_저장소  = lib.New소켓_저장소(20, func() lib.I소켓 {
 		return lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P30초)
 	})
-
-	소켓REP_TR콜백 lib.I소켓_Raw
 
 	ch신호_C32_모음 []chan T신호_C32
 
@@ -53,7 +52,7 @@ var (
 
 	전일_당일_설정_잠금 = new(sync.Mutex)
 	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
-	전일, 당일 lib.I안전한_시각
+	전일, 당일      lib.I안전한_시각
 
 	xing_C32_실행_잠금 sync.Mutex
 	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`

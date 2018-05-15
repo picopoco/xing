@@ -57,4 +57,3 @@ func f콜백_테스트_도우미(t *testing.T, 값 interface{}) {
 
 	t.FailNow()
 }
-

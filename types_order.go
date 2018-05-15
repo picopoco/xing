@@ -38,47 +38,47 @@ import (
 	"time"
 )
 
-type S질의값_정상주문 struct {
-	*lib.S질의값_정상주문
+type S질의값_정상_주문 struct {
+	*lib.S질의값_정상_주문
 	M계좌_비밀번호 string
 	M신용거래_구분 lib.T신용거래_구분
 	M대출일     time.Time
 }
 
-func New질의값_정상주문() *S질의값_정상주문 {
-	s := new(S질의값_정상주문)
-	s.S질의값_정상주문 = lib.New질의값_정상주문()
+func New질의값_정상_주문() *S질의값_정상_주문 {
+	s := new(S질의값_정상_주문)
+	s.S질의값_정상_주문 = lib.New질의값_정상_주문()
 
 	return s
 }
 
-type S질의값_정정주문 struct {
-	*lib.S질의값_정정주문
+type S질의값_정정_주문 struct {
+	*lib.S질의값_정정_주문
 	M계좌_비밀번호 string
 	M주문조건    lib.T주문조건
 	M호가유형    lib.T호가유형
 }
 
-func New질의값_정정주문() *S질의값_정정주문 {
-	s := new(S질의값_정정주문)
-	s.S질의값_정정주문 = lib.New질의값_정정주문()
+func New질의값_정정_주문() *S질의값_정정_주문 {
+	s := new(S질의값_정정_주문)
+	s.S질의값_정정_주문 = lib.New질의값_정정_주문()
 
 	return s
 }
 
-type S질의값_취소주문 struct {
-	*lib.S질의값_취소주문
+type S질의값_취소_주문 struct {
+	*lib.S질의값_취소_주문
 	M계좌_비밀번호 string
 }
 
-func New질의값_취소주문() *S질의값_취소주문 {
-	s := new(S질의값_취소주문)
-	s.S질의값_취소주문 = lib.New질의값_취소주문()
+func New질의값_취소_주문() *S질의값_취소_주문 {
+	s := new(S질의값_취소_주문)
+	s.S질의값_취소_주문 = lib.New질의값_취소_주문()
 
 	return s
 }
 
-type S주문_응답_실시간_정보 struct {// 'SCn'
+type S주문_응답_실시간_정보 struct { // 'SCn'
 	M주문번호   int64
 	M원_주문번호 int64
 	RT코드    string
@@ -112,35 +112,35 @@ func (s *S주문_응답_일반형) G주문_응답2() I주문_응답2 { return s.
 
 func (s *S주문_응답_일반형) G값(TR코드 string) interface{} {
 	switch TR코드 {
-	case TR현물_정상주문:
-		g := new(S현물_정상주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_정상주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_정상주문_응답2)
+	case TR현물_정상_주문:
+		g := new(S현물_정상_주문_응답)
+		g.M응답1 = s.M응답1.(*S현물_정상_주문_응답1)
+		g.M응답2 = s.M응답2.(*S현물_정상_주문_응답2)
 		return g
-	case TR현물_정정주문:
-		g := new(S현물_정정주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_정정주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_정정주문_응답2)
+	case TR현물_정정_주문:
+		g := new(S현물_정정_주문_응답)
+		g.M응답1 = s.M응답1.(*S현물_정정_주문_응답1)
+		g.M응답2 = s.M응답2.(*S현물_정정_주문_응답2)
 		return g
-	case TR현물_취소주문:
-		g := new(S현물_취소주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_취소주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_취소주문_응답2)
+	case TR현물_취소_주문:
+		g := new(S현물_취소_주문_응답)
+		g.M응답1 = s.M응답1.(*S현물_취소_주문_응답1)
+		g.M응답2 = s.M응답2.(*S현물_취소_주문_응답2)
 		return g
 	default:
 		panic(lib.New에러("예상하지 못한 TR코드 : '%v'", TR코드))
 	}
 }
 
-type S현물_정상주문_응답 struct {
-	M응답1 *S현물_정상주문_응답1
-	M응답2 *S현물_정상주문_응답2
+type S현물_정상_주문_응답 struct {
+	M응답1 *S현물_정상_주문_응답1
+	M응답2 *S현물_정상_주문_응답2
 }
 
-func (s *S현물_정상주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_정상주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_정상_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
+func (s *S현물_정상_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
 
-type S현물_정상주문_응답1 struct {
+type S현물_정상_주문_응답1 struct {
 	M레코드_수량     int
 	M계좌번호       string
 	M계좌_비밀번호    string
@@ -168,9 +168,9 @@ type S현물_정상주문_응답1 struct {
 	M반대매매_구분    string
 }
 
-func (s *S현물_정상주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_정상_주문_응답1) G주문_응답1() I주문_응답1 { return s }
 
-type S현물_정상주문_응답2 struct {
+type S현물_정상_주문_응답2 struct {
 	M레코드_수량    int
 	M주문번호      int64
 	M주문시각      time.Time
@@ -190,17 +190,17 @@ type S현물_정상주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_정상주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_정상_주문_응답2) G주문_응답2() I주문_응답2 { return s }
 
-type S현물_정정주문_응답 struct {
-	M응답1 *S현물_정정주문_응답1
-	M응답2 *S현물_정정주문_응답2
+type S현물_정정_주문_응답 struct {
+	M응답1 *S현물_정정_주문_응답1
+	M응답2 *S현물_정정_주문_응답2
 }
 
-func (s *S현물_정정주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_정정주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_정정_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
+func (s *S현물_정정_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
 
-type S현물_정정주문_응답1 struct {
+type S현물_정정_주문_응답1 struct {
 	M레코드_수량   int
 	M원_주문번호   int64
 	M계좌번호     string
@@ -220,9 +220,9 @@ type S현물_정정주문_응답1 struct {
 	M아이템_번호   int64
 }
 
-func (s *S현물_정정주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_정정_주문_응답1) G주문_응답1() I주문_응답1 { return s }
 
-type S현물_정정주문_응답2 struct {
+type S현물_정정_주문_응답2 struct {
 	M레코드_수량    int
 	M주문번호      int64
 	M모_주문번호    int64
@@ -249,17 +249,17 @@ type S현물_정정주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_정정주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_정정_주문_응답2) G주문_응답2() I주문_응답2 { return s }
 
-type S현물_취소주문_응답 struct {
-	M응답1 *S현물_취소주문_응답1
-	M응답2 *S현물_취소주문_응답2
+type S현물_취소_주문_응답 struct {
+	M응답1 *S현물_취소_주문_응답1
+	M응답2 *S현물_취소_주문_응답2
 }
 
-func (s *S현물_취소주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_취소주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_취소_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
+func (s *S현물_취소_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
 
-type S현물_취소주문_응답1 struct {
+type S현물_취소_주문_응답1 struct {
 	M레코드_수량   int
 	M원_주문번호   int64
 	M계좌번호     string
@@ -276,9 +276,9 @@ type S현물_취소주문_응답1 struct {
 	M아이템_번호   int64
 }
 
-func (s *S현물_취소주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_취소_주문_응답1) G주문_응답1() I주문_응답1 { return s }
 
-type S현물_취소주문_응답2 struct {
+type S현물_취소_주문_응답2 struct {
 	M레코드_수량    int
 	M주문번호      int64
 	M모_주문번호    int64
@@ -300,4 +300,4 @@ type S현물_취소주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_취소주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_취소_주문_응답2) G주문_응답2() I주문_응답2 { return s }

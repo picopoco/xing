@@ -52,12 +52,14 @@ type I반복값_모음_TR데이터 interface {
 }
 
 type S헤더_반복값_일반형 struct {
-	M헤더	I헤더_TR데이터
+	M헤더     I헤더_TR데이터
 	M반복값_모음 I반복값_모음_TR데이터
 }
 
 func (s *S헤더_반복값_일반형) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
-func (s *S헤더_반복값_일반형) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S헤더_반복값_일반형) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 func (s *S헤더_반복값_일반형) G값(TR코드 string) interface{} {
 	switch TR코드 {
@@ -90,7 +92,6 @@ func (s *S헤더_반복값_일반형) G값(TR코드 string) interface{} {
 		return 값
 	}
 }
-
 
 // t1101 현물 호가 조회 응답
 type S현물_호가조회_응답 struct {
@@ -241,15 +242,21 @@ type S현물_시간대별_체결_응답 struct {
 	M반복값_모음 *S현물_시간대별_체결_응답_반복값_모음
 }
 
-func (s *S현물_시간대별_체결_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
-func (s *S현물_시간대별_체결_응답) G반복값_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S현물_시간대별_체결_응답) G헤더_TR데이터() I헤더_TR데이터 {
+	return s.M헤더
+}
+func (s *S현물_시간대별_체결_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 // t1301 현물 시간대별 체결 응답 헤더
 type S현물_시간대별_체결_응답_헤더 struct {
 	M연속키 string
 }
 
-func (s *S현물_시간대별_체결_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 { return s }
+func (s *S현물_시간대별_체결_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 {
+	return s
+}
 
 // t1301 현물 시간대별 체결 응답 반복값
 type S현물_시간대별_체결_응답_반복값 struct {
@@ -273,7 +280,9 @@ type S현물_시간대별_체결_응답_반복값_모음 struct {
 	M배열 []*S현물_시간대별_체결_응답_반복값
 }
 
-func (s *S현물_시간대별_체결_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s }
+func (s *S현물_시간대별_체결_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
 
 // t1305 현물 기간별 조회 응답
 type S현물_기간별_조회_응답 struct {
@@ -281,8 +290,10 @@ type S현물_기간별_조회_응답 struct {
 	M반복값_모음 *S현물_기간별_조회_응답_반복값_모음
 }
 
-func (s *S현물_기간별_조회_응답) G헤더_TR데이터() I헤더_TR데이터      { return s.M헤더 }
-func (s *S현물_기간별_조회_응답) G반복값_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S현물_기간별_조회_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
+func (s *S현물_기간별_조회_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 // t1305 기간별 주가 조회 응답 헤더. 추가 질의값 생성에 사용.
 type S현물_기간별_조회_응답_헤더 struct {
@@ -328,7 +339,9 @@ type S현물_기간별_조회_응답_반복값_모음 struct {
 	M배열 []*S현물_기간별_조회_응답_반복값
 }
 
-func (s *S현물_기간별_조회_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s }
+func (s *S현물_기간별_조회_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
 
 // t1310 전일당일분틱조회 응답
 type S현물_전일당일분틱조회_응답 struct {
@@ -336,15 +349,21 @@ type S현물_전일당일분틱조회_응답 struct {
 	M반복값_모음 *S현물_전일당일분틱조회_응답_반복값_모음
 }
 
-func (s *S현물_전일당일분틱조회_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
-func (s *S현물_전일당일분틱조회_응답) G반복값_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S현물_전일당일분틱조회_응답) G헤더_TR데이터() I헤더_TR데이터 {
+	return s.M헤더
+}
+func (s *S현물_전일당일분틱조회_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 // t1310 전일당일분틱조회 응답 헤더
 type S현물_전일당일분틱조회_응답_헤더 struct {
 	M연속키 string
 }
 
-func (s *S현물_전일당일분틱조회_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 { return s }
+func (s *S현물_전일당일분틱조회_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 {
+	return s
+}
 
 // t1310 전일당일분틱조회 응답 반복값
 type S현물_전일당일분틱조회_응답_반복값 struct {
@@ -368,7 +387,9 @@ type S현물_전일당일분틱조회_응답_반복값_모음 struct {
 	M배열 []*S현물_전일당일분틱조회_응답_반복값
 }
 
-func (s *S현물_전일당일분틱조회_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s }
+func (s *S현물_전일당일분틱조회_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
 
 // t1901 ETF 현재가 조회 응답
 type S_ETF_현재가_조회_응답 struct {
@@ -472,7 +493,9 @@ type S_ETF시간별_추이_응답 struct {
 }
 
 func (s *S_ETF시간별_추이_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
-func (s *S_ETF시간별_추이_응답) G반복값_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S_ETF시간별_추이_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 // t1902 ETF 시간별 추이 응답 헤더
 type S_ETF시간별_추이_응답_헤더 struct {
@@ -504,7 +527,9 @@ type S_ETF시간별_추이_응답_반복값_모음 struct {
 	M배열 []*S_ETF시간별_추이_응답_반복값
 }
 
-func (s *S_ETF시간별_추이_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s }
+func (s *S_ETF시간별_추이_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
 
 // t8428 증시주변자금추이 응답
 type S증시주변자금추이_응답 struct {
@@ -513,7 +538,9 @@ type S증시주변자금추이_응답 struct {
 }
 
 func (s *S증시주변자금추이_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
-func (s *S증시주변자금추이_응답) G반복값_TR데이터() I반복값_모음_TR데이터 { return s.M반복값_모음 }
+func (s *S증시주변자금추이_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
 
 // t8428 증시주변자금추이 응답 헤더
 type S증시주변자금추이_응답_헤더 struct {
@@ -548,7 +575,9 @@ type S증시주변자금추이_응답_반복값_모음 struct {
 	M배열 []*S증시주변자금추이_응답_반복값
 }
 
-func (s *S증시주변자금추이_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 { return s }
+func (s *S증시주변자금추이_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
 
 // t8436 현물 종목조회 응답
 type S현물_종목조회_응답_반복값 struct {
@@ -567,4 +596,3 @@ type S현물_종목조회_응답_반복값 struct {
 type S현물_종목조회_응답_반복값_모음 struct {
 	M배열 []*S현물_종목조회_응답_반복값
 }
-
