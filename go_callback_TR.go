@@ -77,8 +77,8 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 	var 수신_메시지 *mangos.Message // 최대한 재활용 해야 성능 문제를 걱정할 필요가 없어진다.
 
 	defer func() { ch도우미_종료 <- 에러 }()
-	defer lib.S에러패닉_처리기{
-		M에러_포인터: &에러,
+	defer lib.S예외처리{
+		M에러: &에러,
 		M함수with내역: func(r interface{}) {
 			if 수신_메시지 != nil {
 				소켓REP_TR콜백.S회신_Raw(수신_메시지, lib.JSON, lib.New에러(r))
@@ -108,7 +108,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 			}
 
 			func() {
-				defer lib.S에러패닉_처리기{M함수with내역: func(r interface{}) {
+				defer lib.S예외처리{M함수with내역: func(r interface{}) {
 					소켓REP_TR콜백.S회신_Raw(수신_메시지, lib.JSON, 에러)
 				}}.S실행()
 
@@ -142,7 +142,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 }
 
 func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행_No출력()
+	defer lib.S예외처리{M에러: &에러}.S실행_No출력()
 
 	식별번호, 대기_항목, TR코드 := f콜백_데이터_식별번호(값)
 
@@ -192,6 +192,7 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 	switch {
 	case !대기_항목.데이터_수신, !대기_항목.응답_완료, !대기_항목.메시지_수신:
 		//lib.F체크포인트(값.G콜백(), 대기_항목.식별번호, "추가 수신 필요.")
+		return
 	case 대기_항목.에러 != nil:
 		lib.F체크포인트(값.G콜백(), 대기_항목.식별번호, "에러 회신")
 		대기소_C32.S회신(식별번호)
@@ -204,7 +205,7 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 }
 
 func f콜백_신호_처리기(콜백 I콜백) (에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행()
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
 	콜백_정수값, ok := 콜백.(*S콜백_정수값)
 	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", 콜백)

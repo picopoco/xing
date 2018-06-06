@@ -45,13 +45,15 @@ func TestF시각_조회_t0167(t *testing.T) {
 
 	lib.F테스트_참임(t, 에러체크(F접속됨()).(bool))
 
-	시각, 에러 := F시각_조회_t0167()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_같음(t, 시각.Year(), time.Now().Year())
-	lib.F테스트_같음(t, 시각.Month(), time.Now().Month())
-	lib.F테스트_같음(t, 시각.Day(), time.Now().Day())
+	for i:= 0; i<5 ; i++ {
+		시각, 에러 := F시각_조회_t0167()
+		lib.F테스트_에러없음(t, 에러)
+		lib.F테스트_같음(t, 시각.Year(), time.Now().Year())
+		lib.F테스트_같음(t, 시각.Month(), time.Now().Month())
+		lib.F테스트_같음(t, 시각.Day(), time.Now().Day())
 
-	지금 := time.Now()
-	차이 := 시각.Sub(지금)
-	lib.F테스트_참임(t, 차이 > (-1*lib.P1시간) && 차이 < lib.P1시간, 시각, 지금)
+		지금 := time.Now()
+		차이 := 시각.Sub(지금)
+		lib.F테스트_참임(t, 차이 > (-1*lib.P1시간) && 차이 < lib.P1시간, 시각, 지금)
+	}
 }

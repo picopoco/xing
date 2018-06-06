@@ -55,9 +55,13 @@ var (
 	전일, 당일      lib.I안전한_시각
 
 	xing_C32_실행_잠금 sync.Mutex
-	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run.bat`
+	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run_C32.bat`
+
+	xing_COM32_실행_잠금 sync.Mutex
+	xing_COM32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_COM32/run_COM32.bat`
 
 	접속유지_실행중 = lib.New안전한_bool(false)
+	주문_응답_구독_중 = lib.New안전한_bool(false)
 )
 
 //	재선언

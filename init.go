@@ -51,11 +51,11 @@ func init() {
 }
 
 func F초기화() (에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러}.S실행()
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
 	f초기화_소켓()
 	f초기화_Go루틴()
-	f초기화_xing_C32() // xing_C32가 실행되면 자동으로 서버 접속까지 진행함.
+	f초기화_xing_C32()
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
 	f전일_당일_설정()
 	f전일_당일_전달()
@@ -86,6 +86,23 @@ func f초기화_xing_C32() (에러 error) {
 	}
 
 	_, 에러 = lib.F외부_프로세스_실행(xing_C32_경로)
+
+	return 에러
+}
+
+func f초기화_xing_COM32() (에러 error) {
+	xing_COM32_실행_잠금.Lock()
+	defer xing_COM32_실행_잠금.Unlock()
+
+	if !lib.F인터넷에_접속됨() {
+		lib.F문자열_출력("인터넷을 확인하십시오.")
+		return
+	} else if 프로세스ID := xing_COM32_실행_중(); 프로세스ID >= 0 {
+		lib.F문자열_출력("xing_COM32 가 이미 실행 중입니다.")
+		return nil
+	}
+
+	_, 에러 = lib.F외부_프로세스_실행(xing_COM32_경로)
 
 	return 에러
 }

@@ -53,7 +53,7 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 }
 
 func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 값 = nil }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
 	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
 	식별번호, ok := i식별번호.(int)
@@ -89,7 +89,7 @@ func F질의_단일TR_단순형(질의값 lib.I질의값, 옵션_모음 ...inter
 }
 
 func F접속됨() (접속됨 bool, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 접속됨 = false }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 접속됨 = false }}.S실행()
 
 	질의값 := lib.New질의값_기본형(TR접속됨, "")
 	접속됨 = 에러체크(F질의(질의값, lib.P10초).G해석값(0)).(bool)
@@ -98,7 +98,7 @@ func F접속됨() (접속됨 bool, 에러 error) {
 }
 
 func F계좌번호_모음() (계좌번호_모음 []string, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌번호_모음 = nil }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌번호_모음 = nil }}.S실행()
 
 	계좌_수량 := 에러체크(F계좌_수량()).(int)
 	계좌번호_모음 = make([]string, 계좌_수량)
@@ -111,7 +111,7 @@ func F계좌번호_모음() (계좌번호_모음 []string, 에러 error) {
 }
 
 func F계좌_수량() (계좌_수량 int, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_수량 = 0 }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_수량 = 0 }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_기본형(TR계좌_수량, ""))
 	계좌_수량 = 에러체크(회신_메시지.G해석값(0)).(int)
@@ -121,7 +121,7 @@ func F계좌_수량() (계좌_수량 int, 에러 error) {
 }
 
 func F계좌_번호(인덱스 int) (계좌_번호 string, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_번호 = "" }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_번호 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_정수(TR계좌_번호, "", 인덱스))
 	계좌_번호 = 에러체크(회신_메시지.G해석값(0)).(string)
@@ -130,7 +130,7 @@ func F계좌_번호(인덱스 int) (계좌_번호 string, 에러 error) {
 }
 
 func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_이름 = "" }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_이름 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_문자열(TR계좌_이름, "", 계좌_번호))
 	계좌_이름 = 에러체크(회신_메시지.G해석값(0)).(string)
@@ -139,7 +139,7 @@ func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
 }
 
 func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 error) {
-	defer lib.S에러패닉_처리기{M에러_포인터: &에러, M함수: func() { 계좌_상세명 = "" }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_상세명 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_문자열(TR계좌_상세명, "", 계좌_번호))
 	계좌_상세명 = 에러체크(회신_메시지.G해석값(0)).(string)
@@ -199,6 +199,17 @@ func F전일() time.Time {
 	return 전일.G값()
 }
 
+func F당일() time.Time {
+	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
+		for f전일_당일_설정() != nil {
+			lib.F대기(lib.P1초)
+		}
+	}
+
+	return 당일.G값()
+}
+
+
 func F2전일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 	if strings.Contains(포맷, "2") {
 		return time.Time{}, lib.New에러("포맷에 이미 날짜가 포함되어 있습니다. %v", 포맷)
@@ -221,15 +232,28 @@ func F2전일_시각_단순형(포맷 string, 값 interface{}) time.Time {
 	return 에러체크(F2전일_시각(포맷, 값)).(time.Time)
 }
 
-func F당일() time.Time {
-	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
-		for f전일_당일_설정() != nil {
-			lib.F대기(lib.P1초)
-		}
+func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
+	if strings.Contains(포맷, "2") {
+		return time.Time{}, lib.New에러("포맷에 이미 날짜가 포함되어 있습니다. %v", 포맷)
 	}
 
-	return 당일.G값()
+	시각, 에러 := lib.F2포맷된_시각(포맷, 값)
+	if 에러 != nil {
+		return time.Time{}, 에러
+	}
+
+	당일 := F당일()
+
+	당일_시각 := time.Date(당일.Year(), 당일.Month(), 당일.Day(),
+		시각.Hour(), 시각.Minute(), 시각.Second(), 0, 시각.Location())
+
+	return 당일_시각, nil
 }
+
+func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
+	return 에러체크(F2당일_시각(포맷, 값)).(time.Time)
+}
+
 
 func etf종목_여부(종목코드 string) bool {
 	종목모음_ETF, 에러 := lib.F종목모음_ETF()
@@ -254,13 +278,28 @@ func etf종목_여부(종목코드 string) bool {
 }
 
 func xing_C32_실행_중() (프로세스ID int) {
-	defer lib.S에러패닉_처리기{M함수: func() { 프로세스ID = -1 }}.S실행()
+	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
 
 	프로세스_모음, 에러 := ps.Processes()
 	lib.F에러체크(에러)
 
 	for _, 프로세스 := range 프로세스_모음 {
 		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_C32_경로, 실행화일명) {
+			return 프로세스.Pid()
+		}
+	}
+
+	return -1
+}
+
+func xing_COM32_실행_중() (프로세스ID int) {
+	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
+
+	프로세스_모음, 에러 := ps.Processes()
+	lib.F에러체크(에러)
+
+	for _, 프로세스 := range 프로세스_모음 {
+		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_COM32_경로, 실행화일명) {
 			return 프로세스.Pid()
 		}
 	}

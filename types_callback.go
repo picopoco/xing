@@ -112,12 +112,18 @@ type S콜백_문자열 struct {
 	M문자열 string
 }
 
-func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
+func New콜백_TR데이터NoID(데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
 	s := new(S콜백_TR데이터)
 	s.S콜백_기본형 = New콜백_기본형(P콜백_TR데이터)
-	s.M식별번호 = 식별번호
 	s.M데이터 = 데이터
 
+	return s
+}
+
+func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
+	s := New콜백_TR데이터NoID(데이터)
+	s.M식별번호 = 식별번호
+	
 	return s
 }
 

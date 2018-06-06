@@ -38,6 +38,18 @@ import (
 	"time"
 )
 
+type S현물_주문_응답_실시간_정보 struct {// 'SCn'
+	M주문번호   int64
+	M원_주문번호 int64
+	RT코드    string
+	M응답_구분 T주문_응답_구분
+	M종목코드   string
+	M수량     int64
+	M가격     int64
+	M잔량     int64
+	M시각     time.Time
+}
+
 type S질의값_정상_주문 struct {
 	*lib.S질의값_정상_주문
 	M계좌_비밀번호 string
@@ -76,17 +88,6 @@ func New질의값_취소_주문() *S질의값_취소_주문 {
 	s.S질의값_취소_주문 = lib.New질의값_취소_주문()
 
 	return s
-}
-
-type S주문_응답_실시간_정보 struct { // 'SCn'
-	M주문번호   int64
-	M원_주문번호 int64
-	RT코드    string
-	M종목코드   string
-	M수량     int64
-	M가격     int64
-	M잔량     int64
-	M시각     time.Time
 }
 
 type I주문_응답 interface {
