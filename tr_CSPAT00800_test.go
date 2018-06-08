@@ -40,7 +40,7 @@ import (
 	"time"
 )
 
-func TestCSPAT00800현물_취소주문(t *testing.T) {
+func TestCSPAT00800현물_취소_주문(t *testing.T) {
 	if !lib.F한국증시_정규시장_거래시간임() {
 		t.SkipNow()
 	}

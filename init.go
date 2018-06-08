@@ -62,9 +62,7 @@ func F초기화() (에러 error) {
 
 	//lib.F메모("f접속유지_실행() 보류")	//f접속유지_실행()
 
-	fmt.Println("**************************")
-	fmt.Println("*       초기화 완료      *")
-	fmt.Println("**************************")
+	fmt.Println("**     초기화 완료     **")
 
 	return nil
 }
@@ -158,9 +156,7 @@ func f초기화_작동_확인() bool {
 		return false
 	}
 
-	fmt.Println("***************************")
-	fmt.Println("*   C32 동작 확인 완료    *")
-	fmt.Println("***************************")
+	fmt.Println("**     C32 동작 확인 완료     **")
 
 	return true
 }

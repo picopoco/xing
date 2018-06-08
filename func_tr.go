@@ -37,6 +37,7 @@ import (
 	"github.com/ghts/lib"
 
 	"time"
+	"strings"
 )
 
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
@@ -60,9 +61,23 @@ func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응�
 func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응답값 *S현물_정정_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
-	응답값 = 에러체크(F질의_단일TR(질의값)).(*S현물_정정_주문_응답)
+	for {
+		i응답값, 에러 := F질의_단일TR(질의값)
 
-	return 응답값, nil
+		if 에러 != nil {
+			체크(에러)
+		}
+
+		switch {
+		case 에러 == nil:
+			return i응답값.(*S현물_정정_주문_응답), nil
+		case strings.Contains(에러.Error(), "원주문번호를 잘못"),
+			strings.Contains(에러.Error(), "접수 대기 상태입니다"):
+			continue
+		default:
+			panic(에러)
+		}
+	}
 }
 
 func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {

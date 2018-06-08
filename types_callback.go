@@ -159,3 +159,7 @@ type S콜백_메시지_및_에러 struct {
 	M코드   string
 	M내용   string
 }
+
+func (s *S콜백_메시지_및_에러) String() string {
+	return s.M코드 + " : " + s.M내용
+}
