@@ -12,7 +12,7 @@
 보다 자세한 사항에 대해서는 GNU LGPL 2.1판을 참고하시기 바랍니다.
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
-(자유 소프트웨어 재단 : Free Software Foundation, In,
+(자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
@@ -33,40 +33,46 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import (
-	"github.com/ghts/lib"
+import "github.com/ghts/lib"
 
-	"sync"
-	"time"
-)
+func go_RT_주문처리결과(ch초기화 chan lib.T신호) {
+	ch종료 := lib.F공통_종료_채널()
+	ch초기화 <- lib.P신호_초기화
 
-var (
-	소켓REP_TR콜백 lib.I소켓_Raw
-	소켓REQ_저장소  = lib.New소켓_저장소(20, func() lib.I소켓_질의 {
-		return lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P30초)
-	})
-	소켓SUB_주문처리 lib.I소켓
+	var 수신값 *lib.S바이트_변환_모음
+	var 주문_처리_결과 *S현물_주문_응답_실시간_정보
+	var 에러 error
 
-	ch신호_C32_모음 []chan T신호_C32
+	for {
+		select {
+		case <-ch종료:
+			return
+		default:
+			수신값, 에러 = 소켓SUB_주문처리.G수신()
+			if 에러 != nil {
+				select {
+				case <-ch종료:
+					에러 = nil
+					return
+				default:
+					lib.F에러_출력(lib.New에러(에러))
+					continue
+				}
+			}
 
-	대기소_C32 = new대기_TR_저장소_C32()
+			lib.F조건부_패닉(수신값.G수량() != 1, "메시지 길이 : 예상값 1, 실제값 %v.", 수신값.G수량())
 
-	전일_당일_설정_잠금 = new(sync.Mutex)
-	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
-	전일, 당일      lib.I안전한_시각
+			if 수신값.G자료형_문자열(0) != P자료형_S현물_주문_응답_실시간_정보 {
+				continue
+			}
 
-	xing_C32_실행_잠금 sync.Mutex
-	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/run_C32.bat`
+			주문_처리_결과 = new(S현물_주문_응답_실시간_정보)
+			if 에러 = 수신값.G값(0, 주문_처리_결과); 에러 != nil {
+				lib.F에러_출력(에러)
+				continue
+			}
 
-	xing_COM32_실행_잠금 sync.Mutex
-	xing_COM32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_COM32/run_COM32.bat`
-
-	접속유지_실행중 = lib.New안전한_bool(false)
-	주문_응답_구독_중 = lib.New안전한_bool(false)
-)
-
-//	재선언
-var (
-	에러체크 = lib.F에러체크
-	체크   = lib.F체크포인트
-)
+			체크(주문_처리_결과.RT코드, 주문_처리_결과.M응답_구분, 주문_처리_결과.M주문번호, 주문_처리_결과.M원_주문번호, 주문_처리_결과.M수량, 주문_처리_결과.M잔량)
+		}
+	}
+}

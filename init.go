@@ -69,6 +69,7 @@ func F초기화() (에러 error) {
 
 func f초기화_소켓() {
 	소켓REP_TR콜백 = lib.NewNano소켓REP_raw_단순형(lib.P주소_Xing_C함수_콜백)
+	소켓SUB_주문처리 = lib.NewNano소켓SUB_단순형(lib.P주소_Xing_실시간)
 }
 
 func f초기화_xing_C32() (에러 error) {
@@ -108,6 +109,9 @@ func f초기화_xing_COM32() (에러 error) {
 func f초기화_Go루틴() {
 	ch초기화 := make(chan lib.T신호, 1)
 	go go_TR콜백_처리(ch초기화)
+	<-ch초기화
+
+	go go_RT_주문처리결과(ch초기화)
 	<-ch초기화
 }
 

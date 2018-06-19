@@ -52,8 +52,8 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 	return 소켓REQ.G질의_응답_검사(lib.P변환형식_기본값, 질의값)
 }
 
-func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
+func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}) {
+	defer lib.S예외처리{M함수with내역: func(r interface{}) { 값 = lib.New에러(r) }}.S실행()
 
 	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
 	식별번호, ok := i식별번호.(int)
@@ -62,8 +62,6 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호)
 
 	ch회신 := 대기소_C32.S추가(식별번호, 질의값.TR코드())
-
-	var 회신값 interface{}
 
 	타임아웃 := lib.P1분
 
@@ -75,17 +73,11 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 	}
 
 	select {
-	case 회신값 = <-ch회신:
-		// PASS
+	case 값 = <-ch회신:
+		return 값
 	case <-time.After(타임아웃):
-		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
+		return lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
 	}
-
-	return 회신값, nil
-}
-
-func F질의_단일TR_단순형(질의값 lib.I질의값, 옵션_모음 ...interface{}) interface{} {
-	return 에러체크(F질의_단일TR(질의값, 옵션_모음...))
 }
 
 func F접속됨() (접속됨 bool, 에러 error) {
@@ -163,7 +155,7 @@ func f전일_당일_설정() (에러 error) {
 	질의값_기간별_조회.M연속키 = ""
 	질의값_기간별_조회.M수량 = 2
 
-	응답값 := F질의_단일TR_단순형(질의값_기간별_조회).(*S현물_기간별_조회_응답)
+	응답값 := F질의_단일TR(질의값_기간별_조회).(*S현물_기간별_조회_응답)
 	lib.F조건부_패닉(응답값.M헤더.M수량 != 2, "예상하지 못한 수량 : '%v'", 응답값.M헤더.M수량)
 	lib.F조건부_패닉(len(응답값.M반복값_모음.M배열) != 2, "예상하지 못한 수량 : '%v'", len(응답값.M반복값_모음.M배열))
 

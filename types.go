@@ -69,7 +69,6 @@ func (s *대기_항목_C32) S회신() {
 	}
 
 	if s.에러 != nil {
-		lib.F체크포인트()
 		s.ch회신 <- s.에러
 	} else {
 		s.ch회신 <- s.G회신값()

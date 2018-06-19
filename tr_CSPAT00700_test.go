@@ -45,6 +45,8 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 		t.SkipNow()
 	}
 
+	체크()
+
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)
@@ -94,8 +96,6 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 
 	원주문번호 := 정상주문_응답값.M응답2.M주문번호
 
-	체크()
-
 	/*
 	// 주문 접수 확인
 	for {
@@ -125,8 +125,6 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 		break
 	}
 	*/
-
-	체크()
 
 	질의값_정정주문 := New질의값_정정_주문()
 	질의값_정정주문.M구분 = TR주문
