@@ -411,6 +411,7 @@ func f데이터_복원_현물_주문(대기_항목 *대기_항목_C32, 수신값
 	default:
 		panic(lib.New에러("예상하지 못한 자료형 문자열 : '%v'", 수신값.G자료형_문자열()))
 	case error:
+		//체크(변환값.Error())
 		return 변환값
 	case I주문_응답:
 		if 변환값.G주문_응답1() != nil {
@@ -456,6 +457,7 @@ func f데이터_복원_반복_조회(대기_항목 *대기_항목_C32, 수신값
 	default:
 		panic(lib.New에러("예상하지 못한 자료형 : '%v' '%v'", 변환값, 수신값.G자료형_문자열()))
 	case error:
+		체크(변환값.Error())
 		return 변환값
 	case I헤더_반복값_TR데이터:
 		if 변환값.G헤더_TR데이터() != nil {
