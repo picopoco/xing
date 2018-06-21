@@ -45,9 +45,16 @@ func F시각_조회_t0167() (시각 time.Time, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행_No출력()
 
 	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
-	시각 = 에러체크(F질의_단일TR(질의값, lib.P20초)).(time.Time)
+	i시각 := F질의_단일TR(질의값, lib.P20초)
 
-	return 시각, nil
+	switch 값 := i시각.(type) {
+	case error:
+		return time.Time{}, 값
+	case time.Time:
+		return 값, nil
+	default:
+		return time.Time{}, lib.New에러("예상하지 못한 자료형 : '%T", i시각)
+	}
 }
 
 func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응답값 *S현물_정상_주문_응답, 에러 error) {
@@ -71,15 +78,15 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	for i:=0 ; i<10 ; i++ {	// 최대 10번 재시도
+		//체크("F현물_정정주문_CSPAT00700", i)
 		i응답값 := F질의_단일TR(질의값)
 
 		switch 값 := i응답값.(type) {
 		case error:
 			체크("** 에러 발생 **", 값.Error())
 			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
-				strings.Contains(값.Error(), "접수 대기 상태입니다") ||
-				strings.Contains(값.Error(), "정정 가능한 수량을 초과") {
-				체크("예상된 에러")
+				strings.Contains(값.Error(), "접수 대기 상태입니다") {
+				체크("** 예상된 에러 **")
 				continue
 			}
 
