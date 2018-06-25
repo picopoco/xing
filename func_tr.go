@@ -79,15 +79,16 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 
 	for i:=0 ; i<10 ; i++ {	// 최대 10번 재시도
 		//체크("F현물_정정주문_CSPAT00700", i)
+
 		i응답값 := F질의_단일TR(질의값)
 
 		switch 값 := i응답값.(type) {
 		case error:
-			체크("** 에러 발생 **", 값.Error())
+			//체크("** 에러 발생 **", 값.Error())
 			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
 				strings.Contains(값.Error(), "접수 대기 상태입니다") {
-				체크("** 예상된 에러 **")
-				continue
+				//체크("** 예상된 에러 **")
+				continue	// 재시도
 			}
 
 			return nil, 값
@@ -104,15 +105,18 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
-	for {
+	for i:=0 ; i<10 ; i++ {	// 최대 10번 재시도
+		//체크("F현물_취소주문_CSPAT00800", "@", i, "@", 질의값.M원주문번호)
+
 		i응답값 := F질의_단일TR(질의값)
 
 		switch 값 := i응답값.(type) {
 		case error:
-			체크(값)
+			//체크("** 에러 발생 **", 값.Error())
 			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
-				strings.Contains(값.Error(), "접수 대기 상태입니다") {
-				continue
+				strings.Contains(값.Error(), "접수 대기 상태") {
+				//체크("** 예상된 에러 **")
+				continue	// 재시도
 			}
 
 			return nil, 값
@@ -122,6 +126,8 @@ func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응�
 			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
 		}
 	}
+
+	return nil, lib.New에러("취소 주문 TR 실행 실패.")
 }
 
 func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가조회_응답, 에러 error) {

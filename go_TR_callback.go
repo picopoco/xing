@@ -37,6 +37,7 @@ import (
 	"github.com/ghts/lib"
 	"github.com/go-mangos/mangos"
 	"fmt"
+	"strings"
 )
 
 func go_TR콜백_처리(ch초기화 chan lib.T신호) {
@@ -165,7 +166,14 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 	switch 값.G콜백() {
 	case P콜백_TR데이터:
 		if 에러 = f데이터_복원(대기_항목, 값.(*S콜백_TR데이터).M데이터); 에러 != nil && 대기_항목.에러 == nil {
-			체크(에러)
+			switch {
+			case strings.Contains(에러.Error(), "New현물_정정주문_응답2() : 주문번호 생성 에러"),
+				strings.Contains(에러.Error(), "New현물_취소주문_응답2() : 주문번호 생성 에러"):
+				// skip
+			default:
+				체크(에러)
+			}
+
 			return
 		}
 	case P콜백_메시지_및_에러:
@@ -187,7 +195,7 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 		panic(lib.New에러("예상하지 못한 경우. 콜백 구분값 : '%v', 자료형 : '%T'", 값.G콜백(), 값))
 	}
 
-	체크(대기_항목.식별번호, 대기_항목.TR코드, 대기_항목.데이터_수신, 대기_항목.메시지_수신, 대기_항목.응답_완료, 대기_항목.에러)
+	//체크(대기_항목.식별번호, 대기_항목.TR코드, 값.G콜백(), 대기_항목.데이터_수신, 대기_항목.메시지_수신, 대기_항목.응답_완료, 대기_항목.에러)
 
 	// TR응답 데이터 수신 및 완료 확인이 되었는 지 확인.
 	switch {
