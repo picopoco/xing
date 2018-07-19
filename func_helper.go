@@ -140,13 +140,6 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 }
 
 func f전일_당일_설정() (에러 error) {
-	전일_당일_설정_잠금.Lock()
-	defer 전일_당일_설정_잠금.Unlock()
-
-	if 전일_당일_설정_일자.G값().Equal(lib.F금일()) {
-		return
-	}
-
 	질의값_기간별_조회 := New질의값_현물_기간별_조회()
 	질의값_기간별_조회.M구분 = TR조회
 	질의값_기간별_조회.M코드 = TR현물_기간별_조회
@@ -172,8 +165,6 @@ func f전일_당일_설정() (에러 error) {
 			전일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[0].M일자)
 		}
 
-		전일_당일_설정_일자.S값(lib.F금일())
-
 		return nil
 	default:
 		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
@@ -190,22 +181,10 @@ func f전일_당일_전달() (에러 error) {
 }
 
 func F전일() time.Time {
-	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
-		for f전일_당일_설정() != nil {
-			lib.F대기(lib.P1초)
-		}
-	}
-
 	return 전일.G값()
 }
 
 func F당일() time.Time {
-	if !전일_당일_설정_일자.G값().Equal(lib.F금일()) {
-		for f전일_당일_설정() != nil {
-			lib.F대기(lib.P1초)
-		}
-	}
-
 	return 당일.G값()
 }
 

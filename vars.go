@@ -37,7 +37,6 @@ import (
 	"github.com/ghts/lib"
 
 	"sync"
-	"time"
 )
 
 var (
@@ -51,8 +50,6 @@ var (
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
-	전일_당일_설정_잠금 = new(sync.Mutex)
-	전일_당일_설정_일자 = lib.New안전한_시각(time.Time{})
 	전일, 당일      lib.I안전한_시각
 
 	xing_C32_실행_잠금 sync.Mutex

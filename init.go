@@ -206,7 +206,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 	}
 }
 
-func f리소스_정리() {
+func F리소스_정리() {
 	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(TR종료, ""), lib.P10초)
 	<-ch신호_C32_모음[P신호_C32_종료]
 
