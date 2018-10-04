@@ -271,20 +271,20 @@ func xing_C32_실행_중() (프로세스ID int) {
 	return -1
 }
 
-func xing_COM32_실행_중() (프로세스ID int) {
-	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
-
-	프로세스_모음, 에러 := ps.Processes()
-	lib.F에러체크(에러)
-
-	for _, 프로세스 := range 프로세스_모음 {
-		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_COM32_경로, 실행화일명) {
-			return 프로세스.Pid()
-		}
-	}
-
-	return -1
-}
+//func xing_COM32_실행_중() (프로세스ID int) {
+//	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
+//
+//	프로세스_모음, 에러 := ps.Processes()
+//	lib.F에러체크(에러)
+//
+//	for _, 프로세스 := range 프로세스_모음 {
+//		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_COM32_경로, 실행화일명) {
+//			return 프로세스.Pid()
+//		}
+//	}
+//
+//	return -1
+//}
 
 func f접속유지_실행() {
 	if !lib.F인터넷에_접속됨() {
