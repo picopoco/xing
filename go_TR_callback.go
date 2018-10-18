@@ -35,7 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"github.com/go-mangos/mangos"
+	"nanomsg.org/go-mangos"
 	"fmt"
 	"strings"
 )
