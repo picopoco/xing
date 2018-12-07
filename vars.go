@@ -35,6 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"time"
 
 	"sync"
 )
@@ -60,6 +61,20 @@ var (
 
 	접속유지_실행중 = lib.New안전한_bool(false)
 	주문_응답_구독_중 = lib.New안전한_bool(false)
+)
+
+// 종목 관련 저장소는 초기화 이후에는 사실상 읽기 전용. 다중 사용에 문제가 없음.
+var (
+	종목모음_설정_잠금 sync.Mutex
+	종목모음_설정일   = lib.New안전한_시각(time.Time{})
+	종목맵_전체     = make(map[string]*lib.S종목)
+	종목모음_코스피   = make([]*lib.S종목, 0)
+	종목모음_코스닥   = make([]*lib.S종목, 0)
+	종목모음_ETF   = make([]*lib.S종목, 0)
+	종목모음_ETN   = make([]*lib.S종목, 0)
+	종목모음_전체    = make([]*lib.S종목, 0)
+	기준가_맵      = make(map[string]int64)
+	하한가_맵 = make(map[string]int64)
 )
 
 //	재선언

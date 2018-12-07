@@ -42,6 +42,10 @@ import (
 )
 
 func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S바이트_변환_모음) {
+	defer lib.S예외처리{M함수with내역: func(r interface{}) { 값 = lib.New바이트_변환_모음_단순형(lib.MsgPack, r) }}.S실행()
+
+	lib.F에러체크(F질의값_종목코드_검사(질의값))
+
 	소켓REQ := 소켓REQ_저장소.G소켓()
 	defer 소켓REQ_저장소.S회수(소켓REQ)
 
@@ -57,9 +61,9 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 
 	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
 	식별번호, ok := i식별번호.(int)
-	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'\n"+
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T', '%v'\n"+
 		"Xing API에서 식별번호를 부여받고, 콜백을 통해서 응답이 있는 경우에만 사용할 것.\n"+
-		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호)
+		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호, i식별번호)
 
 	ch회신 := 대기소_C32.S추가(식별번호, 질의값.TR코드())
 
@@ -234,27 +238,27 @@ func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
 }
 
 
-func etf종목_여부(종목코드 string) bool {
-	종목모음_ETF, 에러 := lib.F종목모음_ETF()
-	lib.F에러체크(에러)
-
-	for _, 종목 := range 종목모음_ETF {
-		if 종목코드 == 종목.G코드() {
-			return true
-		}
-	}
-
-	종목, 에러 := lib.F종목by코드(종목코드)
-	lib.F에러체크(에러)
-
-	switch {
-	case strings.Contains(종목.G이름(), " ETN"),
-		strings.Contains(종목.G이름(), " ETF"):
-		return true
-	}
-
-	return false
-}
+//func ETF종목_여부(종목코드 string) bool {
+//	종목모음_ETF, 에러 := lib.F종목모음_ETF()
+//	lib.F에러체크(에러)
+//
+//	for _, 종목 := range 종목모음_ETF {
+//		if 종목코드 == 종목.G코드() {
+//			return true
+//		}
+//	}
+//
+//	종목, 에러 := lib.F종목by코드(종목코드)
+//	lib.F에러체크(에러)
+//
+//	switch {
+//	case strings.Contains(종목.G이름(), " ETN"),
+//		strings.Contains(종목.G이름(), " ETF"):
+//		return true
+//	}
+//
+//	return false
+//}
 
 func xing_C32_실행_중() (프로세스ID int) {
 	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
