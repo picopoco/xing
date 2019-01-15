@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -528,6 +528,62 @@ type S_ETF시간별_추이_응답_반복값_모음 struct {
 }
 
 func (s *S_ETF시간별_추이_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
+}
+
+// t8411 현물 차트 틱 응답
+type S현물_차트_틱_응답 struct {
+	M헤더     *S현물_차트_틱_응답_헤더
+	M반복값_모음 *S현물_차트_틱_응답_반복값_모음
+}
+
+func (s *S현물_차트_틱_응답) G헤더_TR데이터() I헤더_TR데이터 { return s.M헤더 }
+func (s *S현물_차트_틱_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
+
+// t8411 현물 차트 틱 응답 헤더
+type S현물_차트_틱_응답_헤더 struct {
+	M종목코드     string
+	M전일시가     int64
+	M전일고가     int64
+	M전일저가     int64
+	M전일종가     int64
+	M전일거래량    int64
+	M당일시가     int64
+	M당일고가     int64
+	M당일저가     int64
+	M당일종가     int64
+	M상한가      int64
+	M하한가      int64
+	M연속일자     string
+	M연속시간     string
+	M장시작시간    time.Time
+	M장종료시간    time.Time
+	M동시호가처리시간 int
+	M수량       int64
+}
+
+func (s *S현물_차트_틱_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 { return s }
+
+// t8411 현물 차트 틱 응답 반복값
+type S현물_차트_틱_응답_반복값 struct {
+	M일자_시각    time.Time
+	M시가       int64
+	M고가       int64
+	M저가       int64
+	M종가       int64
+	M거래량      int64
+	M수정구분     T수정구분
+	M수정비율     float64
+	M수정주가반영항목 int64
+}
+
+type S현물_차트_틱_응답_반복값_모음 struct {
+	M배열 []*S현물_차트_틱_응답_반복값
+}
+
+func (s *S현물_차트_틱_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
 	return s
 }
 

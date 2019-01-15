@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -48,7 +48,7 @@ func TestMain(m *testing.M) {
 }
 
 func f테스트_준비() (에러 error) {
-	defer lib.S예외처리{M에러:&에러}.S실행()
+	defer lib.S예외처리{M에러: &에러}.S실행()
 	lib.F테스트_모드_시작()
 
 	에러체크(F초기화())
@@ -58,12 +58,12 @@ func f테스트_준비() (에러 error) {
 }
 
 func f테스트_정리() (에러 error) {
-	defer lib.S예외처리{M에러:&에러}.S실행()
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
 	에러체크(F주문_응답_실시간_정보_해지())
 	F리소스_정리()
 
 	lib.F테스트_모드_종료()
-	
+
 	return nil
 }

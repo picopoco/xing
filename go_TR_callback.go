@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -34,9 +34,9 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"fmt"
 	"github.com/ghts/lib"
 	"nanomsg.org/go-mangos"
-	"fmt"
 	"strings"
 )
 
@@ -115,7 +115,6 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 			lib.F조건부_패닉(수신값.G수량() != 1, "메시지 길이 : 예상값 1, 실제값 %v.", 수신값.G수량())
 
 			i값 := 수신값.S해석기(F바이트_변환값_해석).G해석값_단순형(0)
-
 
 			콜백값, ok = i값.(I콜백)
 			lib.F조건부_패닉(!ok, "'I콜백'형이 아님 : '%T'", i값)

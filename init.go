@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -42,8 +42,8 @@ import (
 
 func init() {
 	lib.F메모("종목 설정 기능 추가할 것.")
-	lib.F메모("t1904(ETF 구성종목조회)로 ETF 종목 구분할 수 있도록 할 것.")
-	lib.F메모("t8411로 과거 틱데이터 구할 수 있도록 할 것.")
+	lib.F메모("t8411(과거 틱데이터 수집) 구현.")
+	lib.F메모("t8428(증시주변자금추이) 디버깅.")
 	lib.F메모("당일 일일 정보 최신 여부 혹은 일자 변동 여부 확인 후 필요하면 종목 정보 재설정 할 것.")
 
 	lib.TR구분_String = TR구분_String
@@ -62,9 +62,9 @@ func F초기화() (에러 error) {
 	f초기화_Go루틴()
 	f초기화_xing_C32()
 	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
+	f종목모음_설정()
 	f전일_당일_설정()
 	f전일_당일_전달()
-	f종목모음_설정()
 	//lib.F메모("f접속유지_실행() 보류")	//f접속유지_실행()
 
 	fmt.Println("**     초기화 완료     **")

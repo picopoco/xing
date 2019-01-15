@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -41,11 +41,15 @@ import (
 )
 
 func TestF증시주변자금추이_t8428(t *testing.T) {
+	lib.F메모("t8428 에러 발생.")
+
+	//t.SkipNow()
+
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, 접속됨)
 
-	for i:=0 ; i<20 ; i++ {
+	for i := 0; i < 20; i++ {
 		시장_구분 := ([]lib.T시장구분{lib.P시장구분_코스피, lib.P시장구분_코스닥})[lib.F임의_범위_이내_정수값(0, 1)]
 		값_모음, 에러 := F증시주변자금추이_t8428(시장_구분, 500)
 		lib.F테스트_에러없음(t, 에러)

@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -61,6 +61,15 @@ func F종목코드_존재함(종목코드 string) bool {
 
 	return 존재함
 }
+
+func F종목코드_검사(종목코드 string) error {
+	if !F종목코드_존재함(종목코드) {
+		return lib.New에러("존재하지 않는 종목코드 : '%s'.", 종목코드)
+	}
+
+	return nil
+}
+
 func f종목모음_설정() (에러 error) {
 	종목모음_설정_잠금.Lock()
 	defer 종목모음_설정_잠금.Unlock()
@@ -87,7 +96,7 @@ func f종목모음_설정() (에러 error) {
 		len(종목맵_전체) > 0 &&
 		len(기준가_맵) > 0 &&
 		len(하한가_맵) > 0 &&
-		종목모음_설정일.G값().Equal(당일.G값()) {
+		종목모음_설정일.G값().Equal(lib.F금일()) {
 		return nil
 	}
 
@@ -122,7 +131,7 @@ func f종목모음_설정() (에러 error) {
 		}
 	}
 
-	종목모음_설정일 = lib.New안전한_시각(당일.G값())
+	종목모음_설정일 = lib.New안전한_시각(lib.F금일())
 
 	return nil
 }

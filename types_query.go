@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -77,6 +77,27 @@ type S질의값_단일종목_연속키 struct {
 func New질의값_단일종목_연속키() *S질의값_단일종목_연속키 {
 	s := new(S질의값_단일종목_연속키)
 	s.S질의값_단일_종목 = lib.New질의값_단일_종목()
+
+	return s
+}
+
+// t8411 현물 차트 틱
+type S질의값_현물_차트_틱 struct {
+	*lib.S질의값_기본형
+	M종목코드   string
+	M단위     int // n틱
+	M요청건수   int // 최대 압축 2000, 비압축 500
+	M조회영업일수 int // 0 : 미사용, 1 >= 사용
+	M시작일자   time.Time
+	M종료일자   time.Time
+	M연속일자   string
+	M연속시간   string
+	M압축여부   bool
+}
+
+func New질의값_현물_차트_틱() *S질의값_현물_차트_틱 {
+	s := new(S질의값_현물_차트_틱)
+	s.S질의값_기본형 = new(lib.S질의값_기본형)
 
 	return s
 }

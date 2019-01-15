@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -94,7 +94,7 @@ func TestCSPAT00800현물_취소_주문(t *testing.T) {
 	질의값_취소주문.M주문수량 = 수량_일부_취소_주문
 
 	// 일부 취소주문 TR 실행
-	for i := 0; i < 반복횟수 ; i++ {
+	for i := 0; i < 반복횟수; i++ {
 		취소주문_응답값, 에러 := F현물_취소주문_CSPAT00800(질의값_취소주문)
 		lib.F테스트_에러없음(t, 에러)
 		lib.F테스트_참임(t, 취소주문_응답값.M응답2.M주문번호 > 0, 취소주문_응답값.M응답2.M주문번호)

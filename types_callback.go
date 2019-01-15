@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -123,7 +123,7 @@ func New콜백_TR데이터NoID(데이터 *lib.S바이트_변환) *S콜백_TR데�
 func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
 	s := New콜백_TR데이터NoID(데이터)
 	s.M식별번호 = 식별번호
-	
+
 	return s
 }
 

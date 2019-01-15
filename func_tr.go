@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -36,8 +36,8 @@ package xing
 import (
 	"github.com/ghts/lib"
 
-	"time"
 	"strings"
+	"time"
 )
 
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
@@ -76,7 +76,7 @@ func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응�
 func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응답값 *S현물_정정_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
-	for i:=0 ; i<10 ; i++ {	// 최대 10번 재시도
+	for i := 0; i < 10; i++ { // 최대 10번 재시도
 		//체크("F현물_정정주문_CSPAT00700", i)
 
 		i응답값 := F질의_단일TR(질의값)
@@ -89,7 +89,7 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
 				strings.Contains(값.Error(), "접수 대기 상태입니다") {
 				//체크("** 예상된 에러 **")
-				continue	// 재시도
+				continue // 재시도
 			}
 
 			return nil, 값
@@ -104,7 +104,7 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
-	for i:=0 ; i<10 ; i++ {	// 최대 10번 재시도
+	for i := 0; i < 10; i++ { // 최대 10번 재시도
 		//체크("F현물_취소주문_CSPAT00800", "@", i, "@", 질의값.M원주문번호)
 
 		i응답값 := F질의_단일TR(질의값)
@@ -117,7 +117,7 @@ func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응�
 			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
 				strings.Contains(값.Error(), "접수 대기 상태") {
 				//체크("** 예상된 에러 **")
-				continue	// 재시도
+				continue // 재시도
 			}
 
 			return nil, 값
@@ -297,8 +297,6 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 		} else if lib.F2문자열_공백제거(연속키) == "" {
 			break
 		}
-
-		체크(len(응답값_모음_역순))
 	}
 
 	수량 = len(응답값_모음_역순)
@@ -369,6 +367,52 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 		if 수량 > 0 && len(응답값_모음) >= 수량 {
 			break
 		} else if lib.F2문자열_공백제거(연속키) == "" {
+			break
+		}
+	}
+
+	return 응답값_모음, nil
+}
+
+func F현물_차트_틱_t8411(종목코드 string, 시작일자, 종료일자 time.Time) (응답값_모음 []*S현물_차트_틱_응답_반복값, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
+
+	lib.F에러체크(F종목코드_검사(종목코드))
+	lib.F조건부_패닉(종료일자.Before(시작일자), "시작일자가 종료일자보다 늦습니다. %v, %v", 시작일자, 종료일자)
+
+	응답값_모음 = make([]*S현물_차트_틱_응답_반복값, 0)
+	연속일자 := ""
+	연속시간 := ""
+
+	for {
+		질의값 := New질의값_현물_차트_틱()
+		질의값.M구분 = TR조회
+		질의값.M코드 = TR_ETF_시간별_추이
+		질의값.M종목코드 = 종목코드
+		질의값.M단위 = 1
+		질의값.M요청건수 = 2000
+		질의값.M조회영업일수 = 0
+		질의값.M시작일자 = 시작일자
+		질의값.M종료일자 = 종료일자
+		질의값.M연속일자 = 연속일자
+		질의값.M연속시간 = 연속시간
+		질의값.M압축여부 = true
+
+		i응답값 := F질의_단일TR(질의값)
+
+		switch 값 := i응답값.(type) {
+		case *S현물_차트_틱_응답:
+			연속일자 = 값.M헤더.M연속일자
+			연속시간 = 값.M헤더.M연속시간
+
+			응답값_모음 = append(응답값_모음, 값.M반복값_모음.M배열...)
+		case error:
+			return nil, 값
+		default:
+			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
+		}
+
+		if lib.F2문자열_공백제거(연속일자) == "" || lib.F2문자열_공백제거(연속시간) == "" {
 			break
 		}
 	}
@@ -475,4 +519,3 @@ func F주식종목조회_t8436(시장_구분 lib.T시장구분) (응답값_모�
 		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
 	}
 }
-

@@ -37,23 +37,22 @@ import (
 	"github.com/ghts/lib"
 
 	"testing"
-	"time"
 )
 
-func TestF시각_조회_t0167(t *testing.T) {
+func TestF종목코드_존재함(t *testing.T) {
 	t.Parallel()
 
-	lib.F테스트_참임(t, 에러체크(F접속됨()).(bool))
+	lib.F테스트_참임(t, F종목코드_존재함("069500"))
+}
 
-	for i := 0; i < 5; i++ {
-		시각, 에러 := F시각_조회_t0167()
-		lib.F테스트_에러없음(t, 에러)
-		lib.F테스트_같음(t, 시각.Year(), time.Now().Year())
-		lib.F테스트_같음(t, 시각.Month(), time.Now().Month())
-		lib.F테스트_같음(t, 시각.Day(), time.Now().Day())
+func TestF질의값_종목코드_검사(t *testing.T) {
+	t.Parallel()
 
-		지금 := time.Now()
-		차이 := 시각.Sub(지금)
-		lib.F테스트_참임(t, 차이 > (-1*lib.P1시간) && 차이 < lib.P1시간, 시각, 지금)
-	}
+	질의값1 := lib.New질의값_단일_종목()
+	질의값1.M종목코드 = "069500"
+
+	질의값2 := lib.New질의값_복수종목(lib.TR조회, "", []string{"069500"})
+
+	lib.F테스트_에러없음(t, F질의값_종목코드_검사(질의값1))
+	lib.F테스트_에러없음(t, F질의값_종목코드_검사(질의값2))
 }

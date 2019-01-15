@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -38,11 +38,11 @@ import (
 	"time"
 )
 
-type S현물_주문_응답_실시간_정보 struct {// 'SCn'
+type S현물_주문_응답_실시간_정보 struct { // 'SCn'
 	M주문번호   int64
 	M원_주문번호 int64
 	RT코드    string
-	M응답_구분 T주문_응답_구분
+	M응답_구분  T주문_응답_구분
 	M종목코드   string
 	M수량     int64
 	M가격     int64

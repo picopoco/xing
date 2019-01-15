@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -129,6 +129,7 @@ const (
 	TR현물_당일_전일_분틱_조회 = "t1310"
 	TR_ETF_시세_조회     = "t1901"
 	TR_ETF_시간별_추이    = "t1902"
+	TR현물_차트_틱        = "t84"
 	TR현물_종목_조회       = "t8436"
 
 	// 구현된 RT코드
@@ -796,6 +797,10 @@ const (
 	P자료형_S_ETF시간별_추이_응답_반복값     = "S_ETF시간별_추이_응답_반복값"
 	P자료형_S_ETF시간별_추이_응답_반복값_모음  = "S_ETF시간별_추이_응답_반복값_모음"
 	P자료형_S증시주변자금추이_응답           = "S증시주변자금추이_응답"
+	P자료형_S현물_차트_틱_응답            = "S현물_차트_틱_응답"
+	P자료형_S현물_차트_틱_응답_헤더         = "S현물_차트_틱_응답_헤더"
+	P자료형_S현물_차트_틱_응답_반복값        = "S현물_차트_틱_응답_반복값"
+	P자료형_S현물_차트_틱_응답_반복값_모음     = "S현물_차트_틱_응답_반복값_모음"
 	P자료형_S증시주변자금추이_응답_헤더        = "S증시주변자금추이_응답_헤더"
 	P자료형_S증시주변자금추이_응답_반복값       = "S증시주변자금추이_응답_반복값"
 	P자료형_S증시주변자금추이_응답_반복값_모음    = "S증시주변자금추이_응답_반복값_모음"
@@ -851,5 +856,56 @@ func (p T신호_C32) String() string {
 		return "C32 종료"
 	default:
 		return lib.F2문자열("예상하지 못한 T신호_C32 값 : '%v'", p)
+	}
+}
+
+type T수정구분 uint8
+
+const (
+	P수정구분_없음 = iota
+	P수정구분_권리락
+	P수정구분_배당락
+	P수정구분_액면분할
+	P수정구분_액면병합
+	P수정구분_주식병합
+	P수정구분_기업분할
+	P수정구분_관리
+	P수정구분_투자경고
+	P수정구분_거래정지
+	P수정구분_기준가조정
+	P수정구분_우선주
+	P수정구분_CB발동예고
+)
+
+func (p T수정구분) String() string {
+	switch p {
+	case P수정구분_없음:
+		return "없음"
+	case P수정구분_권리락:
+		return "권리락"
+	case P수정구분_배당락:
+		return "배당락"
+	case P수정구분_액면분할:
+		return "액면분할"
+	case P수정구분_액면병합:
+		return "액면병합"
+	case P수정구분_주식병합:
+		return "주식병합"
+	case P수정구분_기업분할:
+		return "기업분할"
+	case P수정구분_관리:
+		return "관리"
+	case P수정구분_투자경고:
+		return "투자경고"
+	case P수정구분_거래정지:
+		return "거래정지"
+	case P수정구분_기준가조정:
+		return "기준가 조정"
+	case P수정구분_우선주:
+		return "우선주"
+	case P수정구분_CB발동예고:
+		return "CB발동 예고"
+	default:
+		return lib.F2문자열("예상하지 못한 값 : '%v'", p)
 	}
 }

@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -94,7 +94,7 @@ func TestF현물_호가_조회_t1101(t *testing.T) {
 
 	if F한국증시_정규시장_거래시간임() {
 		lib.F테스트_참임(t, 값.M수신시간.After(time.Now().Add(-1*lib.P10분)),
-			값.M수신시간.Format("15:04:06"), time.Now().Add(-1 * lib.P10분).Format("15:04:06"))
+			값.M수신시간.Format("15:04:06"), time.Now().Add(-1*lib.P10분).Format("15:04:06"))
 		lib.F테스트_참임(t, 값.M수신시간.Before(time.Now().Add(lib.P10분)),
 			time.Now().Add(lib.P10분).Format("15:04:06"), 값.M수신시간.Format("15:04:06"))
 	}

@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -62,7 +62,7 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 	값_모음, 에러 := F현물_당일전일_분틱_조회_t1310(종목코드, 당일전일_구분, 분틱_구분, 종료시각, 70)
 	lib.F테스트_에러없음(t, 에러)
 
-	const 일자_포맷_문자열= "2006/01/02"
+	const 일자_포맷_문자열 = "2006/01/02"
 
 	for _, 값 := range 값_모음 {
 		switch 당일전일_구분 {
@@ -103,7 +103,7 @@ func TestF현물_당일전일_분틱_조회_t1310(t *testing.T) {
 
 		// 게시판 답변 : 체결강도 = 매수체결량/매도체결량*100 입니다.
 		if 값.M매도체결수량 != 0 {
-			체결강도_예상값 := float64(값.M매수체결수량) /  float64(값.M매도체결수량) * 100
+			체결강도_예상값 := float64(값.M매수체결수량) / float64(값.M매도체결수량) * 100
 
 			lib.F테스트_참임(t,
 				lib.F오차(값.M체결강도, 체결강도_예상값) < 0.01 ||

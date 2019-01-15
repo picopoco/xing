@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -44,8 +44,6 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 	if !F한국증시_정규시장_거래시간임() {
 		t.SkipNow()
 	}
-
-	체크()
 
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)
@@ -145,11 +143,11 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 
 	// 취소 주문 확인
 	취소_주문_접수, 취소_주문_처리 := false, false
-	
+
 	for {
 		바이트_변환_모음, 에러 := 소켓SUB_실시간.G수신()
 		lib.F테스트_에러없음(t, 에러)
-		
+
 		실시간_정보, ok := 바이트_변환_모음.S해석기(F바이트_변환값_해석).G해석값_단순형(0).(*S현물_주문_응답_실시간_정보)
 
 		switch {

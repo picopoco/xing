@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -48,7 +48,6 @@ func TestI주문_질의값(t *testing.T) {
 	_, ok = interface{}(new(S질의값_취소_주문)).(lib.I질의값)
 	lib.F테스트_참임(t, ok)
 }
-
 
 func TestI주문응답(t *testing.T) {
 	_, ok := interface{}(new(S현물_정상_주문_응답)).(I주문_응답)

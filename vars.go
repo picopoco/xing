@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, In,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -51,7 +51,7 @@ var (
 
 	대기소_C32 = new대기_TR_저장소_C32()
 
-	전일, 당일      lib.I안전한_시각
+	전일, 당일 lib.I안전한_시각
 
 	xing_C32_실행_잠금 sync.Mutex
 	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/xing_C32.bat`
@@ -59,7 +59,7 @@ var (
 	//xing_COM32_실행_잠금 sync.Mutex
 	//xing_COM32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_COM32/xing_COM32.bat`
 
-	접속유지_실행중 = lib.New안전한_bool(false)
+	접속유지_실행중   = lib.New안전한_bool(false)
 	주문_응답_구독_중 = lib.New안전한_bool(false)
 )
 
@@ -74,7 +74,7 @@ var (
 	종목모음_ETN   = make([]*lib.S종목, 0)
 	종목모음_전체    = make([]*lib.S종목, 0)
 	기준가_맵      = make(map[string]int64)
-	하한가_맵 = make(map[string]int64)
+	하한가_맵      = make(map[string]int64)
 )
 
 //	재선언

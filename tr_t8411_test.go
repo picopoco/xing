@@ -35,25 +35,38 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-
 	"testing"
-	"time"
 )
 
-func TestF시각_조회_t0167(t *testing.T) {
+func TestF현물_차트_틱_t8411(t *testing.T) {
 	t.Parallel()
 
-	lib.F테스트_참임(t, 에러체크(F접속됨()).(bool))
+	접속됨, 에러 := F접속됨()
+	lib.F테스트_에러없음(t, 에러)
+	lib.F테스트_참임(t, 접속됨)
 
-	for i := 0; i < 5; i++ {
-		시각, 에러 := F시각_조회_t0167()
-		lib.F테스트_에러없음(t, 에러)
-		lib.F테스트_같음(t, 시각.Year(), time.Now().Year())
-		lib.F테스트_같음(t, 시각.Month(), time.Now().Month())
-		lib.F테스트_같음(t, 시각.Day(), time.Now().Day())
+	const 종목코드 = "069500" // 코덱스200
 
-		지금 := time.Now()
-		차이 := 시각.Sub(지금)
-		lib.F테스트_참임(t, 차이 > (-1*lib.P1시간) && 차이 < lib.P1시간, 시각, 지금)
+	값_모음, 에러 := F현물_차트_틱_t8411(종목코드, 당일.G값(), 당일.G값())
+	lib.F테스트_에러없음(t, 에러)
+
+	for _, 값 := range 값_모음 {
+		lib.F테스트_같음(t, lib.F2일자(값.M일자_시각), 당일.G값())
+		lib.F테스트_같음(t, 값.M시가, 값.M고가)
+		lib.F테스트_같음(t, 값.M시가, 값.M저가)
+		lib.F테스트_같음(t, 값.M시가, 값.M종가)
+		lib.F테스트_참임(t, 값.M거래량 > 0)
+		lib.F테스트_같음(t, 값.M수정구분, P수정구분_없음, P수정구분_권리락, P수정구분_배당락, P수정구분_액면분할,
+			P수정구분_액면병합, P수정구분_주식병합, P수정구분_기업분할, P수정구분_관리, P수정구분_투자경고,
+			P수정구분_거래정지, P수정구분_기준가조정, P수정구분_우선주, P수정구분_CB발동예고)
+
+		switch 값.M수정구분 {
+		case P수정구분_없음:
+			lib.F테스트_같음(t, 값.M수정비율, 0)
+		default:
+			lib.F테스트_다름(t, 값.M수정비율, 0)
+		}
+
+		//?? lib.F테스트_같음(t, 값.M수정주가반영항목, ...??)
 	}
 }

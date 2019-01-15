@@ -1,4 +1,4 @@
-/* Copyright (C) 2015-2018 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
+/* Copyright (C) 2015-2019 김운하(UnHa Kim)  unha.kim@kuh.pe.kr
 
 이 파일은 GHTS의 일부입니다.
 
@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2018년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -192,7 +192,6 @@ func F당일() time.Time {
 	return 당일.G값()
 }
 
-
 func F2전일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 	if strings.Contains(포맷, "2") {
 		return time.Time{}, lib.New에러("포맷에 이미 날짜가 포함되어 있습니다. %v", 포맷)
@@ -236,7 +235,6 @@ func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
 	return 에러체크(F2당일_시각(포맷, 값)).(time.Time)
 }
-
 
 //func ETF종목_여부(종목코드 string) bool {
 //	종목모음_ETF, 에러 := lib.F종목모음_ETF()
