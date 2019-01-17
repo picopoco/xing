@@ -120,9 +120,10 @@ func New콜백_TR데이터NoID(데이터 *lib.S바이트_변환) *S콜백_TR데�
 	return s
 }
 
-func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
+func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환, TR코드 string) *S콜백_TR데이터 {
 	s := New콜백_TR데이터NoID(데이터)
 	s.M식별번호 = 식별번호
+	s.TR코드 = TR코드
 
 	return s
 }
