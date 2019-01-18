@@ -35,7 +35,6 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-
 	"sync"
 )
 
@@ -69,9 +68,17 @@ func (s *대기_항목_C32) S회신() {
 	}
 
 	if s.에러 != nil {
-		s.ch회신 <- s.에러
+		select {
+		case s.ch회신 <- s.에러:
+		default:
+			panic(lib.New에러with출력("채널 에러 회신 실패."))
+		}
 	} else {
-		s.ch회신 <- s.G회신값()
+		select {
+		case s.ch회신 <- s.G회신값():
+		default:
+			panic(lib.New에러with출력("채널 회신 실패."))
+		}
 	}
 
 	s.회신_완료 = true
