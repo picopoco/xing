@@ -78,6 +78,10 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		s := new(S질의값_현물_차트_틱)
 		lib.F에러체크(바이트_변환값.G값(s))
 		return s, nil
+	case P자료형_S질의값_현물_차트_분:
+		s := new(S질의값_현물_차트_분)
+		lib.F에러체크(바이트_변환값.G값(s))
+		return s, nil
 	case P자료형_S질의값_증시주변자금추이:
 		s := new(S질의값_증시주변자금추이)
 		lib.F에러체크(바이트_변환값.G값(s))
@@ -228,6 +232,22 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		return s, nil
 	case P자료형_S현물_차트_틱_응답_반복값_모음:
 		s := new(S현물_차트_틱_응답_반복값_모음)
+		lib.F에러체크(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S현물_차트_분_응답:
+		s := new(S현물_차트_분_응답)
+		lib.F에러체크(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S현물_차트_분_응답_헤더:
+		s := new(S현물_차트_분_응답_헤더)
+		lib.F에러체크(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S현물_차트_분_응답_반복값:
+		s := new(S현물_차트_분_응답_반복값)
+		lib.F에러체크(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S현물_차트_분_응답_반복값_모음:
+		s := new(S현물_차트_분_응답_반복값_모음)
 		lib.F에러체크(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S증시_주변자금추이_응답:

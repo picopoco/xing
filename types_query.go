@@ -101,6 +101,26 @@ func New질의값_현물_차트_틱() *S질의값_현물_차트_틱 {
 	return s
 }
 
+// t8412 현물 차트 분
+type S질의값_현물_차트_분 struct {
+	*lib.S질의값_단일_종목
+	M단위     int // n분
+	M요청건수   int // 최대 압축 2000, 비압축 500
+	M조회영업일수 int // 0 : 미사용, 1 >= 사용
+	M시작일자   time.Time
+	M종료일자   time.Time
+	M연속일자   string
+	M연속시간   string
+	M압축여부   bool
+}
+
+func New질의값_현물_차트_분() *S질의값_현물_차트_분 {
+	s := new(S질의값_현물_차트_분)
+	s.S질의값_단일_종목 = lib.New질의값_단일_종목()
+
+	return s
+}
+
 // t8428 증시주변자금추이
 type S질의값_증시주변자금추이 struct {
 	*lib.S질의값_기본형
