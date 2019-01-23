@@ -76,9 +76,3 @@ var (
 	기준가_맵      = make(map[string]int64)
 	하한가_맵      = make(map[string]int64)
 )
-
-//	재선언
-var (
-	에러체크 = lib.F에러체크
-	체크   = lib.F체크포인트
-)

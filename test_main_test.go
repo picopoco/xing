@@ -41,7 +41,7 @@ import (
 func TestMain(m *testing.M) {
 	defer lib.S예외처리{}.S실행()
 
-	에러체크(f테스트_준비())
+	lib.F확인(f테스트_준비())
 	defer f테스트_정리()
 
 	m.Run()
@@ -51,8 +51,8 @@ func f테스트_준비() (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 	lib.F테스트_모드_시작()
 
-	에러체크(F초기화())
-	에러체크(F주문_응답_실시간_정보_구독())
+	lib.F확인(F초기화())
+	lib.F확인(F주문_응답_실시간_정보_구독())
 
 	return nil
 }
@@ -60,7 +60,7 @@ func f테스트_준비() (에러 error) {
 func f테스트_정리() (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	에러체크(F주문_응답_실시간_정보_해지())
+	lib.F확인(F주문_응답_실시간_정보_해지())
 	F리소스_정리()
 
 	lib.F테스트_모드_종료()

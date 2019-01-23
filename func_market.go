@@ -101,7 +101,7 @@ func f종목모음_설정() (에러 error) {
 	}
 
 	종목_정보_모음, 에러 := F주식종목조회_t8436(lib.P시장구분_전체)
-	lib.F에러체크(에러)
+	lib.F확인(에러)
 
 	종목모음_코스피 = make([]*lib.S종목, 0)
 	종목모음_코스닥 = make([]*lib.S종목, 0)
@@ -228,7 +228,7 @@ func ETN종목_여부(종목_코드 string) bool {
 func F최소_호가단위by종목코드(종목코드 string) (값 int64, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = 0 }}.S실행()
 
-	종목 := lib.F에러체크(F종목by코드(종목코드)).(*lib.S종목)
+	종목 := lib.F확인(F종목by코드(종목코드)).(*lib.S종목)
 
 	return F최소_호가단위by종목(종목)
 }

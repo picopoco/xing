@@ -44,7 +44,7 @@ import (
 func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S바이트_변환_모음) {
 	defer lib.S예외처리{M함수with내역: func(r interface{}) { 값 = lib.New바이트_변환_모음_단순형(lib.MsgPack, r) }}.S실행()
 
-	lib.F에러체크(F질의값_종목코드_검사(질의값))
+	lib.F확인(F질의값_종목코드_검사(질의값))
 
 	소켓REQ := 소켓REQ_저장소.G소켓()
 	defer 소켓REQ_저장소.S회수(소켓REQ)
@@ -88,7 +88,7 @@ func F접속됨() (접속됨 bool, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 접속됨 = false }}.S실행()
 
 	질의값 := lib.New질의값_기본형(TR접속됨, "")
-	접속됨 = 에러체크(F질의(질의값, lib.P10초).G해석값(0)).(bool)
+	접속됨 = lib.F확인(F질의(질의값, lib.P10초).G해석값(0)).(bool)
 
 	return 접속됨, nil
 }
@@ -96,11 +96,11 @@ func F접속됨() (접속됨 bool, 에러 error) {
 func F계좌번호_모음() (계좌번호_모음 []string, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌번호_모음 = nil }}.S실행()
 
-	계좌_수량 := 에러체크(F계좌_수량()).(int)
+	계좌_수량 := lib.F확인(F계좌_수량()).(int)
 	계좌번호_모음 = make([]string, 계좌_수량)
 
 	for i := 0; i < 계좌_수량; i++ {
-		계좌번호_모음[i] = 에러체크(F계좌_번호(0)).(string)
+		계좌번호_모음[i] = lib.F확인(F계좌_번호(0)).(string)
 	}
 
 	return 계좌번호_모음, nil
@@ -110,7 +110,7 @@ func F계좌_수량() (계좌_수량 int, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_수량 = 0 }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_기본형(TR계좌_수량, ""))
-	계좌_수량 = 에러체크(회신_메시지.G해석값(0)).(int)
+	계좌_수량 = lib.F확인(회신_메시지.G해석값(0)).(int)
 	lib.F조건부_패닉(계좌_수량 == 0, "계좌 수량 0.")
 
 	return 계좌_수량, nil
@@ -120,7 +120,7 @@ func F계좌_번호(인덱스 int) (계좌_번호 string, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_번호 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_정수(TR계좌_번호, "", 인덱스))
-	계좌_번호 = 에러체크(회신_메시지.G해석값(0)).(string)
+	계좌_번호 = lib.F확인(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_번호, nil
 }
@@ -129,7 +129,7 @@ func F계좌_이름(계좌_번호 string) (계좌_이름 string, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_이름 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_문자열(TR계좌_이름, "", 계좌_번호))
-	계좌_이름 = 에러체크(회신_메시지.G해석값(0)).(string)
+	계좌_이름 = lib.F확인(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_이름, nil
 }
@@ -138,7 +138,7 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 계좌_상세명 = "" }}.S실행()
 
 	회신_메시지 := F질의(lib.New질의값_문자열(TR계좌_상세명, "", 계좌_번호))
-	계좌_상세명 = 에러체크(회신_메시지.G해석값(0)).(string)
+	계좌_상세명 = lib.F확인(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_상세명, nil
 }
@@ -211,7 +211,7 @@ func F2전일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 }
 
 func F2전일_시각_단순형(포맷 string, 값 interface{}) time.Time {
-	return 에러체크(F2전일_시각(포맷, 값)).(time.Time)
+	return lib.F확인(F2전일_시각(포맷, 값)).(time.Time)
 }
 
 func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
@@ -233,7 +233,7 @@ func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 }
 
 func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
-	return 에러체크(F2당일_시각(포맷, 값)).(time.Time)
+	return lib.F확인(F2당일_시각(포맷, 값)).(time.Time)
 }
 
 //func ETF종목_여부(종목코드 string) bool {
@@ -262,7 +262,7 @@ func xing_C32_실행_중() (프로세스ID int) {
 	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
 
 	프로세스_모음, 에러 := ps.Processes()
-	lib.F에러체크(에러)
+	lib.F확인(에러)
 
 	for _, 프로세스 := range 프로세스_모음 {
 		if 실행화일명 := 프로세스.Executable(); strings.HasSuffix(xing_C32_경로, 실행화일명) {

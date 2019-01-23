@@ -48,251 +48,251 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 	switch 자료형_문자열 {
 	case P자료형_S현물_주문_응답_실시간_정보:
 		s := new(S현물_주문_응답_실시간_정보)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_정상_주문:
 		s := new(S질의값_정상_주문)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_정정_주문:
 		s := new(S질의값_정정_주문)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_취소_주문:
 		s := new(S질의값_취소_주문)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_전일당일_분틱_조회:
 		s := new(S질의값_현물_전일당일_분틱_조회)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_기간별_조회:
 		s := new(S질의값_현물_기간별_조회)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_단일종목_연속키:
 		s := new(S질의값_단일종목_연속키)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_차트_틱:
 		s := new(S질의값_현물_차트_틱)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_차트_분:
 		s := new(S질의값_현물_차트_분)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_차트_일주월:
 		s := new(S질의값_현물_차트_일주월)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_증시주변자금추이:
 		s := new(S질의값_증시주변자금추이)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_기본형:
 		s := new(S콜백_기본형)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_정수값:
 		s := New콜백_정수값_기본형()
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_문자열:
 		s := new(S콜백_문자열)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_TR데이터:
 		s := new(S콜백_TR데이터)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_메시지_및_에러:
 		s := new(S콜백_메시지_및_에러)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정상_주문_응답:
 		s := new(S현물_정상_주문_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정상_주문_응답1:
 		s := new(S현물_정상_주문_응답1)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정상_주문_응답2:
 		s := new(S현물_정상_주문_응답2)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정정_주문_응답:
 		s := new(S현물_정정_주문_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정정_주문_응답1:
 		s := new(S현물_정정_주문_응답1)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_정정_주문_응답2:
 		s := new(S현물_정정_주문_응답2)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_취소_주문_응답:
 		s := new(S현물_취소_주문_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_취소_주문_응답1:
 		s := new(S현물_취소_주문_응답1)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_취소_주문_응답2:
 		s := new(S현물_취소_주문_응답2)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_호가조회_응답:
 		s := new(S현물_호가조회_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시세조회_응답:
 		s := new(S현물_시세조회_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시간대별_체결_응답:
 		s := new(S현물_시간대별_체결_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시간대별_체결_응답_헤더:
 		s := new(S현물_시간대별_체결_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시간대별_체결_응답_반복값:
 		s := new(S현물_시간대별_체결_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시간대별_체결_응답_반복값_모음:
 		s := new(S현물_시간대별_체결_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_기간별_조회_응답:
 		s := new(S현물_기간별_조회_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_기간별_조회_응답_헤더:
 		s := new(S현물_기간별_조회_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_기간별_조회_응답_반복값:
 		s := new(S현물_기간별_조회_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_기간별_조회_응답_반복값_모음:
 		s := new(S현물_기간별_조회_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_전일당일분틱조회_응답:
 		s := new(S현물_전일당일분틱조회_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_전일당일분틱조회_응답_헤더:
 		s := new(S현물_전일당일분틱조회_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_전일당일분틱조회_응답_반복값:
 		s := new(S현물_전일당일분틱조회_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_전일당일분틱조회_응답_반복값_모음:
 		s := new(S현물_전일당일분틱조회_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S_ETF_현재가_조회_응답:
 		s := new(S_ETF_현재가_조회_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S_ETF시간별_추이_응답:
 		s := new(S_ETF시간별_추이_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S_ETF시간별_추이_응답_헤더:
 		s := new(S_ETF시간별_추이_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S_ETF시간별_추이_응답_반복값:
 		s := new(S_ETF시간별_추이_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S_ETF시간별_추이_응답_반복값_모음:
 		s := new(S_ETF시간별_추이_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_틱_응답:
 		s := new(S현물_차트_틱_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_틱_응답_헤더:
 		s := new(S현물_차트_틱_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_틱_응답_반복값:
 		s := new(S현물_차트_틱_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_틱_응답_반복값_모음:
 		s := new(S현물_차트_틱_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_분_응답:
 		s := new(S현물_차트_분_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_분_응답_헤더:
 		s := new(S현물_차트_분_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_분_응답_반복값:
 		s := new(S현물_차트_분_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_분_응답_반복값_모음:
 		s := new(S현물_차트_분_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_일주월_응답:
 		s := new(S현물_차트_일주월_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_일주월_응답_헤더:
 		s := new(S현물_차트_일주월_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_일주월_응답_반복값:
 		s := new(S현물_차트_일주월_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_일주월_응답_반복값_모음:
 		s := new(S현물_차트_일주월_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S증시_주변자금추이_응답:
 		s := new(S증시_주변자금추이_응답)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S증시_주변자금추이_응답_헤더:
 		s := new(S증시_주변자금추이_응답_헤더)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S증시_주변자금추이_응답_반복값:
 		s := new(S증시_주변자금추이_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S증시_주변자금추이_응답_반복값_모음:
 		s := new(S증시_주변자금추이_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_종목조회_응답_반복값:
 		s := new(S현물_종목조회_응답_반복값)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_종목조회_응답_반복값_모음:
 		s := new(S현물_종목조회_응답_반복값_모음)
-		lib.F에러체크(바이트_변환값.G값(s))
+		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	}
 
