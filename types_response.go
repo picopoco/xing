@@ -583,6 +583,7 @@ func (s *S현물_차트_틱_응답_헤더) G헤더_TR데이터() I헤더_TR데�
 
 // t8411 현물 차트 틱 응답 반복값
 type S현물_차트_틱_응답_반복값 struct {
+	M종목코드	string
 	M일자_시각    time.Time
 	M시가       int64
 	M고가       int64
@@ -640,6 +641,7 @@ func (s *S현물_차트_분_응답_헤더) G헤더_TR데이터() I헤더_TR데�
 
 // t8412 현물 차트 분 응답 반복값
 type S현물_차트_분_응답_반복값 struct {
+	M종목코드	string
 	M일자_시각   time.Time
 	M시가      int64
 	M고가      int64
@@ -697,6 +699,7 @@ func (s *S현물_차트_일주월_응답_헤더) G헤더_TR데이터() I헤더_T
 
 // t8413 현물 차트 일주월 응답 반복값
 type S현물_차트_일주월_응답_반복값 struct {
+	M종목코드 	string
 	M일자         time.Time
 	M시가         int64
 	M고가         int64

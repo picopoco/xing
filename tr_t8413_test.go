@@ -36,6 +36,7 @@ package xing
 import (
 	"github.com/ghts/lib"
 	"testing"
+	"time"
 )
 
 func TestF현물_차트_일주월_t8413(t *testing.T) {
@@ -46,6 +47,7 @@ func TestF현물_차트_일주월_t8413(t *testing.T) {
 	lib.F테스트_참임(t, 접속됨)
 
 	const 종목코드 = "069500" // 코덱스200
+	var 이전_일자 time.Time
 
 	lib.F메모("수정 구분값 오류로 인해, 테스트 기간 축소.")
 	//시작일 := 당일.G값().AddDate(-8, 0, 0)
@@ -55,7 +57,11 @@ func TestF현물_차트_일주월_t8413(t *testing.T) {
 	lib.F테스트_에러없음(t, 에러)
 
 	for _, 값 := range 값_모음 {
-		//lib.F테스트_같음(t, lib.F2일자(값.M일자), 전일.G값(), 당일.G값())
+		lib.F테스트_같음(t, 값.M종목코드, 종목코드)
+		lib.F테스트_참임(t, 값.M일자.After(이전_일자) || 값.M일자.Equal(이전_일자))
+		이전_일자 = 값.M일자
+		lib.F테스트_참임(t, 값.M일자.Equal(시작일) || 값.M일자.After(시작일))
+		lib.F테스트_참임(t, 값.M일자.Equal(당일.G값()) || 값.M일자.Before(당일.G값()))
 		lib.F테스트_참임(t, 값.M고가 >= 값.M시가)
 		lib.F테스트_참임(t, 값.M고가 >= 값.M종가)
 		lib.F테스트_참임(t, 값.M저가 <= 값.M시가)

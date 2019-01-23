@@ -36,6 +36,7 @@ package xing
 import (
 	"github.com/ghts/lib"
 	"testing"
+	"time"
 )
 
 func TestF현물_차트_틱_t8411(t *testing.T) {
@@ -46,11 +47,15 @@ func TestF현물_차트_틱_t8411(t *testing.T) {
 	lib.F테스트_참임(t, 접속됨)
 
 	const 종목코드 = "069500" // 코덱스200
+	var 이전_일자_시각 time.Time
 
 	값_모음, 에러 := F현물_차트_틱_t8411(종목코드, 전일.G값(), 당일.G값(), 2300)
 	lib.F테스트_에러없음(t, 에러)
 
 	for _, 값 := range 값_모음 {
+		lib.F테스트_같음(t, 값.M종목코드, 종목코드)
+		lib.F테스트_참임(t, 값.M일자_시각.After(이전_일자_시각) || 값.M일자_시각.Equal(이전_일자_시각))
+		이전_일자_시각 = 값.M일자_시각
 		lib.F테스트_같음(t, lib.F2일자(값.M일자_시각), 전일.G값(), 당일.G값())
 		lib.F테스트_같음(t, 값.M시가, 값.M고가)
 		lib.F테스트_같음(t, 값.M시가, 값.M저가)
