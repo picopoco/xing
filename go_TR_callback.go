@@ -140,7 +140,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 }
 
 func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
-	defer lib.S예외처리{M에러: &에러}.S실행_No출력()
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
 	식별번호, 대기_항목, TR코드 := f콜백_데이터_식별번호(값)
 

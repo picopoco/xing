@@ -42,7 +42,7 @@ import (
 
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
 func F시각_조회_t0167() (시각 time.Time, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행_No출력()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행()
 
 	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
 
