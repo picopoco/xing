@@ -61,9 +61,9 @@ const (
 	TR계좌_번호
 	TR계좌_이름
 	TR계좌_상세명
-	//TR압축_해제
 	TR소켓_테스트
 	TR전일_당일
+	TR_10분_쿼터_잔여량
 )
 
 func TR구분_String(v lib.TR구분) string {
@@ -104,12 +104,12 @@ func TR구분_String(v lib.TR구분) string {
 		return "계좌_이름"
 	case TR계좌_상세명:
 		return "계좌_상세명"
-	//case TR압축_해제:
-	//	//	return "압축_해제"
 	case TR소켓_테스트:
 		return "신호"
 	case TR전일_당일:
 		return "당일_전일"
+	case TR_10분_쿼터_잔여량:
+		return "10분 쿼터 잔여량"
 	default:
 		return lib.F2문자열("예상하지 못한 M값 : '%v'", v)
 	}

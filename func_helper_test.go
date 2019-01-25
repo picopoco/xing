@@ -83,6 +83,16 @@ func TestF계좌_XX(t *testing.T) {
 	}
 }
 
+func TestF_10분_쿼터_잔여량(t *testing.T) {
+	t.Parallel()
+
+	잔여량_모음, 에러 := F_10분_쿼터_잔여량([]string{TR현물_차트_틱, TR현물_정상_주문})
+
+	lib.F테스트_에러없음(t, 에러)
+	lib.F테스트_참임(t, 잔여량_모음[0] > 100, 잔여량_모음[0])
+	lib.F테스트_참임(t, 잔여량_모음[1] < 0, 잔여량_모음[1])
+}
+
 func TestF영업일_기준_전일_당일(t *testing.T) {
 	t.Parallel()
 

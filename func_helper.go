@@ -143,6 +143,23 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 	return 계좌_상세명, nil
 }
 
+func F_10분_쿼터_잔여량(TR코드_모음 []string) (잔여량_모음 []int, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 잔여량_모음 = nil }}.S실행()
+
+	for _, TR코드 := range TR코드_모음 {
+		if !f처리_가능한_TR코드(TR코드) {
+			return nil, lib.New에러with출력("잘못된 TR코드 : '%v'", TR코드)
+		}
+	}
+
+	잔여량_모음 = make([]int, len(TR코드_모음))
+	질의값 := lib.New질의값_문자열_모음(TR_10분_쿼터_잔여량, "" , TR코드_모음)
+
+	lib.F확인(F질의(질의값, lib.P30초).G값(0, &잔여량_모음))
+
+	return 잔여량_모음, nil
+}
+
 func f전일_당일_설정() (에러 error) {
 	const 수량 = 30
 
