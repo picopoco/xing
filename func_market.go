@@ -38,6 +38,46 @@ import (
 	"time"
 )
 
+func F종목코드_모음_전체() []string {
+	종목코드_모음 := make([]string, len(종목모음_전체), len(종목모음_전체))
+
+	for i, 종목 := range 종목모음_전체 {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
+func F종목코드_모음_KOSPI() []string {
+	종목코드_모음 := make([]string, len(종목모음_코스피), len(종목모음_코스피))
+
+	for i, 종목 := range 종목모음_코스피 {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
+func F종목코드_모음_KOSDAQ() []string {
+	종목코드_모음 := make([]string, len(종목모음_코스닥), len(종목모음_코스닥))
+
+	for i, 종목 := range 종목모음_코스닥 {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
+func F종목코드_모음_ETF() []string {
+	종목코드_모음 := make([]string, len(종목모음_ETF), len(종목모음_ETF))
+
+	for i, 종목 := range 종목모음_ETF {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
 func F질의값_종목코드_검사(질의값_원본 lib.I질의값) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
