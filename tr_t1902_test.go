@@ -41,7 +41,7 @@ import (
 )
 
 func TestETF_시간별_추이_t1902(t *testing.T) {
-	//t.Parallel()	// 병렬 테스트 에러 발생함.
+	t.Parallel()	// 병렬 테스트 에러 발생함.
 
 	접속됨, 에러 := F접속됨()
 	lib.F테스트_에러없음(t, 에러)

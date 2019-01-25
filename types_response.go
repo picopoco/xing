@@ -523,6 +523,7 @@ func (s *S_ETF시간별_추이_응답_헤더) G헤더_TR데이터() I헤더_TR�
 
 // t1902 ETF 시간별 추이 응답 반복값
 type S_ETF시간별_추이_응답_반복값 struct {
+	M종목코드 string
 	M시각         time.Time
 	M현재가        int64
 	M전일대비구분     T전일대비_구분
