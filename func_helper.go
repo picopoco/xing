@@ -34,6 +34,7 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"fmt"
 	"github.com/ghts/lib"
 	"github.com/mitchellh/go-ps"
 
@@ -144,7 +145,7 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 }
 
 func F_10분_쿼터_잔여량(TR코드_모음 []string) (잔여량_모음 []int, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 잔여량_모음 = nil }}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 잔여량_모음 = nil }, M출력_여부: true}.S실행()
 
 	for _, TR코드 := range TR코드_모음 {
 		if !f처리_가능한_TR코드(TR코드) {
@@ -152,10 +153,24 @@ func F_10분_쿼터_잔여량(TR코드_모음 []string) (잔여량_모음 []int,
 		}
 	}
 
-	잔여량_모음 = make([]int, len(TR코드_모음))
 	질의값 := lib.New질의값_문자열_모음(TR_10분_쿼터_잔여량, "" , TR코드_모음)
 
-	lib.F확인(F질의(질의값, lib.P30초).G값(0, &잔여량_모음))
+	lib.F메모("C32에서 원인을 알 수 없는 에러가 발생하며, nil 응답값 수신됨.")
+
+	var 응답값 *lib.S바이트_변환_모음
+
+	for {
+		응답값 = F질의(질의값, lib.P5초)
+
+		if 응답값 == nil {
+			C32_재시작()
+			continue
+		}
+
+		break
+	}
+
+	lib.F확인(응답값.G값(0, &잔여량_모음))
 
 	return 잔여량_모음, nil
 }
@@ -260,28 +275,6 @@ func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 func F2당일_시각_단순형(포맷 string, 값 interface{}) time.Time {
 	return lib.F확인(F2당일_시각(포맷, 값)).(time.Time)
 }
-
-//func ETF종목_여부(종목코드 string) bool {
-//	종목모음_ETF, 에러 := lib.F종목모음_ETF()
-//	lib.F에러체크(에러)
-//
-//	for _, 종목 := range 종목모음_ETF {
-//		if 종목코드 == 종목.G코드() {
-//			return true
-//		}
-//	}
-//
-//	종목, 에러 := lib.F종목by코드(종목코드)
-//	lib.F에러체크(에러)
-//
-//	switch {
-//	case strings.Contains(종목.G이름(), " ETN"),
-//		strings.Contains(종목.G이름(), " ETF"):
-//		return true
-//	}
-//
-//	return false
-//}
 
 func xing_C32_실행_중() (프로세스ID int) {
 	defer lib.S예외처리{M함수: func() { 프로세스ID = -1 }}.S실행()
@@ -526,4 +519,27 @@ func f처리_가능한_TR코드(TR코드 string) bool {
 		lib.F문자열_출력("예상하지 못한 TR코드 : '%v'", TR코드)
 		return false
 	}
+}
+
+func C32_재시작() (에러 error) {
+	defer lib.S예외처리{M에러: &에러, M출력_여부: true}.S실행()
+
+	lib.F메모("해결하지 못하고 있는 에러. '다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.'")
+
+	lib.F문자열_출력("** C32 재시작 **")
+
+	lib.F확인(C32_종료())
+	lib.F확인(f초기화_xing_C32())
+
+	lib.F체크포인트("")
+
+	lib.F조건부_패닉(!f초기화_작동_확인(), "초기화 작동 확인 실패.")
+
+	lib.F체크포인트()
+
+	lib.F확인(f전일_당일_전달())
+
+	fmt.Println("** C32 재시작 완료     **")
+
+	return nil
 }

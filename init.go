@@ -34,9 +34,8 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
-	"github.com/ghts/lib"
-
 	"fmt"
+	"github.com/ghts/lib"
 	"time"
 )
 
@@ -60,8 +59,6 @@ func F초기화() (에러 error) {
 	f종목모음_설정()
 	f전일_당일_설정()
 	f전일_당일_전달()
-
-	//lib.F메모("f접속유지_실행() 보류")
 	f접속유지_실행()
 
 	fmt.Println("**     초기화 완료     **")
@@ -208,17 +205,30 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 	}
 }
 
-func F리소스_정리() {
-	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(TR종료, ""), lib.P10초)
-	<-ch신호_C32_모음[P신호_C32_종료]
+func C32_종료() (에러 error) {
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
+	// 종료 신호 전송
+	lib.F패닉억제_호출(F질의, lib.New질의값_기본형(TR종료, ""), lib.P10초)
+
+	select {
+	case <-ch신호_C32_모음[P신호_C32_종료]:
+	case <-time.After(lib.P3초):
+	}
+
+	// 강제 종료
 	for {
 		if 프로세스ID := xing_C32_실행_중(); 프로세스ID < 0 {
-			break
+			return
 		} else {
-			lib.F대기(lib.P500밀리초)
+			lib.F프로세스_종료by프로세스ID(프로세스ID)
+			lib.F대기(lib.P3초)
 		}
 	}
+}
+
+func F리소스_정리() {
+	C32_종료()
 
 	lib.F공통_종료_채널_닫기()
 	lib.F패닉억제_호출(소켓REP_TR콜백.Close)

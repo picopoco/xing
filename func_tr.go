@@ -349,6 +349,9 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 
 		i응답값 := F질의_단일TR(질의값)
 
+		lib.F메모("TR전송 제한 관련 전송 권한 모듈 에러. 3초 대기로 응급처치.")
+		lib.F대기(lib.P100밀리초 * 35)
+
 		switch 값 := i응답값.(type) {
 		case *S_ETF시간별_추이_응답:
 			연속키 = 값.M헤더.M연속키
@@ -356,7 +359,7 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 		case error:
 			return nil, 값
 		default:
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
+			return nil, lib.New에러("예상하지 못한 자료형 : '%T'", i응답값)
 		}
 
 		if !시각.Equal(time.Time{}) {
@@ -421,6 +424,9 @@ func F현물_차트_틱_t8411(종목코드 string, 시작일자, 종료일자 ti
 
 		i응답값 := F질의_단일TR(질의값, lib.P30초)
 
+		lib.F메모("TR전송 제한 관련 전송 권한 모듈 에러. 3초 대기로 응급처치.")
+		lib.F대기(lib.P100밀리초 * 35)
+
 		switch 값 := i응답값.(type) {
 		case *S현물_차트_틱_응답:
 			연속일자 = 값.M헤더.M연속일자
@@ -484,6 +490,9 @@ func F현물_차트_분_t8412(종목코드 string, 시작일자, 종료일자 ti
 
 		i응답값 := F질의_단일TR(질의값, lib.P30초)
 
+		lib.F메모("TR전송 제한 관련 전송 권한 모듈 에러. 3초 대기로 응급처치.")
+		lib.F대기(lib.P100밀리초 * 35)
+
 		switch 값 := i응답값.(type) {
 		case *S현물_차트_분_응답:
 			연속일자 = 값.M헤더.M연속일자
@@ -544,6 +553,9 @@ func F현물_차트_일주월_t8413(종목코드 string, 시작일자, 종료일
 		질의값.M압축여부 = true
 
 		i응답값 := F질의_단일TR(질의값, lib.P30초)
+
+		lib.F메모("TR전송 제한 관련 전송 권한 모듈 에러. 3초 대기로 응급처치.")
+		lib.F대기(lib.P100밀리초 * 35)
 
 		switch 값 := i응답값.(type) {
 		case *S현물_차트_일주월_응답:
