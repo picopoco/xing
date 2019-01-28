@@ -222,6 +222,14 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		s := new(S_ETF시간별_추이_응답_반복값_모음)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
+	case P자료형_T3320OutBlock:
+		s := new(T3320OutBlock)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_T3320OutBlock1:
+		s := new(T3320OutBlock1)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
 	case P자료형_S현물_차트_틱_응답:
 		s := new(S현물_차트_틱_응답)
 		lib.F확인(바이트_변환값.G값(s))
@@ -300,7 +308,7 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 }
 
 func f2수정구분_모음(값 int64) (수정구분_모음 []T수정구분, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() {수정구분_모음 = nil}}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 수정구분_모음 = nil }}.S실행()
 
 	if 값 == 0 {
 		return []T수정구분{P수정구분_없음}, nil

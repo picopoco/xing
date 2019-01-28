@@ -38,24 +38,8 @@ import (
 	"testing"
 )
 
-func TestI주문_질의값(t *testing.T) {
-	_, ok := interface{}(new(S질의값_정상_주문)).(lib.I질의값)
-	lib.F테스트_참임(t, ok)
+func TestF초기화_Go_C_자료형_크기_비교(t *testing.T) {
+	t.Parallel()
 
-	_, ok = interface{}(new(S질의값_정정_주문)).(lib.I질의값)
-	lib.F테스트_참임(t, ok)
-
-	_, ok = interface{}(new(S질의값_취소_주문)).(lib.I질의값)
-	lib.F테스트_참임(t, ok)
-}
-
-func TestI주문응답(t *testing.T) {
-	_, ok := interface{}(new(S현물_정상_주문_응답)).(I이중_응답)
-	lib.F테스트_참임(t, ok)
-
-	_, ok = interface{}(new(S현물_정정_주문_응답)).(I이중_응답)
-	lib.F테스트_참임(t, ok)
-
-	_, ok = interface{}(new(S현물_취소_주문_응답)).(I이중_응답)
-	lib.F테스트_참임(t, ok)
+	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
 }

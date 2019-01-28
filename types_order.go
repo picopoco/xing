@@ -90,28 +90,28 @@ func New질의값_취소_주문() *S질의값_취소_주문 {
 	return s
 }
 
-type I주문_응답 interface {
-	I주문_응답1
-	I주문_응답2
+type I이중_응답 interface {
+	I이중_응답1
+	I이중_응답2
 }
 
-type I주문_응답1 interface {
-	G주문_응답1() I주문_응답1
+type I이중_응답1 interface {
+	G응답1() I이중_응답1
 }
 
-type I주문_응답2 interface {
-	G주문_응답2() I주문_응답2
+type I이중_응답2 interface {
+	G응답2() I이중_응답2
 }
 
-type S주문_응답_일반형 struct {
-	M응답1 I주문_응답1
-	M응답2 I주문_응답2
+type S이중_응답_일반형 struct {
+	M응답1 I이중_응답1
+	M응답2 I이중_응답2
 }
 
-func (s *S주문_응답_일반형) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S주문_응답_일반형) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S이중_응답_일반형) G응답1() I이중_응답1 { return s.M응답1 }
+func (s *S이중_응답_일반형) G응답2() I이중_응답2 { return s.M응답2 }
 
-func (s *S주문_응답_일반형) G값(TR코드 string) interface{} {
+func (s *S이중_응답_일반형) G값(TR코드 string) interface{} {
 	switch TR코드 {
 	case TR현물_정상_주문:
 		g := new(S현물_정상_주문_응답)
@@ -128,6 +128,11 @@ func (s *S주문_응답_일반형) G값(TR코드 string) interface{} {
 		g.M응답1 = s.M응답1.(*S현물_취소_주문_응답1)
 		g.M응답2 = s.M응답2.(*S현물_취소_주문_응답2)
 		return g
+	case TR기업정보_요약:
+		g := new(S기업정보_요약_응답)
+		g.M응답1 = s.M응답1.(*S기업정보_요약_응답1)
+		g.M응답2 = s.M응답2.(*S기업정보_요약_응답2)
+		return g
 	default:
 		panic(lib.New에러("예상하지 못한 TR코드 : '%v'", TR코드))
 	}
@@ -138,8 +143,8 @@ type S현물_정상_주문_응답 struct {
 	M응답2 *S현물_정상_주문_응답2
 }
 
-func (s *S현물_정상_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_정상_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_정상_주문_응답) G응답1() I이중_응답1 { return s.M응답1 }
+func (s *S현물_정상_주문_응답) G응답2() I이중_응답2 { return s.M응답2 }
 
 type S현물_정상_주문_응답1 struct {
 	M레코드_수량     int
@@ -169,7 +174,7 @@ type S현물_정상_주문_응답1 struct {
 	M반대매매_구분    string
 }
 
-func (s *S현물_정상_주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_정상_주문_응답1) G응답1() I이중_응답1 { return s }
 
 type S현물_정상_주문_응답2 struct {
 	M레코드_수량    int
@@ -191,15 +196,15 @@ type S현물_정상_주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_정상_주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_정상_주문_응답2) G응답2() I이중_응답2 { return s }
 
 type S현물_정정_주문_응답 struct {
 	M응답1 *S현물_정정_주문_응답1
 	M응답2 *S현물_정정_주문_응답2
 }
 
-func (s *S현물_정정_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_정정_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_정정_주문_응답) G응답1() I이중_응답1 { return s.M응답1 }
+func (s *S현물_정정_주문_응답) G응답2() I이중_응답2 { return s.M응답2 }
 
 type S현물_정정_주문_응답1 struct {
 	M레코드_수량   int
@@ -221,7 +226,7 @@ type S현물_정정_주문_응답1 struct {
 	M아이템_번호   int64
 }
 
-func (s *S현물_정정_주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_정정_주문_응답1) G응답1() I이중_응답1 { return s }
 
 type S현물_정정_주문_응답2 struct {
 	M레코드_수량    int
@@ -250,15 +255,15 @@ type S현물_정정_주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_정정_주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_정정_주문_응답2) G응답2() I이중_응답2 { return s }
 
 type S현물_취소_주문_응답 struct {
 	M응답1 *S현물_취소_주문_응답1
 	M응답2 *S현물_취소_주문_응답2
 }
 
-func (s *S현물_취소_주문_응답) G주문_응답1() I주문_응답1 { return s.M응답1 }
-func (s *S현물_취소_주문_응답) G주문_응답2() I주문_응답2 { return s.M응답2 }
+func (s *S현물_취소_주문_응답) G응답1() I이중_응답1 { return s.M응답1 }
+func (s *S현물_취소_주문_응답) G응답2() I이중_응답2 { return s.M응답2 }
 
 type S현물_취소_주문_응답1 struct {
 	M레코드_수량   int
@@ -277,7 +282,7 @@ type S현물_취소_주문_응답1 struct {
 	M아이템_번호   int64
 }
 
-func (s *S현물_취소_주문_응답1) G주문_응답1() I주문_응답1 { return s }
+func (s *S현물_취소_주문_응답1) G응답1() I이중_응답1 { return s }
 
 type S현물_취소_주문_응답2 struct {
 	M레코드_수량    int
@@ -301,4 +306,4 @@ type S현물_취소_주문_응답2 struct {
 	M종목명       string
 }
 
-func (s *S현물_취소_주문_응답2) G주문_응답2() I주문_응답2 { return s }
+func (s *S현물_취소_주문_응답2) G응답2() I이중_응답2 { return s }

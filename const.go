@@ -35,6 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"unsafe"
 
 	"strconv"
 )
@@ -129,6 +130,7 @@ const (
 	TR현물_당일_전일_분틱_조회 = "t1310"
 	TR_ETF_시세_조회     = "t1901"
 	TR_ETF_시간별_추이    = "t1902"
+	TR기업정보_요약        = "t3320"
 	TR현물_차트_틱        = "t8411"
 	TR현물_차트_분        = "t8412"
 	TR현물_차트_일주월      = "t8413"
@@ -776,16 +778,15 @@ const (
 	P자료형_S콜백_TR데이터    = "S콜백_TR데이터"
 	P자료형_S콜백_메시지_및_에러 = "S콜백_메시지_및_에러"
 
-	P자료형_S현물_정상_주문_응답  = "S현물_정상_주문_응답"
-	P자료형_S현물_정상_주문_응답1 = "S현물_정상_주문_응답1"
-	P자료형_S현물_정상_주문_응답2 = "S현물_정상_주문_응답2"
-	P자료형_S현물_정정_주문_응답  = "S현물_정정_주문_응답"
-	P자료형_S현물_정정_주문_응답1 = "S현물_정정_주문_응답1"
-	P자료형_S현물_정정_주문_응답2 = "S현물_정정_주문_응답2"
-	P자료형_S현물_취소_주문_응답  = "S현물_취소_주문_응답"
-	P자료형_S현물_취소_주문_응답1 = "S현물_취소_주문_응답1"
-	P자료형_S현물_취소_주문_응답2 = "S현물_취소_주문_응답2"
-
+	P자료형_S현물_정상_주문_응답           = "S현물_정상_주문_응답"
+	P자료형_S현물_정상_주문_응답1          = "S현물_정상_주문_응답1"
+	P자료형_S현물_정상_주문_응답2          = "S현물_정상_주문_응답2"
+	P자료형_S현물_정정_주문_응답           = "S현물_정정_주문_응답"
+	P자료형_S현물_정정_주문_응답1          = "S현물_정정_주문_응답1"
+	P자료형_S현물_정정_주문_응답2          = "S현물_정정_주문_응답2"
+	P자료형_S현물_취소_주문_응답           = "S현물_취소_주문_응답"
+	P자료형_S현물_취소_주문_응답1          = "S현물_취소_주문_응답1"
+	P자료형_S현물_취소_주문_응답2          = "S현물_취소_주문_응답2"
 	P자료형_S현물_호가조회_응답            = "S현물_호가조회_응답"
 	P자료형_S현물_시세조회_응답            = "S현물_시세조회_응답"
 	P자료형_S현물_시간대별_체결_응답         = "S현물_시간대별_체결_응답"
@@ -805,6 +806,8 @@ const (
 	P자료형_S_ETF시간별_추이_응답_헤더      = "S_ETF시간별_추이_응답_헤더"
 	P자료형_S_ETF시간별_추이_응답_반복값     = "S_ETF시간별_추이_응답_반복값"
 	P자료형_S_ETF시간별_추이_응답_반복값_모음  = "S_ETF시간별_추이_응답_반복값_모음"
+	P자료형_T3320OutBlock          = "P자료형_T3320OutBlock"
+	P자료형_T3320OutBlock1         = "P자료형_T3320OutBlock1"
 	P자료형_S현물_차트_틱_응답            = "S현물_차트_틱_응답"
 	P자료형_S현물_차트_틱_응답_헤더         = "S현물_차트_틱_응답_헤더"
 	P자료형_S현물_차트_틱_응답_반복값        = "S현물_차트_틱_응답_반복값"
@@ -962,3 +965,46 @@ func (p T수정구분) String() string {
 		return lib.F2문자열("예상하지 못한 값 : '%v'", p)
 	}
 }
+
+const (
+	SizeCSPAT00600InBlock1  = int(unsafe.Sizeof(CSPAT00600InBlock1{}))
+	SizeCSPAT00600OutBlock1 = int(unsafe.Sizeof(CSPAT00600OutBlock1{}))
+	SizeCSPAT00600OutBlock2 = int(unsafe.Sizeof(CSPAT00600OutBlock2{}))
+	SizeCSPAT00700InBlock1  = int(unsafe.Sizeof(CSPAT00700InBlock1{}))
+	SizeCSPAT00700OutBlock1 = int(unsafe.Sizeof(CSPAT00700OutBlock1{}))
+	SizeCSPAT00700OutBlock2 = int(unsafe.Sizeof(CSPAT00700OutBlock2{}))
+	SizeCSPAT00800InBlock1  = int(unsafe.Sizeof(CSPAT00800InBlock1{}))
+	SizeCSPAT00800OutBlock1 = int(unsafe.Sizeof(CSPAT00800OutBlock1{}))
+	SizeCSPAT00800OutBlock2 = int(unsafe.Sizeof(CSPAT00800OutBlock2{}))
+	SizeT1101InBlock        = int(unsafe.Sizeof(T1101InBlock{}))
+	SizeT1102InBlock        = int(unsafe.Sizeof(T1102InBlock{}))
+	SizeT1301InBlock        = int(unsafe.Sizeof(T1301InBlock{}))
+	SizeT1301OutBlock       = int(unsafe.Sizeof(T1301OutBlock{}))
+	SizeT1301OutBlock1      = int(unsafe.Sizeof(T1301OutBlock1{}))
+	SizeT1305InBlock        = int(unsafe.Sizeof(T1305InBlock{}))
+	SizeT1305OutBlock       = int(unsafe.Sizeof(T1305OutBlock{}))
+	SizeT1305OutBlock1      = int(unsafe.Sizeof(T1305OutBlock1{}))
+	SizeT1310InBlock        = int(unsafe.Sizeof(T1310InBlock{}))
+	SizeT1310OutBlock       = int(unsafe.Sizeof(T1310OutBlock{}))
+	SizeT1310OutBlock1      = int(unsafe.Sizeof(T1310OutBlock1{}))
+	SizeT1902InBlock        = int(unsafe.Sizeof(T1902InBlock{}))
+	SizeT1902OutBlock       = int(unsafe.Sizeof(T1902OutBlock{}))
+	SizeT1902OutBlock1      = int(unsafe.Sizeof(T1902OutBlock1{}))
+	SizeT3320InBlock        = int(unsafe.Sizeof(T3320InBlock{}))
+	SizeT3320OutBlock       = int(unsafe.Sizeof(T3320OutBlock{}))
+	SizeT3320OutBlock1      = int(unsafe.Sizeof(T3320OutBlock1{}))
+	SizeT8411InBlock        = int(unsafe.Sizeof(T8411InBlock{}))
+	SizeT8411OutBlock       = int(unsafe.Sizeof(T8411OutBlock{}))
+	SizeT8411OutBlock1      = int(unsafe.Sizeof(T8411OutBlock1{}))
+	SizeT8412InBlock        = int(unsafe.Sizeof(T8412InBlock{}))
+	SizeT8412OutBlock       = int(unsafe.Sizeof(T8412OutBlock{}))
+	SizeT8412OutBlock1      = int(unsafe.Sizeof(T8412OutBlock1{}))
+	SizeT8413InBlock        = int(unsafe.Sizeof(T8413InBlock{}))
+	SizeT8413OutBlock       = int(unsafe.Sizeof(T8413OutBlock{}))
+	SizeT8413OutBlock1      = int(unsafe.Sizeof(T8413OutBlock1{}))
+	SizeT8428InBlock        = int(unsafe.Sizeof(T8428InBlock{}))
+	SizeT8428OutBlock       = int(unsafe.Sizeof(T8428OutBlock{}))
+	SizeT8428OutBlock1      = int(unsafe.Sizeof(T8428OutBlock1{}))
+	SizeT8436InBlock        = int(unsafe.Sizeof(T8436InBlock{}))
+	SizeT8436OutBlock       = int(unsafe.Sizeof(T8436OutBlock{}))
+)
