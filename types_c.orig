@@ -63,19 +63,19 @@ type LINK_DATA C.LINK_DATA
 type CSPAT00600InBlock1 C.CSPAT00600InBlock1
 type CSPAT00600OutBlock1 C.CSPAT00600OutBlock1
 type CSPAT00600OutBlock2 C.CSPAT00600OutBlock2
-type CSPAT00600OutBlockAll C.CSPAT00600OutBlockAll
+type CSPAT00600OutBlock C.CSPAT00600OutBlock
 
 // 현물 정정주문
 type CSPAT00700InBlock1 C.CSPAT00700InBlock1
 type CSPAT00700OutBlock1 C.CSPAT00700OutBlock1
 type CSPAT00700OutBlock2 C.CSPAT00700OutBlock2
-type CSPAT00700OutBlockAll C.CSPAT00700OutBlockAll
+type CSPAT00700OutBlock C.CSPAT00700OutBlock
 
 // 현물 취소주문
 type CSPAT00800InBlock1 C.CSPAT00800InBlock1
 type CSPAT00800OutBlock1 C.CSPAT00800OutBlock1
 type CSPAT00800OutBlock2 C.CSPAT00800OutBlock2
-type CSPAT00800OutBlockAll C.CSPAT00800OutBlockAll
+type CSPAT00800OutBlock C.CSPAT00800OutBlock
 
 type SC0_OutBlock C.SC0_OutBlock    // 주식 주문 접수 실시간 정보
 type SC1_OutBlock C.SC1_OutBlock    // 주식 주문 체결 실시간 정보

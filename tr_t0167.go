@@ -34,70 +34,41 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"bytes"
+	"encoding/binary"
 	"github.com/ghts/lib"
 	"time"
 )
 
-type S현물_주문_응답_실시간_정보 struct { // 'SCn'
-	M주문번호   int64
-	M원_주문번호 int64
-	RT코드    string
-	M응답_구분  T주문_응답_구분
-	M종목코드   string
-	M수량     int64
-	M가격     int64
-	M잔량     int64
-	M시각     time.Time
-}
+// 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
+func F시각_조회_t0167() (시각 time.Time, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행()
 
-type I이중_응답 interface {
-	I이중_응답1
-	I이중_응답2
-}
+	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
 
-type I이중_응답1 interface {
-	G응답1() I이중_응답1
-}
+	i응답값 := F질의_단일TR(질의값, lib.P20초)
 
-type I이중_응답2 interface {
-	G응답2() I이중_응답2
-}
-
-type S이중_응답_일반형 struct {
-	M응답1 I이중_응답1
-	M응답2 I이중_응답2
-}
-
-func (s *S이중_응답_일반형) G응답1() I이중_응답1 { return s.M응답1 }
-func (s *S이중_응답_일반형) G응답2() I이중_응답2 { return s.M응답2 }
-
-func (s *S이중_응답_일반형) G값(TR코드 string) interface{} {
-	switch TR코드 {
-	case TR현물_정상_주문:
-		g := new(S현물_정상_주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_정상_주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_정상_주문_응답2)
-		return g
-	case TR현물_정정_주문:
-		g := new(S현물_정정_주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_정정_주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_정정_주문_응답2)
-		return g
-	case TR현물_취소_주문:
-		g := new(S현물_취소_주문_응답)
-		g.M응답1 = s.M응답1.(*S현물_취소_주문_응답1)
-		g.M응답2 = s.M응답2.(*S현물_취소_주문_응답2)
-		return g
-	case TR기업정보_요약:
-		g := new(S기업정보_요약_응답)
-		g.M응답1 = s.M응답1.(*S기업정보_요약_응답1)
-		g.M응답2 = s.M응답2.(*S기업정보_요약_응답2)
-		return g
+	switch 값 := i응답값.(type) {
+	case time.Time:
+		return 값, nil
+	case error:
+		return time.Time{}, 값
 	default:
-		panic(lib.New에러("예상하지 못한 TR코드 : '%v'", TR코드))
+		return time.Time{}, lib.New에러("예상하지 못한 자료형 : '%T", i응답값)
 	}
 }
 
+func New시간조회_응답(b []byte) (값 time.Time, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = time.Time{} }}.S실행()
 
+	lib.F조건부_패닉(len(b) != SizeT0167OutBlock,
+		"예상하지 못한 길이 : '%v", len(b))
 
+	g := new(T0167OutBlock)
+	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
+	날짜_문자열 := lib.F2문자열(g.Date)
+	시간_문자열 := lib.F2문자열(g.Time)
+
+	return lib.F2포맷된_시각("20060102150405.99999999", 날짜_문자열+시간_문자열[:6]+"."+시간_문자열[7:])
+}

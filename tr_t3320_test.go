@@ -34,13 +34,15 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"github.com/ghts/lib"
 	"testing"
 )
 
 func TestF기업정보_요약_t3320(t *testing.T) {
 	t.Parallel()
 
-	t.FailNow()
+	lib.F메모("t3320은 아직 테스트 케이스를 작성하지 못했음.")
+	t.SkipNow()
 
 	//접속됨, 에러 := F접속됨()
 	//lib.F테스트_에러없음(t, 에러)

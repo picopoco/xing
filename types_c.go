@@ -69,7 +69,7 @@ type CSPAT00600OutBlock2 struct {
 	AcntNm		[40]byte
 	IsuNm		[40]byte
 }
-type CSPAT00600OutBlockAll struct {
+type CSPAT00600OutBlock struct {
 	OutBlock1	CSPAT00600OutBlock1
 	OutBlock2	CSPAT00600OutBlock2
 }
@@ -130,7 +130,7 @@ type CSPAT00700OutBlock2 struct {
 	AcntNm			[40]byte
 	IsuNm			[40]byte
 }
-type CSPAT00700OutBlockAll struct {
+type CSPAT00700OutBlock struct {
 	OutBlock1	CSPAT00700OutBlock1
 	OutBlock2	CSPAT00700OutBlock2
 }
@@ -181,7 +181,7 @@ type CSPAT00800OutBlock2 struct {
 	AcntNm			[40]byte
 	IsuNm			[40]byte
 }
-type CSPAT00800OutBlockAll struct {
+type CSPAT00800OutBlock struct {
 	OutBlock1	CSPAT00800OutBlock1
 	OutBlock2	CSPAT00800OutBlock2
 }

@@ -190,7 +190,7 @@ typedef struct {
 typedef struct {
     CSPAT00600OutBlock1	outBlock1;
     CSPAT00600OutBlock2	outBlock2;
-} CSPAT00600OutBlockAll;
+} CSPAT00600OutBlock;
 
 //------------------------------------------------------------------------------
 // 현물 정정주문 (CSPAT00700,ENCRYPT,SIGNATURE,HEADTYPE=B)
@@ -257,7 +257,7 @@ typedef struct {
 typedef struct {
     CSPAT00700OutBlock1	outBlock1;
     CSPAT00700OutBlock2	outBlock2;
-} CSPAT00700OutBlockAll;
+} CSPAT00700OutBlock;
 
 //------------------------------------------------------------------------------
 // 현물 취소주문 (CSPAT00800,ENCRYPT,SIGNATURE,HEADTYPE=B)
@@ -314,7 +314,7 @@ typedef struct {
 typedef struct {
     CSPAT00800OutBlock1	outBlock1;
     CSPAT00800OutBlock2	outBlock2;
-} CSPAT00800OutBlockAll;
+} CSPAT00800OutBlock;
 
 //------------------------------------------------------------------------------
 // 주식 주문 접수 실시간 정보 (SC0)

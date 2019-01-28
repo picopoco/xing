@@ -40,94 +40,8 @@ import (
 	"time"
 )
 
-// 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
-func F시각_조회_t0167() (시각 time.Time, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행()
 
-	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
 
-	i응답값 := F질의_단일TR(질의값, lib.P20초)
-
-	switch 값 := i응답값.(type) {
-	case time.Time:
-		return 값, nil
-	case error:
-		return time.Time{}, 값
-	default:
-		return time.Time{}, lib.New에러("예상하지 못한 자료형 : '%T", i응답값)
-	}
-}
-
-func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응답값 *S현물_정상_주문_응답, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
-
-	i응답값 := F질의_단일TR(질의값)
-
-	switch 값 := i응답값.(type) {
-	case *S현물_정상_주문_응답:
-		return 값, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
-}
-
-func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응답값 *S현물_정정_주문_응답, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
-
-	for i := 0; i < 10; i++ { // 최대 10번 재시도
-		//체크("F현물_정정주문_CSPAT00700", i)
-
-		i응답값 := F질의_단일TR(질의값)
-
-		switch 값 := i응답값.(type) {
-		case *S현물_정정_주문_응답:
-			return 값, nil
-		case error:
-			//체크("** 에러 발생 **", 값.Error())
-			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
-				strings.Contains(값.Error(), "접수 대기 상태입니다") {
-				//체크("** 예상된 에러 **")
-				continue // 재시도
-			}
-
-			return nil, 값
-		default:
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-		}
-	}
-
-	return nil, lib.New에러("정정 주문 TR 실행 실패.")
-}
-
-func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
-
-	for i := 0; i < 10; i++ { // 최대 10번 재시도
-		//체크("F현물_취소주문_CSPAT00800", "@", i, "@", 질의값.M원주문번호)
-
-		i응답값 := F질의_단일TR(질의값)
-
-		switch 값 := i응답값.(type) {
-		case *S현물_취소_주문_응답:
-			return 값, nil
-		case error:
-			//체크("** 에러 발생 **", 값.Error())
-			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
-				strings.Contains(값.Error(), "접수 대기 상태") {
-				//체크("** 예상된 에러 **")
-				continue // 재시도
-			}
-
-			return nil, 값
-		default:
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-		}
-	}
-
-	return nil, lib.New에러("취소 주문 TR 실행 실패.")
-}
 
 func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
@@ -169,79 +83,6 @@ func F현물_시세_조회_t1102(종목코드 string) (응답값 *S현물_시세
 	}
 }
 
-func F기간별_주가_조회_t1305(종목코드 string, 일주월_구분 T일주월_구분, 추가_옵션_모음 ...interface{}) (
-	응답값_모음 []*S현물_기간별_조회_응답_반복값, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
-
-	var 수량 int
-	var 일자 time.Time
-
-	for _, 추가_옵션 := range 추가_옵션_모음 {
-		switch 변환값 := 추가_옵션.(type) {
-		case int:
-			수량 = 변환값
-		case time.Time:
-			일자 = 변환값
-		default:
-			panic(lib.New에러("예상하지 못한 옵션값 : '%T' '%v'", 추가_옵션, 추가_옵션))
-		}
-	}
-
-	lib.F조건부_패닉(일주월_구분 != P일주월_일 && 일주월_구분 != P일주월_주 &&
-		일주월_구분 != P일주월_월, "예상하지 못한 일주월 구분값 : '%v'", 일주월_구분)
-
-	연속키 := ""
-	응답값_모음 = make([]*S현물_기간별_조회_응답_반복값, 0)
-
-	lib.F메모("TR응답에 연속 조회 추가 존재 여부를 포함시켜서 반복 여부 판단 조건으로 사용하는 것을 생각해 볼 것.")
-
-	for {
-		질의값 := New질의값_현물_기간별_조회()
-		질의값.M구분 = TR조회
-		질의값.M코드 = TR현물_기간별_조회
-		질의값.M종목코드 = 종목코드
-		질의값.M일주월_구분 = 일주월_구분
-		질의값.M수량 = 200
-		질의값.M연속키 = 연속키
-
-		i응답값 := F질의_단일TR(질의값)
-
-		switch 값 := i응답값.(type) {
-		case *S현물_기간별_조회_응답:
-			연속키 = 값.M헤더.M연속키
-			응답값_모음 = append(응답값_모음, 값.M반복값_모음.M배열...)
-
-			lib.F조건부_패닉(값.M헤더.M수량 != int64(len(값.M반복값_모음.M배열)),
-				"반복값 수량 불일치. '%v', '%v'", 값.M헤더.M수량, len(값.M반복값_모음.M배열))
-		case error:
-			return nil, 값
-		default:
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-		}
-
-		if !일자.Equal(time.Time{}) {
-			원하는_일자까지_검색 := false
-			for _, 응답값 := range 응답값_모음 {
-				if 응답값.M일자.Equal(일자) || 응답값.M일자.Before(일자) {
-					원하는_일자까지_검색 = true
-					break
-				}
-			}
-
-			if 원하는_일자까지_검색 {
-				break
-			}
-		}
-
-		if 수량 > 0 && len(응답값_모음) >= 수량 {
-			break
-		} else if lib.F2문자열_공백제거(연속키) == "" {
-			break
-		}
-	}
-
-	return 응답값_모음, nil
-}
 
 func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_구분 T당일전일_구분, 분틱_구분 T분틱_구분,
 	종료시각 time.Time, 수량_옵션 ...int) (응답값_모음 []*S현물_전일당일분틱조회_응답_반복값, 에러 error) {
@@ -261,7 +102,27 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 	응답값_모음_역순 := make([]*S현물_전일당일분틱조회_응답_반복값, 0)
 	연속키 := ""
 
-	lib.F메모("TR응답에 연속 조회 추가 존재 여부를 포함시켜서 반복 여부 판단 조건으로 사용하는 것을 생각해 볼 것.")
+	defer func() {
+		수량 = len(응답값_모음_역순)
+		응답값_모음 = make([]*S현물_전일당일분틱조회_응답_반복값, len(응답값_모음_역순))
+
+		var 일자 time.Time
+
+		if 당일전일_구분 == P당일전일구분_당일 {
+			일자 = F당일()
+		} else {
+			일자 = F전일()
+		}
+
+		// 당일/전일 설정. 시간 기준 정렬순서 변경.
+		for i, 응답값 := range 응답값_모음_역순 {
+			시각 := 응답값.M시각
+			응답값.M시각 = time.Date(일자.Year(), 일자.Month(), 일자.Day(),
+				시각.Hour(), 시각.Minute(), 시각.Second(), 시각.Nanosecond(), 시각.Location())
+
+			응답값_모음[수량-1-i] = 응답값
+		}
+	}()
 
 	for {
 		질의값 := New질의값_현물_전일당일_분틱_조회()
@@ -297,13 +158,6 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 		} else if lib.F2문자열_공백제거(연속키) == "" {
 			break
 		}
-	}
-
-	수량 = len(응답값_모음_역순)
-	응답값_모음 = make([]*S현물_전일당일분틱조회_응답_반복값, len(응답값_모음_역순))
-
-	for i, 응답값 := range 응답값_모음_역순 {
-		응답값_모음[수량-1-i] = 응답값
 	}
 
 	return 응답값_모음, nil
@@ -453,7 +307,7 @@ func F현물_차트_틱_t8411(종목코드 string, 시작일자, 종료일자 ti
 }
 
 func F현물_차트_분_t8412(종목코드 string, 시작일자, 종료일자 time.Time, 추가_인수_모음 ...interface{}) (응답값_모음 []*S현물_차트_분_응답_반복값, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }, M출력_여부: true}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F확인(F종목코드_검사(종목코드))
 	lib.F조건부_패닉(종료일자.Before(시작일자), "시작일자가 종료일자보다 늦습니다. %v, %v", 시작일자, 종료일자)
@@ -520,7 +374,7 @@ func F현물_차트_분_t8412(종목코드 string, 시작일자, 종료일자 ti
 
 func F현물_차트_일주월_t8413(종목코드 string, 시작일자, 종료일자 time.Time, 주기구분 T일주월_구분,
 	추가_인수_모음 ...interface{}) (응답값_모음 []*S현물_차트_일주월_응답_반복값, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }, M출력_여부: true}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F확인(F종목코드_검사(종목코드))
 	lib.F조건부_패닉(종료일자.Before(시작일자), "시작일자가 종료일자보다 늦습니다. %v, %v", 시작일자, 종료일자)
@@ -651,31 +505,3 @@ func F증시주변자금추이_t8428(시장_구분 lib.T시장구분, 추가_옵
 	return 응답값_모음, nil
 }
 
-func F주식종목조회_t8436(시장_구분 lib.T시장구분) (응답값_모음 []*S현물_종목조회_응답_반복값, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
-
-	var 시장구분_문자열 string
-
-	switch 시장_구분 {
-	case lib.P시장구분_전체:
-		시장구분_문자열 = "0"
-	case lib.P시장구분_코스피:
-		시장구분_문자열 = "1"
-	case lib.P시장구분_코스닥:
-		시장구분_문자열 = "2"
-	default:
-		panic(lib.New에러("예상하지 못한 시장 구분값 : '%v'", 시장_구분))
-	}
-
-	질의값 := lib.New질의값_문자열(TR조회, TR현물_종목_조회, 시장구분_문자열)
-	i응답값 := F질의_단일TR(질의값)
-
-	switch 값 := i응답값.(type) {
-	case *S현물_종목조회_응답_반복값_모음:
-		return 값.M배열, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
-}

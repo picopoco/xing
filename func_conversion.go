@@ -41,11 +41,68 @@ import (
 func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (해석값 interface{}, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 해석값 = nil }}.S실행()
 
+	var b []byte
+	if 바이트_변환값.G변환_형식() == lib.Raw {
+		lib.F확인(바이트_변환값.G값(&b))
+	}
+
 	자료형_문자열 := 바이트_변환값.G자료형_문자열()
 	시작_인덱스 := strings.Index(자료형_문자열, ".") + 1
 	자료형_문자열 = 자료형_문자열[시작_인덱스:]
 
 	switch 자료형_문자열 {
+	case P자료형_CSPAT00600OutBlock1:
+		return New현물_정상주문_응답1(b)
+	case P자료형_CSPAT00600OutBlock2:
+		return New현물_정상주문_응답2(b)
+	case P자료형_CSPAT00700OutBlock1:
+		return New현물_정정주문_응답1(b)
+	case P자료형_CSPAT00700OutBlock2:
+		return New현물_정정주문_응답2(b)
+	case P자료형_CSPAT00800OutBlock1:
+		return New현물_취소주문_응답1(b)
+	case P자료형_CSPAT00800OutBlock2:
+		return New현물_취소주문_응답2(b)
+	case P자료형_T0167OutBlock:
+		return New시간조회_응답(b)
+	case P자료형_T1101OutBlock:
+		return New현물_호가조회_응답(b)
+	case P자료형_T1102OutBlock:
+		return New현물_시세조회_응답(b)
+	case P자료형_T1305OutBlock:
+		return New현물_기간별_조회_응답_헤더(b)
+	case P자료형_T1305OutBlock1:
+		return New현물_기간별_조회_응답_반복값_모음(b)
+	case P자료형_T1310OutBlock:
+		return New현물_당일전일분틱조회_응답_헤더(b)
+	case P자료형_T1310OutBlock1:
+		return New현물_당일전일분틱조회_응답_반복값_모음(b)
+	case P자료형_T1902OutBlock:
+		return NewETF시간별_추이_응답_헤더(b)
+	case P자료형_T1902OutBlock1:
+		return NewETF시간별_추이_응답_반복값_모음(b)
+	case P자료형_T3320OutBlock:
+		return NewS기업정보_요약_응답1(b)
+	case P자료형_T3320OutBlock1:
+		return NewS기업정보_요약_응답2(b)
+	case P자료형_T8411OutBlock:
+		return New현물_차트_틱_응답_헤더(b)
+	case P자료형_T8411OutBlock1:
+		return New현물_차트_틱_응답_반복값_모음(b)
+	case P자료형_T8412OutBlock:
+		return New현물_차트_분_응답_헤더(b)
+	case P자료형_T8412OutBlock1:
+		return New현물_차트_분_응답_반복값_모음(b)
+	case P자료형_T8413OutBlock:
+		return New현물_차트_일주월_응답_헤더(b)
+	case P자료형_T8413OutBlock1:
+		return New현물_차트_일주월_응답_반복값_모음(b)
+	case P자료형_T8428OutBlock:
+		return New증시주변자금추이_응답_헤더(b)
+	case P자료형_T8428OutBlock1:
+		return New증시주변자금추이_응답_반복값_모음(b)
+	case P자료형_T8436OutBlock:
+		return New현물_종목조회_응답_반복값_모음(b)
 	case P자료형_S현물_주문_응답_실시간_정보:
 		s := new(S현물_주문_응답_실시간_정보)
 		lib.F확인(바이트_변환값.G값(s))
@@ -222,12 +279,16 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		s := new(S_ETF시간별_추이_응답_반복값_모음)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_T3320OutBlock:
-		s := new(T3320OutBlock)
+	case P자료형_S기업정보_요약_응답:
+		s := new(S기업정보_요약_응답)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_T3320OutBlock1:
-		s := new(T3320OutBlock1)
+	case P자료형_S기업정보_요약_응답1:
+		s := new(S기업정보_요약_응답1)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S기업정보_요약_응답2:
+		s := new(S기업정보_요약_응답2)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_차트_틱_응답:
@@ -353,4 +414,159 @@ func f2수정구분_모음(값 int64) (수정구분_모음 []T수정구분, 에�
 	}
 
 	return 수정구분_모음, nil
+}
+
+func f2매수매도(매수_매도 T매수_매도) (lib.T매수_매도, error) {
+	switch 매수_매도 {
+	case P매도:
+		return lib.P매도, nil
+	case P매수:
+		return lib.P매수, nil
+	default:
+		return lib.T매수_매도(0), lib.New에러("예상하지 못한 매수 매도 구분값. %v", 매수_매도)
+	}
+}
+
+func f2시장구분(값 interface{}) lib.T시장구분 {
+	문자열 := lib.F2문자열_EUC_KR_공백제거(값)
+
+	switch 문자열 {
+	case "KOSPI", "KOSPI200":
+		return lib.P시장구분_코스피
+	case "KOSDAQ":
+		return lib.P시장구분_코스닥
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '%v'", 문자열))
+	}
+}
+
+func f2Xing매수매도(매수_매도 lib.T매수_매도) T매수_매도 {
+	switch 매수_매도 {
+	case lib.P매도:
+		return P매도
+	case lib.P매수:
+		return P매수
+	default:
+		panic(lib.New에러("예상하지 못한 매수 매도 구분값. %v", 매수_매도))
+	}
+}
+
+func f2Xing주문조건(주문_조건 lib.T주문조건) T주문조건 {
+	switch 주문_조건 {
+	case lib.P주문조건_없음:
+		return P주문조건_없음
+	case lib.P주문조건_IOC:
+		return P주문조건_IOC
+	case lib.P주문조건_FOK:
+		return P주문조건_FOK
+	default:
+		panic(lib.New에러("예상하지 못한 신용거래_구분 값. %v", 주문_조건))
+	}
+}
+
+func f2주문조건(주문_조건 T주문조건) lib.T주문조건 {
+	switch 주문_조건 {
+	case P주문조건_없음:
+		return lib.P주문조건_없음
+	case P주문조건_IOC:
+		return lib.P주문조건_IOC
+	case P주문조건_FOK:
+		return lib.P주문조건_FOK
+	default:
+		panic(lib.New에러("예상하지 못한 주문_조건 값. %v", 주문_조건))
+	}
+}
+
+func f2Xing신용거래_구분(신용거래_구분 lib.T신용거래_구분) T신용거래_구분 {
+	switch 신용거래_구분 {
+	case lib.P신용거래_해당없음:
+		return P신용거래_아님
+	case lib.P신용거래_유통융자신규:
+		return P유통융자신규
+	case lib.P신용거래_자기융자신규:
+		return P자기융자신규
+	case lib.P신용거래_유통대주신규:
+		return P유통대주신규
+	case lib.P신용거래_자기대주신규:
+		return P자기대주신규
+	case lib.P신용거래_유통융자상환:
+		return P유통융자상환
+	case lib.P신용거래_자기융자상환:
+		return P자기융자상환
+	case lib.P신용거래_유통대주상환:
+		return P유통대주상환
+	case lib.P신용거래_자기대주상환:
+		return P자기대주상환
+	case lib.P신용거래_예탁담보대출상환:
+		return P예탁담보대출상환
+	default:
+		panic(lib.New에러("예상하지 못한 신용거래_구분 값. %v", 신용거래_구분))
+	}
+}
+
+func f2신용거래_구분(신용거래_구분 T신용거래_구분) lib.T신용거래_구분 {
+	switch 신용거래_구분 {
+	case P유통융자신규:
+		return lib.P신용거래_유통융자신규
+	case P자기융자신규:
+		return lib.P신용거래_자기융자신규
+	case P유통대주신규:
+		return lib.P신용거래_유통대주신규
+	case P자기대주신규:
+		return lib.P신용거래_자기대주신규
+	case P유통융자상환:
+		return lib.P신용거래_유통융자상환
+	case P자기융자상환:
+		return lib.P신용거래_자기융자상환
+	case P유통대주상환:
+		return lib.P신용거래_유통대주상환
+	}
+
+	return lib.P신용거래_해당없음
+}
+
+func f2Xing호가유형(호가_유형 lib.T호가유형) T호가유형 {
+	switch 호가_유형 {
+	case lib.P호가유형_지정가:
+		return P지정가
+	case lib.P호가유형_시장가:
+		return P시장가
+	case lib.P호가유형_조건부_지정가:
+		return P조건부_지정가
+	case lib.P호가유형_최유리_지정가:
+		return P최유리_지정가
+	case lib.P호가유형_최우선_지정가:
+		return P최우선_지정가
+	case lib.P호가유형_시간외종가_장개시전:
+		return P시간외종가_장개시전
+	case lib.P호가유형_시간외종가:
+		return P시간외종가
+	case lib.P호가유형_시간외단일가:
+		return P시간외단일가
+	default:
+		panic(lib.New에러("예상하지 못한 호가_유형 값. %v", 호가_유형))
+	}
+}
+
+func f2호가유형(호가_유형 T호가유형) lib.T호가유형 {
+	switch 호가_유형 {
+	case P지정가:
+		return lib.P호가유형_지정가
+	case P시장가:
+		return lib.P호가유형_시장가
+	case P조건부_지정가:
+		return lib.P호가유형_조건부_지정가
+	case P최유리_지정가:
+		return lib.P호가유형_최유리_지정가
+	case P최우선_지정가:
+		return lib.P호가유형_최우선_지정가
+	case P시간외종가_장개시전:
+		return lib.P호가유형_시간외종가_장개시전
+	case P시간외종가:
+		return lib.P호가유형_시간외종가
+	case P시간외단일가:
+		return lib.P호가유형_시간외단일가
+	default:
+		panic(lib.New에러("예상하지 못한 호가_유형 값. '%v'", 호가_유형))
+	}
 }

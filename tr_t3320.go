@@ -34,6 +34,8 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
+	"bytes"
+	"encoding/binary"
 	"github.com/ghts/lib"
 )
 
@@ -117,8 +119,14 @@ func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_�
 	}
 }
 
-func NewS기업정보_요약_응답1(g *T3320OutBlock) (값 *S기업정보_요약_응답1, 에러 error) {
+func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답1, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
+
+	lib.F조건부_패닉(len(b) != SizeT3320OutBlock,
+		"예상하지 못한 길이 : '%v", len(b))
+
+	g := new(T3320OutBlock)
+	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	값 = new(S기업정보_요약_응답1)
 	값.M업종구분명 = lib.F2문자열(g.Upgubunnm)
@@ -146,8 +154,14 @@ func NewS기업정보_요약_응답1(g *T3320OutBlock) (값 *S기업정보_요�
 	return 값, nil
 }
 
-func NewS기업정보_요약_응답2(g *T3320OutBlock1) (값 *S기업정보_요약_응답2, 에러 error) {
+func NewS기업정보_요약_응답2(b []byte) (값 *S기업정보_요약_응답2, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
+
+	lib.F조건부_패닉(len(b) != SizeT3320OutBlock1,
+		"예상하지 못한 길이 : '%v", len(b))
+
+	g := new(T3320OutBlock1)
+	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	값 = new(S기업정보_요약_응답2)
 	값.M기업코드      = lib.F2문자열(g.Gicode)

@@ -83,7 +83,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 		M에러: &에러,
 		M함수with내역: func(r interface{}) {
 			if 수신_메시지 != nil {
-				소켓REP_TR콜백.S회신_Raw(수신_메시지, lib.JSON, lib.New에러(r))
+				소켓REP_TR콜백.S회신Raw(수신_메시지, lib.JSON, lib.New에러(r))
 			}
 		}}.S실행()
 
@@ -99,7 +99,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 		case <-ch종료:
 			return
 		default:
-			수신_메시지, 에러 = 소켓REP_TR콜백.G수신_Raw()
+			수신_메시지, 에러 = 소켓REP_TR콜백.G수신Raw()
 			if 에러 != nil {
 				select {
 				case <-ch종료:
@@ -134,7 +134,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 				panic(lib.New에러("예상하지 못한 콜백 구분값 : '%v'", 콜백값.G콜백()))
 			}
 
-			소켓REP_TR콜백.S회신_Raw(수신_메시지, 변환_형식, lib.P신호_OK)
+			소켓REP_TR콜백.S회신Raw(수신_메시지, 변환_형식, lib.P신호_OK)
 		}
 	}
 }

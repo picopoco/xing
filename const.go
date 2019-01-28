@@ -806,8 +806,9 @@ const (
 	P자료형_S_ETF시간별_추이_응답_헤더      = "S_ETF시간별_추이_응답_헤더"
 	P자료형_S_ETF시간별_추이_응답_반복값     = "S_ETF시간별_추이_응답_반복값"
 	P자료형_S_ETF시간별_추이_응답_반복값_모음  = "S_ETF시간별_추이_응답_반복값_모음"
-	P자료형_T3320OutBlock          = "P자료형_T3320OutBlock"
-	P자료형_T3320OutBlock1         = "P자료형_T3320OutBlock1"
+	P자료형_S기업정보_요약_응답            = "S기업정보_요약_응답"
+	P자료형_S기업정보_요약_응답1           = "S기업정보_요약_응답1"
+	P자료형_S기업정보_요약_응답2           = "S기업정보_요약_응답2"
 	P자료형_S현물_차트_틱_응답            = "S현물_차트_틱_응답"
 	P자료형_S현물_차트_틱_응답_헤더         = "S현물_차트_틱_응답_헤더"
 	P자료형_S현물_차트_틱_응답_반복값        = "S현물_차트_틱_응답_반복값"
@@ -826,6 +827,33 @@ const (
 	P자료형_S증시_주변자금추이_응답_반복값_모음   = "S증시_주변자금추이_응답_반복값_모음"
 	P자료형_S현물_종목조회_응답_반복값        = "S현물_종목조회_응답_반복값"
 	P자료형_S현물_종목조회_응답_반복값_모음     = "S현물_종목조회_응답_반복값_모음"
+
+	P자료형_CSPAT00600OutBlock1 = "CSPAT00600OutBlock1"
+	P자료형_CSPAT00600OutBlock2 = "CSPAT00600OutBlock2"
+	P자료형_CSPAT00700OutBlock1 = "CSPAT00700OutBlock1"
+	P자료형_CSPAT00700OutBlock2 = "CSPAT00700OutBlock2"
+	P자료형_CSPAT00800OutBlock1 = "CSPAT00800OutBlock1"
+	P자료형_CSPAT00800OutBlock2 = "CSPAT00800OutBlock2"
+	P자료형_T0167OutBlock       = "T0167OutBlock"
+	P자료형_T1101OutBlock       = "T1101OutBlock"
+	P자료형_T1102OutBlock       = "T1102OutBlock"
+	P자료형_T1305OutBlock       = "T1305OutBlock"
+	P자료형_T1305OutBlock1      = "T1305OutBlock1"
+	P자료형_T1310OutBlock       = "T1310OutBlock"
+	P자료형_T1310OutBlock1      = "T1310OutBlock1"
+	P자료형_T1902OutBlock       = "T1902OutBlock"
+	P자료형_T1902OutBlock1      = "T1902OutBlock1"
+	P자료형_T3320OutBlock       = "T3320OutBlock"
+	P자료형_T3320OutBlock1      = "T3320OutBlock1"
+	P자료형_T8411OutBlock       = "T8411OutBlock"
+	P자료형_T8411OutBlock1      = "T8411OutBlock1"
+	P자료형_T8412OutBlock       = "T8412OutBlock"
+	P자료형_T8412OutBlock1      = "T8412OutBlock1"
+	P자료형_T8413OutBlock       = "T8413OutBlock"
+	P자료형_T8413OutBlock1      = "T8413OutBlock1"
+	P자료형_T8428OutBlock       = "T8428OutBlock"
+	P자료형_T8428OutBlock1      = "T8428OutBlock1"
+	P자료형_T8436OutBlock       = "T8436OutBlock"
 )
 
 type T콜백 uint8
@@ -976,11 +1004,11 @@ const (
 	SizeCSPAT00800InBlock1  = int(unsafe.Sizeof(CSPAT00800InBlock1{}))
 	SizeCSPAT00800OutBlock1 = int(unsafe.Sizeof(CSPAT00800OutBlock1{}))
 	SizeCSPAT00800OutBlock2 = int(unsafe.Sizeof(CSPAT00800OutBlock2{}))
+	SizeT0167OutBlock       = int(unsafe.Sizeof(T0167OutBlock{}))
 	SizeT1101InBlock        = int(unsafe.Sizeof(T1101InBlock{}))
+	SizeT1101OutBlock       = int(unsafe.Sizeof(T1101OutBlock{}))
 	SizeT1102InBlock        = int(unsafe.Sizeof(T1102InBlock{}))
-	SizeT1301InBlock        = int(unsafe.Sizeof(T1301InBlock{}))
-	SizeT1301OutBlock       = int(unsafe.Sizeof(T1301OutBlock{}))
-	SizeT1301OutBlock1      = int(unsafe.Sizeof(T1301OutBlock1{}))
+	SizeT1102OutBlock       = int(unsafe.Sizeof(T1102OutBlock{}))
 	SizeT1305InBlock        = int(unsafe.Sizeof(T1305InBlock{}))
 	SizeT1305OutBlock       = int(unsafe.Sizeof(T1305OutBlock{}))
 	SizeT1305OutBlock1      = int(unsafe.Sizeof(T1305OutBlock1{}))
