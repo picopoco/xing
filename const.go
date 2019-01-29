@@ -33,6 +33,7 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
+import "C"
 import (
 	"github.com/ghts/lib"
 	"unsafe"
@@ -63,7 +64,6 @@ const (
 	TR계좌_이름
 	TR계좌_상세명
 	TR소켓_테스트
-	TR전일_당일
 	TR_10분_쿼터_잔여량
 )
 
@@ -107,8 +107,6 @@ func TR구분_String(v lib.TR구분) string {
 		return "계좌_상세명"
 	case TR소켓_테스트:
 		return "신호"
-	case TR전일_당일:
-		return "당일_전일"
 	case TR_10분_쿼터_잔여량:
 		return "10분 쿼터 잔여량"
 	default:
@@ -766,7 +764,6 @@ const (
 	P자료형_S질의값_취소_주문         = "S질의값_취소_주문"
 	P자료형_S질의값_현물_전일당일_분틱_조회 = "S질의값_현물_전일당일_분틱_조회"
 	P자료형_S질의값_현물_기간별_조회     = "S질의값_현물_기간별_조회"
-	P자료형_S질의값_단일종목_연속키      = "S질의값_단일종목_연속키"
 	P자료형_S질의값_현물_차트_틱       = "S질의값_현물_차트_틱"
 	P자료형_S질의값_현물_차트_분       = "S질의값_현물_차트_분"
 	P자료형_S질의값_현물_차트_일주월     = "S질의값_현물_차트_일주월"
@@ -995,6 +992,22 @@ func (p T수정구분) String() string {
 }
 
 const (
+	Sizeof_C_TR_DATA        = 107 // C.sizeof_TR_DATA
+	Sizeof_C_MSG_DATA       = 26  // C.sizeof_MSG_DATA
+	Sizeof_C_REALTIME_DATA  = 86  // C.sizeof_REALTIME_DATA
+	SizeSC0_OutBlock        = int(unsafe.Sizeof(SC0_OutBlock{}))
+	SizeSC1_OutBlock        = int(unsafe.Sizeof(SC1_OutBlock{}))
+	SizeSC2_OutBlock        = int(unsafe.Sizeof(SC2_OutBlock{}))
+	SizeSC3_OutBlock        = int(unsafe.Sizeof(SC3_OutBlock{}))
+	SizeSC4_OutBlock        = int(unsafe.Sizeof(SC4_OutBlock{}))
+	SizeH1_OutBlock         = int(unsafe.Sizeof(H1_OutBlock{}))
+	SizeH2_OutBlock         = int(unsafe.Sizeof(H2_OutBlock{}))
+	SizeS3_OutBlock         = int(unsafe.Sizeof(S3_OutBlock{}))
+	SizeYS3OutBlock         = int(unsafe.Sizeof(YS3OutBlock{}))
+	SizeI5_OutBlock         = int(unsafe.Sizeof(I5_OutBlock{}))
+	SizeVI_OutBlock         = int(unsafe.Sizeof(VI_OutBlock{}))
+	SizeDVIOutBlock         = int(unsafe.Sizeof(DVIOutBlock{}))
+	SizeJIFOutBlock         = int(unsafe.Sizeof(JIFOutBlock{}))
 	SizeCSPAT00600InBlock1  = int(unsafe.Sizeof(CSPAT00600InBlock1{}))
 	SizeCSPAT00600OutBlock1 = int(unsafe.Sizeof(CSPAT00600OutBlock1{}))
 	SizeCSPAT00600OutBlock2 = int(unsafe.Sizeof(CSPAT00600OutBlock2{}))

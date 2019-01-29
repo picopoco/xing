@@ -40,6 +40,11 @@ import (
 	"time"
 )
 
+func TestS질의값_정상_주문(t *testing.T) {
+	_, ok := interface{}(new(S질의값_정상_주문)).(lib.I질의값)
+	lib.F테스트_참임(t, ok)
+}
+
 func TestCSPAT00600현물_정상_주문(t *testing.T) {
 	if !F한국증시_정규시장_거래시간임() {
 		t.SkipNow()

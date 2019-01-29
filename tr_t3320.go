@@ -41,8 +41,8 @@ import (
 
 type S기업정보_요약_응답 struct {
 	M종목코드 string
-	M응답1 *S기업정보_요약_응답1
-	M응답2 *S기업정보_요약_응답2
+	M응답1  *S기업정보_요약_응답1
+	M응답2  *S기업정보_요약_응답2
 }
 
 func (s *S기업정보_요약_응답) G응답1() I이중_응답1 { return s.M응답1 }
@@ -75,9 +75,9 @@ type S기업정보_요약_응답1 struct {
 func (s *S기업정보_요약_응답1) G응답1() I이중_응답1 { return s }
 
 type S기업정보_요약_응답2 struct {
-	M기업코드     string
-	M결산년월     string
-	M결산구분     string
+	M기업코드    string
+	M결산년월    string
+	M결산구분    string
 	PER      float64
 	EPS      float64
 	PBR      float64
@@ -85,7 +85,7 @@ type S기업정보_요약_응답2 struct {
 	ROE      float64
 	EBITDA   float64
 	EVEBITDA float64
-	M액면가      float64
+	M액면가     float64
 	SPS      float64
 	CPS      float64
 	BPS      float64
@@ -93,7 +93,7 @@ type S기업정보_요약_응답2 struct {
 	T_EPS    float64
 	PEG      float64
 	T_PEG    float64
-	M최근분기년도   string
+	M최근분기년도  string
 }
 
 func (s *S기업정보_요약_응답2) G응답2() I이중_응답2 { return s }
@@ -136,20 +136,20 @@ func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답
 	값.M본사주소 = lib.F2문자열(g.Baddress)
 	값.M본사전화번호 = lib.F2문자열(g.Btelno)
 	값.M최근결산년도 = lib.F2문자열(g.Gsyyyy)
-	값.M결산월    = lib.F2문자열(g.Gsmm)
+	값.M결산월 = lib.F2문자열(g.Gsmm)
 	값.M최근결산년월 = lib.F2문자열(g.Gsym)
-	값.M주당액면가  = lib.F2정수64_단순형(g.Lstprice)
-	값.M주식수    = lib.F2정수64_단순형(g.Gstock)
-	값.M홈페이지   = lib.F2문자열(g.Homeurl)
-	값.M그룹명    = lib.F2문자열(g.Grdnm)
-	값.M외국인  = lib.F2실수_단순형(g.Foreignratio)
-	값.M주담전화   = lib.F2문자열(g.Irtel)
-	값.M자본금    = lib.F2실수_단순형(g.Capital)
-	값.M시가총액   = lib.F2실수_단순형(g.Sigavalue)
-	값.M배당금    = lib.F2실수_단순형(g.Cashsis)
-	값.M배당수익율  = lib.F2실수_단순형(g.Cashrate)
-	값.M현재가    = lib.F2정수64_단순형(g.Price)
-	값.M전일종가   = lib.F2정수64_단순형(g.Jnilclose)
+	값.M주당액면가 = lib.F2정수64_단순형(g.Lstprice)
+	값.M주식수 = lib.F2정수64_단순형(g.Gstock)
+	값.M홈페이지 = lib.F2문자열(g.Homeurl)
+	값.M그룹명 = lib.F2문자열(g.Grdnm)
+	값.M외국인 = lib.F2실수_단순형(g.Foreignratio)
+	값.M주담전화 = lib.F2문자열(g.Irtel)
+	값.M자본금 = lib.F2실수_단순형(g.Capital)
+	값.M시가총액 = lib.F2실수_단순형(g.Sigavalue)
+	값.M배당금 = lib.F2실수_단순형(g.Cashsis)
+	값.M배당수익율 = lib.F2실수_단순형(g.Cashrate)
+	값.M현재가 = lib.F2정수64_단순형(g.Price)
+	값.M전일종가 = lib.F2정수64_단순형(g.Jnilclose)
 
 	return 값, nil
 }
@@ -164,25 +164,25 @@ func NewS기업정보_요약_응답2(b []byte) (값 *S기업정보_요약_응답
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	값 = new(S기업정보_요약_응답2)
-	값.M기업코드      = lib.F2문자열(g.Gicode)
-	값.M결산년월      = lib.F2문자열(g.Gsym)
-	값.M결산구분      = lib.F2문자열(g.Gsgb)
-	값.PER      = lib.F2실수_단순형(g.Per)
-	값.EPS      = lib.F2실수_단순형(g.Eps)
-	값.PBR      = lib.F2실수_단순형(g.Pbr)
-	값.ROA      = lib.F2실수_단순형(g.Roa)
-	값.ROE      = lib.F2실수_단순형(g.Roe)
-	값.EBITDA   = lib.F2실수_단순형(g.Ebitda)
+	값.M기업코드 = lib.F2문자열(g.Gicode)
+	값.M결산년월 = lib.F2문자열(g.Gsym)
+	값.M결산구분 = lib.F2문자열(g.Gsgb)
+	값.PER = lib.F2실수_단순형(g.Per)
+	값.EPS = lib.F2실수_단순형(g.Eps)
+	값.PBR = lib.F2실수_단순형(g.Pbr)
+	값.ROA = lib.F2실수_단순형(g.Roa)
+	값.ROE = lib.F2실수_단순형(g.Roe)
+	값.EBITDA = lib.F2실수_단순형(g.Ebitda)
 	값.EVEBITDA = lib.F2실수_단순형(g.Evebitda)
-	값.M액면가      = lib.F2실수_단순형(g.Par)
-	값.SPS      = lib.F2실수_단순형(g.Sps)
-	값.CPS      = lib.F2실수_단순형(g.Cps)
-	값.BPS      = lib.F2실수_단순형(g.Bps)
-	값.T_PER    = lib.F2실수_단순형(g.Tper)
-	값.T_EPS    = lib.F2실수_단순형(g.Teps)
-	값.PEG      = lib.F2실수_단순형(g.Peg)
-	값.T_PEG    = lib.F2실수_단순형(g.Tpeg)
-	값.M최근분기년도    = lib.F2문자열(g.Tgsym)
+	값.M액면가 = lib.F2실수_단순형(g.Par)
+	값.SPS = lib.F2실수_단순형(g.Sps)
+	값.CPS = lib.F2실수_단순형(g.Cps)
+	값.BPS = lib.F2실수_단순형(g.Bps)
+	값.T_PER = lib.F2실수_단순형(g.Tper)
+	값.T_EPS = lib.F2실수_단순형(g.Teps)
+	값.PEG = lib.F2실수_단순형(g.Peg)
+	값.T_PEG = lib.F2실수_단순형(g.Tpeg)
+	값.M최근분기년도 = lib.F2문자열(g.Tgsym)
 
 	return 값, nil
 }

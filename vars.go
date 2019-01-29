@@ -41,17 +41,17 @@ import (
 )
 
 var (
-	소켓REP_TR콜백 lib.I소켓_Raw
+	소켓REP_TR콜백 lib.I소켓Raw
 	소켓REQ_저장소  = lib.New소켓_저장소(20, func() lib.I소켓_질의 {
 		return lib.NewNano소켓REQ_단순형(lib.P주소_Xing_C함수_호출, lib.P30초)
 	})
-	소켓SUB_주문처리 lib.I소켓
+	소켓SUB_실시간_정보 lib.I소켓Raw
 
 	ch신호_C32_모음 []chan T신호_C32
 
-	대기소_C32 = new대기_TR_저장소_C32()
+	대기소_C32 = newC32_콜백_대기_저장소()
 
-	전일, 당일 lib.I안전한_시각
+	전일, 당일    lib.I안전한_시각
 	최근_영업일_모음 []time.Time
 
 	xing_C32_실행_잠금 sync.Mutex

@@ -38,12 +38,26 @@ import (
 	"strings"
 )
 
+func f2주문_응답_구분(값 [8]byte) T주문_응답_구분 {
+	switch lib.F2문자열(값) {
+	case "SONAT000":
+		return P주문_응답_신규_주문
+	case "SONAT001":
+		return P주문_응답_정정_주문
+	case "SONAT002":
+		return P주문_응답_취소_주문
+	case "SONAS100":
+		return P주문_응답_체결_확인
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '%v", 값))
+	}
+}
+
 func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (해석값 interface{}, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 해석값 = nil }}.S실행()
 
-	var b []byte
 	if 바이트_변환값.G변환_형식() == lib.Raw {
-		lib.F확인(바이트_변환값.G값(&b))
+		return f바이트_변환값_해석Raw(바이트_변환값)
 	}
 
 	자료형_문자열 := 바이트_변환값.G자료형_문자열()
@@ -51,58 +65,6 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 	자료형_문자열 = 자료형_문자열[시작_인덱스:]
 
 	switch 자료형_문자열 {
-	case P자료형_CSPAT00600OutBlock1:
-		return New현물_정상주문_응답1(b)
-	case P자료형_CSPAT00600OutBlock2:
-		return New현물_정상주문_응답2(b)
-	case P자료형_CSPAT00700OutBlock1:
-		return New현물_정정주문_응답1(b)
-	case P자료형_CSPAT00700OutBlock2:
-		return New현물_정정주문_응답2(b)
-	case P자료형_CSPAT00800OutBlock1:
-		return New현물_취소주문_응답1(b)
-	case P자료형_CSPAT00800OutBlock2:
-		return New현물_취소주문_응답2(b)
-	case P자료형_T0167OutBlock:
-		return New시간조회_응답(b)
-	case P자료형_T1101OutBlock:
-		return New현물_호가조회_응답(b)
-	case P자료형_T1102OutBlock:
-		return New현물_시세조회_응답(b)
-	case P자료형_T1305OutBlock:
-		return New현물_기간별_조회_응답_헤더(b)
-	case P자료형_T1305OutBlock1:
-		return New현물_기간별_조회_응답_반복값_모음(b)
-	case P자료형_T1310OutBlock:
-		return New현물_당일전일분틱조회_응답_헤더(b)
-	case P자료형_T1310OutBlock1:
-		return New현물_당일전일분틱조회_응답_반복값_모음(b)
-	case P자료형_T1902OutBlock:
-		return NewETF시간별_추이_응답_헤더(b)
-	case P자료형_T1902OutBlock1:
-		return NewETF시간별_추이_응답_반복값_모음(b)
-	case P자료형_T3320OutBlock:
-		return NewS기업정보_요약_응답1(b)
-	case P자료형_T3320OutBlock1:
-		return NewS기업정보_요약_응답2(b)
-	case P자료형_T8411OutBlock:
-		return New현물_차트_틱_응답_헤더(b)
-	case P자료형_T8411OutBlock1:
-		return New현물_차트_틱_응답_반복값_모음(b)
-	case P자료형_T8412OutBlock:
-		return New현물_차트_분_응답_헤더(b)
-	case P자료형_T8412OutBlock1:
-		return New현물_차트_분_응답_반복값_모음(b)
-	case P자료형_T8413OutBlock:
-		return New현물_차트_일주월_응답_헤더(b)
-	case P자료형_T8413OutBlock1:
-		return New현물_차트_일주월_응답_반복값_모음(b)
-	case P자료형_T8428OutBlock:
-		return New증시주변자금추이_응답_헤더(b)
-	case P자료형_T8428OutBlock1:
-		return New증시주변자금추이_응답_반복값_모음(b)
-	case P자료형_T8436OutBlock:
-		return New현물_종목조회_응답_반복값_모음(b)
 	case P자료형_S현물_주문_응답_실시간_정보:
 		s := new(S현물_주문_응답_실시간_정보)
 		lib.F확인(바이트_변환값.G값(s))
@@ -125,10 +87,6 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		return s, nil
 	case P자료형_S질의값_현물_기간별_조회:
 		s := new(S질의값_현물_기간별_조회)
-		lib.F확인(바이트_변환값.G값(s))
-		return s, nil
-	case P자료형_S질의값_단일종목_연속키:
-		s := new(S질의값_단일종목_연속키)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_현물_차트_틱:
@@ -366,6 +324,106 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 	}
 
 	return lib.F바이트_변환값_해석(바이트_변환값)
+}
+
+func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) (해석값 interface{}, 에러 error) {
+	var b []byte
+	lib.F확인(바이트_변환값.G값(&b))
+
+	자료형_문자열 := 바이트_변환값.G자료형_문자열()
+	시작_인덱스 := strings.Index(자료형_문자열, ".") + 1
+	자료형_문자열 = 자료형_문자열[시작_인덱스:]
+
+	switch 자료형_문자열 {
+	case RT현물_주문_접수:
+		return New현물_주문_접수(b)
+	case RT현물_주문_체결:
+		return New현물_주문_체결(b)
+	case RT현물_주문_정정:
+		return New현물_주문_정정(b)
+	case RT현물_주문_취소:
+		return New현물_주문_취소(b)
+	case RT현물_주문_거부:
+		return New현물_주문_거부(b)
+	case RT코스피_호가_잔량:
+		return New코스피_호가_잔량(b)
+	case RT코스피_시간외_호가_잔량:
+		return New코스피_시간외_호가_잔량(b)
+	case RT코스피_체결:
+		return New코스피_체결(b)
+	case RT코스피_예상_체결:
+		return New코스피_예상_체결(b)
+	case RT코스피_ETF_NAV:
+		return New코스피_ETF_NAV(b)
+	case RT주식_VI발동해제:
+		return New주식_VI발동해제(b)
+	case RT시간외_단일가VI발동해제:
+		return New시간외_단일가VI발동해제(b)
+	case RT장_운영정보:
+		return New장_운영정보(b)
+	case RT코스닥_체결, RT코스닥_예상_체결,
+		RT코스피_거래원, RT코스닥_거래원,
+		RT코스피_기세, RT코스닥_LP호가,
+		RT코스닥_호가잔량, RT코스닥_시간외_호가잔량,
+		RT지수, RT예상지수,
+		RT실시간_뉴스_제목_패킷,
+		RT업종별_투자자별_매매_현황:
+		return nil, lib.New에러("미구현 RT코드 : '%v'", 자료형_문자열)
+	case P자료형_CSPAT00600OutBlock1:
+		return New현물_정상주문_응답1(b)
+	case P자료형_CSPAT00600OutBlock2:
+		return New현물_정상주문_응답2(b)
+	case P자료형_CSPAT00700OutBlock1:
+		return New현물_정정주문_응답1(b)
+	case P자료형_CSPAT00700OutBlock2:
+		return New현물_정정주문_응답2(b)
+	case P자료형_CSPAT00800OutBlock1:
+		return New현물_취소주문_응답1(b)
+	case P자료형_CSPAT00800OutBlock2:
+		return New현물_취소주문_응답2(b)
+	case P자료형_T0167OutBlock:
+		return New시간조회_응답(b)
+	case P자료형_T1101OutBlock:
+		return New현물_호가조회_응답(b)
+	case P자료형_T1102OutBlock:
+		return New현물_시세조회_응답(b)
+	case P자료형_T1305OutBlock:
+		return New현물_기간별_조회_응답_헤더(b)
+	case P자료형_T1305OutBlock1:
+		return New현물_기간별_조회_응답_반복값_모음(b)
+	case P자료형_T1310OutBlock:
+		return New현물_당일전일분틱조회_응답_헤더(b)
+	case P자료형_T1310OutBlock1:
+		return New현물_당일전일분틱조회_응답_반복값_모음(b)
+	case P자료형_T1902OutBlock:
+		return NewETF시간별_추이_응답_헤더(b)
+	case P자료형_T1902OutBlock1:
+		return NewETF시간별_추이_응답_반복값_모음(b)
+	case P자료형_T3320OutBlock:
+		return NewS기업정보_요약_응답1(b)
+	case P자료형_T3320OutBlock1:
+		return NewS기업정보_요약_응답2(b)
+	case P자료형_T8411OutBlock:
+		return New현물_차트_틱_응답_헤더(b)
+	case P자료형_T8411OutBlock1:
+		return New현물_차트_틱_응답_반복값_모음(b)
+	case P자료형_T8412OutBlock:
+		return New현물_차트_분_응답_헤더(b)
+	case P자료형_T8412OutBlock1:
+		return New현물_차트_분_응답_반복값_모음(b)
+	case P자료형_T8413OutBlock:
+		return New현물_차트_일주월_응답_헤더(b)
+	case P자료형_T8413OutBlock1:
+		return New현물_차트_일주월_응답_반복값_모음(b)
+	case P자료형_T8428OutBlock:
+		return New증시주변자금추이_응답_헤더(b)
+	case P자료형_T8428OutBlock1:
+		return New증시주변자금추이_응답_반복값_모음(b)
+	case P자료형_T8436OutBlock:
+		return New현물_종목조회_응답_반복값_모음(b)
+	default:
+		return nil, lib.New에러with출력("예상하지 못한 자료형. '%v'\n", 자료형_문자열)
+	}
 }
 
 func f2수정구분_모음(값 int64) (수정구분_모음 []T수정구분, 에러 error) {

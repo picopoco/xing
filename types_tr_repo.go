@@ -15,7 +15,7 @@ GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
 
-Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
+Copyright (C) 2015~2017년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
@@ -33,46 +33,45 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import "github.com/ghts/lib"
+// #include "./types_c.h"
+import "C"
 
-func go_RT_주문처리결과(ch초기화 chan lib.T신호) {
-	ch종료 := lib.F공통_종료_채널()
-	ch초기화 <- lib.P신호_초기화
+import (
+	"github.com/ghts/lib"
+	"sync"
+)
 
-	var 수신값 *lib.S바이트_변환_모음
-	var 주문_처리_결과 *S현물_주문_응답_실시간_정보
-	var 에러 error
+// (xing_C32과의 TR&콜백이 아닌) 모듈로부터 소켓으로 들어오는 TR질의 저장
+type s소켓_메시지_대기_저장소 struct {
+	sync.Mutex
+	저장소 map[*lib.S바이트_변환_모음]chan *lib.S바이트_변환_모음
+}
 
-	for {
-		select {
-		case <-ch종료:
-			return
-		default:
-			수신값, 에러 = 소켓SUB_주문처리.G수신()
-			if 에러 != nil {
-				select {
-				case <-ch종료:
-					에러 = nil
-					return
-				default:
-					lib.F에러_출력(lib.New에러(에러))
-					continue
-				}
-			}
+func (s *s소켓_메시지_대기_저장소) S추가(메시지 *lib.S바이트_변환_모음, ch수신 chan *lib.S바이트_변환_모음) {
+	s.Lock()
+	defer s.Unlock()
+	s.저장소[메시지] = ch수신
+}
 
-			lib.F조건부_패닉(수신값.G수량() != 1, "메시지 길이 : 예상값 1, 실제값 %v.", 수신값.G수량())
+func (s *s소켓_메시지_대기_저장소) S재전송() {
+	s.Lock()
+	defer s.Unlock()
 
-			if 수신값.G자료형_문자열(0) != P자료형_S현물_주문_응답_실시간_정보 {
-				continue
-			}
+	for 메시지, ch수신 := range s.저장소 {
+		s.s재전송_도우미(메시지, ch수신)
+	}
+}
 
-			주문_처리_결과 = new(S현물_주문_응답_실시간_정보)
-			if 에러 = 수신값.G값(0, 주문_처리_결과); 에러 != nil {
-				lib.F에러_출력(에러)
-				continue
-			}
+func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 *lib.S바이트_변환_모음, ch수신 chan *lib.S바이트_변환_모음) {
+	// 채널이 이미 닫힌 경우 송신할 때 패닉이 발생함.
+	// 그럴 경우에는 해당 메시지를 대기목록에서 삭제함.
+	defer lib.S예외처리{M함수: func() { delete(s.저장소, 메시지) }}.S실행()
 
-			//체크(주문_처리_결과.RT코드, 주문_처리_결과.M응답_구분, 주문_처리_결과.M주문번호, 주문_처리_결과.M원_주문번호, 주문_처리_결과.M수량, 주문_처리_결과.M잔량)
-		}
+	select {
+	case ch수신 <- 메시지:
+		// 중계 성공한 메시지는 대기열에서 삭제.
+		delete(s.저장소, 메시지)
+	default:
+		// 중계 실패. 저장소에 그대로 두고 추후 재전송 시도.
 	}
 }

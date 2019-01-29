@@ -79,13 +79,11 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 	var 수신_메시지 *mangos.Message // 최대한 재활용 해야 성능 문제를 걱정할 필요가 없어진다.
 
 	defer func() { ch도우미_종료 <- 에러 }()
-	defer lib.S예외처리{
-		M에러: &에러,
-		M함수with내역: func(r interface{}) {
-			if 수신_메시지 != nil {
-				소켓REP_TR콜백.S회신Raw(수신_메시지, lib.JSON, lib.New에러(r))
-			}
-		}}.S실행()
+	defer lib.S예외처리{M에러: &에러, M함수: func() {
+		if 수신_메시지 != nil {
+			소켓REP_TR콜백.S회신Raw(수신_메시지, lib.JSON, 에러)
+		}
+	}}.S실행()
 
 	var 콜백값 I콜백
 	var ok bool
@@ -106,7 +104,7 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 					에러 = nil
 					return
 				default:
-					lib.F에러_출력(lib.New에러(에러))
+					lib.New에러with출력(에러)
 					continue
 				}
 			}

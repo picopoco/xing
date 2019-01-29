@@ -38,7 +38,22 @@ import (
 	"time"
 )
 
+type S현물_주문_응답_실시간_정보 struct { // 'SCn'
+	RT코드    string
+	M주문번호   int64
+	M원_주문번호 int64
+	M응답_구분  T주문_응답_구분
+	M종목코드   string
+	M수량     int64
+	M가격     int64
+	M잔량     int64
+	M시각     time.Time
+}
+
+func (s S현물_주문_응답_실시간_정보) TR코드() string { return s.RT코드 }
+
 type S코스피_호가_잔량_실시간_정보 struct {
+	RT코드     string
 	M종목코드    string
 	M시각      time.Time
 	M동시호가_구분 T동시호가_구분
@@ -51,6 +66,8 @@ type S코스피_호가_잔량_실시간_정보 struct {
 	M매수_총잔량  int64
 }
 
+func (s S코스피_호가_잔량_실시간_정보) TR코드() string { return RT코스피_호가_잔량 }
+
 type S코스피_시간외_호가_잔량_실시간_정보 struct {
 	M종목코드      string
 	M시각        time.Time
@@ -58,6 +75,10 @@ type S코스피_시간외_호가_잔량_실시간_정보 struct {
 	M매수잔량      int64
 	M매도수량_직전대비 int64
 	M매수수량_직전대비 int64
+}
+
+func (s S코스피_시간외_호가_잔량_실시간_정보) TR코드() string {
+	return RT코스피_시간외_호가_잔량
 }
 
 type S코스피_체결 struct {
@@ -89,6 +110,8 @@ type S코스피_체결 struct {
 	M전일동시간대거래량 int64
 }
 
+func (s S코스피_체결) TR코드() string { return RT코스피_체결 }
+
 type S코스피_예상_체결 struct {
 	M종목코드           string
 	M시각             time.Time
@@ -102,6 +125,8 @@ type S코스피_예상_체결 struct {
 	M예상매도호가수량       int64
 	M예상매수호가수량       int64
 }
+
+func (s S코스피_예상_체결) TR코드() string { return RT코스피_예상_체결 }
 
 type S코스피_ETF_NAV struct {
 	M종목코드      string
@@ -120,6 +145,8 @@ type S코스피_ETF_NAV struct {
 	M지수전일대비등락율 float64
 }
 
+func (s S코스피_ETF_NAV) TR코드() string { return RT코스피_ETF_NAV }
+
 type S주식_VI발동해제 struct {
 	M종목코드        string
 	M참조코드        string
@@ -129,6 +156,8 @@ type S주식_VI발동해제 struct {
 	M동적VI발동_기준가격 int64
 	VI발동가격       int64
 }
+
+func (s S주식_VI발동해제) TR코드() string { return RT주식_VI발동해제 }
 
 type S시간외_단일가VI발동해제 struct {
 	M종목코드        string
@@ -140,7 +169,13 @@ type S시간외_단일가VI발동해제 struct {
 	VI발동가격       int64
 }
 
+func (s S시간외_단일가VI발동해제) TR코드() string {
+	return RT시간외_단일가VI발동해제
+}
+
 type S장_운영정보 struct {
 	M장_구분 T시장구분
 	M장_상태 T시장상태
 }
+
+func (s S장_운영정보) TR코드() string { return RT장_운영정보 }

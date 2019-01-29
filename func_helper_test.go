@@ -86,7 +86,7 @@ func TestF계좌_XX(t *testing.T) {
 func TestF_10분_쿼터_잔여량(t *testing.T) {
 	t.Parallel()
 
-	for i:=0 ; i<10000 ; i++ {
+	for i := 0; i < 10000; i++ {
 		잔여량_모음, 에러 := F_10분_쿼터_잔여량([]string{TR현물_차트_틱, TR현물_정상_주문})
 
 		lib.F테스트_에러없음(t, 에러)
@@ -122,4 +122,10 @@ func TestC32_재시작(t *testing.T) {
 	t.SkipNow()
 
 	lib.F테스트_에러없음(t, C32_재시작())
+}
+
+func TestF초기화_Go_C_자료형_크기_비교(t *testing.T) {
+	t.Parallel()
+
+	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
 }

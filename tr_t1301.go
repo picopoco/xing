@@ -33,13 +33,52 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import (
-	"github.com/ghts/lib"
-	"testing"
-)
+import "time"
 
-func TestF초기화_Go_C_자료형_크기_비교(t *testing.T) {
-	t.Parallel()
+// t1301 현물 시간대별 체결 응답
+type S현물_시간대별_체결_응답 struct {
+	M헤더     *S현물_시간대별_체결_응답_헤더
+	M반복값_모음 *S현물_시간대별_체결_응답_반복값_모음
+}
 
-	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
+func (s *S현물_시간대별_체결_응답) G헤더_TR데이터() I헤더_TR데이터 {
+	return s.M헤더
+}
+func (s *S현물_시간대별_체결_응답) G반복값_TR데이터() I반복값_모음_TR데이터 {
+	return s.M반복값_모음
+}
+
+// t1301 현물 시간대별 체결 응답 헤더
+type S현물_시간대별_체결_응답_헤더 struct {
+	M연속키 string
+}
+
+func (s *S현물_시간대별_체결_응답_헤더) G헤더_TR데이터() I헤더_TR데이터 {
+	return s
+}
+
+// t1301 현물 시간대별 체결 응답 반복값
+type S현물_시간대별_체결_응답_반복값 struct {
+	M시각      time.Time
+	M현재가     int64
+	M전일대비구분  T전일대비_구분
+	M전일대비등락폭 int64
+	M전일대비등락율 float64
+	M체결수량    int64
+	M체결강도    float64
+	M거래량     int64
+	M매도체결수량  int64
+	M매도체결건수  int64
+	M매수체결수량  int64
+	M매수체결건수  int64
+	M순체결량    int64
+	M순체결건수   int64
+}
+
+type S현물_시간대별_체결_응답_반복값_모음 struct {
+	M배열 []*S현물_시간대별_체결_응답_반복값
+}
+
+func (s *S현물_시간대별_체결_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
+	return s
 }

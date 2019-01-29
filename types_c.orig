@@ -37,23 +37,16 @@ package xing
 // #include "./types_c.h"
 import "C"
 
-// 메모리를 압축사용하는 '#pragma pack(push, 1)'을 적용한 경우 Go언어에서 읽을 수 없으며,
-// Go언어에서 읽을 수 있도록 기본 메모리 저장방식을 사용하는 같은 내용의 구조체를 '_UNPACKED'로 선언.
-
+// '#pragma pack(push, 1)'을 적용한 메모리 압축 자료형은 Go언어에서 직접 읽을 수 없음
+// Go언어에서 사용하려면 기본 메모리 저장방식을 사용하는 '_UNPACKED' 자료형을 사용함.
+// 메모리 저장 방식으로 변환은 xing_C32 패키지 내 콜백 Go 함수에서 binary.encoding 로 수행.
 //------------------------------------------------------------------------------
 // 기본 구조체
 //------------------------------------------------------------------------------
 
-// 자동변환 시 오류가 발생하는 경우, 코멘트 처리.
-
-//type TR_DATA C.TR_DATA_UNPACKED
-//type MSG_DATA C.MSG_DATA_UNPACKEDD
-//type REALTIME_DATA C.REALTIME_DATA_UNPACKED
-
-//type TR_DATA_PACKED C.TR_DATA
-//type REALTIME_DATA_PACKED C.REALTIME_DATA
-//type MSG_DATA_PACKED C.MSG_DATA
-type LINK_DATA C.LINK_DATA
+type TR_DATA C.TR_DATA_UNPACKED
+type MSG_DATA C.MSG_DATA_UNPACKED
+type REALTIME_DATA C.REALTIME_DATA_UNPACKED
 
 //------------------------------------------------------------------------------
 // 주식 주문 관련 TR 구조체

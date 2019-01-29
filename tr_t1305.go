@@ -188,10 +188,25 @@ func New질의값_현물_기간별_조회() *S질의값_현물_기간별_조회 
 	return s
 }
 
+func NewT1305InBlock(질의값 *S질의값_현물_기간별_조회) (g *T1305InBlock) {
+	g = new(T1305InBlock)
+	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M종목코드)
+	lib.F바이트_복사_문자열(g.Dwmcode[:], lib.F2문자열(uint8(질의값.M일주월_구분)))
+	lib.F바이트_복사_문자열(g.Date[:], 질의값.M연속키)
+	lib.F바이트_복사_문자열(g.Idx[:], "    ") // 정수형인데, 사용안함(Space)으로 표시됨.
+	lib.F바이트_복사_정수(g.Cnt[:], 질의값.M수량)
+
+	if lib.F2문자열_공백제거(질의값.M연속키) == "" {
+		lib.F바이트_복사_문자열(g.Date[:], "       ")
+	}
+
+	return g
+}
+
 func New현물_기간별_조회_응답_헤더(b []byte) (값 *S현물_기간별_조회_응답_헤더, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
-	lib.F조건부_패닉(len(b) != SizeT1305OutBlock,"예상하지 못한 길이 : '%v", len(b))
+	lib.F조건부_패닉(len(b) != SizeT1305OutBlock, "예상하지 못한 길이 : '%v", len(b))
 
 	g := new(T1305OutBlock)
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))

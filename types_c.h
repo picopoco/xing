@@ -43,8 +43,8 @@ typedef int (__stdcall *ETK_GetTRCountPerSec)(LPCTSTR pszCode);
 //typedef void (__stdcall *ETK_UnadviseLinkFromHTS)();
 typedef int (__stdcall *ETK_Decompress)(LPCTSTR pszSrc, LPCTSTR pszDest, int nSrcLen);
 
-// '#pragma pack(push, 1)'이 적용되면 Go언어에서 읽을 수 없는 구조체들을
-// 원래 메모리 저장방식을 사용해서 Go언어에서 읽을 수 있게 변환한 구조체.
+// Go언어에서 읽을 수 있게 기본 메모리 저장 방식을 사용하는 구조체.
+// 내용은 기본 구조체와 동일하지만, '#pragma pack(pop)'가 적용되지 않았다.
 typedef struct {    // 조회TR 수신 패킷
 	int					RequestID;                  // Request ID
 	int					DataLength;				    // 받은 데이터 크기
@@ -77,13 +77,16 @@ typedef struct {    // 실시간TR 수신 패킷
 } REALTIME_DATA_UNPACKED;
 
 // C 구조체 메모리 저장방식을 1바이트 단위로 설정.
+// 이로 인해 기본 구조체는 UNPACKED로 변환해야만 Go언어에서 읽을 수 있음.
 // 이후에 '#pragma pack(pop)'으로 원래대로 되돌려야 함.
-// 이 경우 Go언어에서 읽을 수 없는 경우가 종종 발생함.
 #pragma pack(push, 1)
 
 //------------------------------------------------------------------------------
 // 기본 구조체
 //------------------------------------------------------------------------------
+// '#pragma pack(push, 1)'이 적용된 기본 구조체들은 Go언어에서 읽을 수 없으며, C언어에서만 사용함..
+//  Go언어에서 읽을 때는 '#pragma pack(push, 1)'이 적용되지 않은 UNPACKED 자료형으로 변환해서 사용함.
+//  메모리 저장 방식으로 변환은 xing_C32 패키지 내 콜백 Go함수에서 binary.encoding 로 수행.
 typedef struct {    // 조회TR 수신 패킷
 	int					RequestID;					// Request ID
 	int					DataLength;				    // 받은 데이터 크기
