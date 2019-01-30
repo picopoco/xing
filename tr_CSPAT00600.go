@@ -148,7 +148,8 @@ func NewCSPAT00600InBlock(질의값 *S질의값_정상_주문) (g *CSPAT00600InB
 	case lib.P신용거래_해당없음:
 		lib.F바이트_복사_문자열(g.LoanDt[:], "        ")
 	default:
-		lib.F바이트_복사_문자열(g.LoanDt[:], 질의값.M대출일.Format("20060102"))
+		lib.F조건부_패닉(len(질의값.M대출일) < len(g.LoanDt), "대출일 내용이 부족합니다. '%v'", 질의값.M대출일)
+		lib.F바이트_복사_문자열(g.LoanDt[:], 질의값.M대출일)
 	}
 
 	lib.F바이트_복사_문자열(g.OrdCndiTpCode[:], string(f2Xing주문조건(질의값.M주문조건)))

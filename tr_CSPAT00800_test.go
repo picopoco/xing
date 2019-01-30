@@ -37,7 +37,6 @@ import (
 	"github.com/ghts/lib"
 
 	"testing"
-	"time"
 )
 
 func TestS질의값_취소_주문(t *testing.T) {
@@ -83,7 +82,7 @@ func TestCSPAT00800현물_취소_주문(t *testing.T) {
 	질의값.M호가유형 = lib.P호가유형_지정가
 	질의값.M신용거래_구분 = lib.P신용거래_해당없음
 	질의값.M주문조건 = lib.P주문조건_없음 // 모의투자에서는 IOC, FOK를 사용할 수 없음.
-	질의값.M대출일 = time.Time{}   // 신용주문이 아닐 경우는 NewCSPAT00600InBlock1()에서 공백문자로 바꿔줌.
+	질의값.M대출일 = ""   // 신용주문이 아닐 경우는 NewCSPAT00600InBlock1()에서 공백문자로 바꿔줌.
 
 	정상주문_응답값, 에러 := F현물_정상주문_CSPAT00600(질의값)
 	lib.F테스트_에러없음(t, 에러)
