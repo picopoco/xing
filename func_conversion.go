@@ -369,18 +369,24 @@ func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) 
 		RT실시간_뉴스_제목_패킷,
 		RT업종별_투자자별_매매_현황:
 		return nil, lib.New에러("미구현 RT코드 : '%v'", 자료형_문자열)
+	case P자료형_CSPAT00600OutBlock:
+		return New현물_정상_주문_응답(b)
 	case P자료형_CSPAT00600OutBlock1:
-		return New현물_정상주문_응답1(b)
+		return New현물_정상_주문_응답1(b)
 	case P자료형_CSPAT00600OutBlock2:
-		return New현물_정상주문_응답2(b)
+		return New현물_정상_주문_응답2(b)
+	case P자료형_CSPAT00700OutBlock:
+		return New현물_정정_주문_응답(b)
 	case P자료형_CSPAT00700OutBlock1:
-		return New현물_정정주문_응답1(b)
+		return New현물_정정_주문_응답1(b)
 	case P자료형_CSPAT00700OutBlock2:
-		return New현물_정정주문_응답2(b)
+		return New현물_정정_주문_응답2(b)
+	case P자료형_CSPAT00800OutBlock:
+		return New현물_취소_주문_응답(b)
 	case P자료형_CSPAT00800OutBlock1:
-		return New현물_취소주문_응답1(b)
+		return New현물_취소_주문_응답1(b)
 	case P자료형_CSPAT00800OutBlock2:
-		return New현물_취소주문_응답2(b)
+		return New현물_취소_주문_응답2(b)
 	case P자료형_T0167OutBlock:
 		return New시간조회_응답(b)
 	case P자료형_T1101OutBlock:

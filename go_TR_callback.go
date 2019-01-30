@@ -164,8 +164,8 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 	case P콜백_TR데이터:
 		if 에러 = f데이터_복원(대기_항목, 값.(*S콜백_TR데이터).M데이터); 에러 != nil && 대기_항목.에러 == nil {
 			switch {
-			case strings.Contains(에러.Error(), "New현물_정정주문_응답2() : 주문번호 생성 에러"),
-				strings.Contains(에러.Error(), "New현물_취소주문_응답2() : 주문번호 생성 에러"):
+			case strings.Contains(에러.Error(), "New현물_정정_주문_응답2() : 주문번호 생성 에러"),
+				strings.Contains(에러.Error(), "New현물_취소_주문_응답2() : 주문번호 생성 에러"):
 				return // skip
 			default:
 				lib.F에러_출력(에러)

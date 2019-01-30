@@ -76,10 +76,13 @@ func TestP자료형_문자열(t *testing.T) {
 	lib.F테스트_같음(t, P자료형_S현물_종목조회_응답_반복값, f자료형_문자열(S현물_종목조회_응답_반복값{}))
 	lib.F테스트_같음(t, P자료형_S현물_종목조회_응답_반복값_모음, f자료형_문자열(S현물_종목조회_응답_반복값_모음{}))
 
+	lib.F테스트_같음(t, P자료형_CSPAT00600OutBlock, f자료형_문자열(CSPAT00600OutBlock{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00600OutBlock1, f자료형_문자열(CSPAT00600OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00600OutBlock2, f자료형_문자열(CSPAT00600OutBlock2{}))
+	lib.F테스트_같음(t, P자료형_CSPAT00700OutBlock, f자료형_문자열(CSPAT00700OutBlock{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00700OutBlock1, f자료형_문자열(CSPAT00700OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00700OutBlock2, f자료형_문자열(CSPAT00700OutBlock2{}))
+	lib.F테스트_같음(t, P자료형_CSPAT00800OutBlock, f자료형_문자열(CSPAT00800OutBlock{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00800OutBlock1, f자료형_문자열(CSPAT00800OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_CSPAT00800OutBlock2, f자료형_문자열(CSPAT00800OutBlock2{}))
 	lib.F테스트_같음(t, P자료형_T0167OutBlock, f자료형_문자열(T0167OutBlock{}))

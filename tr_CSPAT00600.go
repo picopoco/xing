@@ -154,11 +154,26 @@ func NewCSPAT00600InBlock(질의값 *S질의값_정상_주문) (g *CSPAT00600InB
 	return g
 }
 
-func New현물_정상주문_응답1(b []byte) (s *S현물_정상_주문_응답1, 에러 error) {
+func New현물_정상_주문_응답(b []byte) (값 *S현물_정상_주문_응답, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
+
+	lib.F조건부_패닉(len(b) != SizeCSPAT00600OutBlock, "예상하지 못한 길이 : '%v", len(b))
+
+	값 = new(S현물_정상_주문_응답)
+
+	값.M응답1, 에러 = New현물_정상_주문_응답1(b[:SizeCSPAT00600OutBlock1])
+	lib.F확인(에러)
+
+	값.M응답2, 에러 = New현물_정상_주문_응답2(b[SizeCSPAT00600OutBlock1:])
+	lib.F확인(에러)
+
+	return 값, nil
+}
+
+func New현물_정상_주문_응답1(b []byte) (s *S현물_정상_주문_응답1, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { s = nil }}.S실행()
 
-	lib.F조건부_패닉(len(b) != SizeCSPAT00600OutBlock1,
-		"예상하지 못한 길이 : '%v", len(b))
+	lib.F조건부_패닉(len(b) != SizeCSPAT00600OutBlock1, "예상하지 못한 길이 : '%v", len(b))
 
 	g := new(CSPAT00600OutBlock1)
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
@@ -197,7 +212,7 @@ func New현물_정상주문_응답1(b []byte) (s *S현물_정상_주문_응답1,
 	return s, nil
 }
 
-func New현물_정상주문_응답2(b []byte) (s *S현물_정상_주문_응답2, 에러 error) {
+func New현물_정상_주문_응답2(b []byte) (s *S현물_정상_주문_응답2, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { s = nil }}.S실행()
 
 	lib.F조건부_패닉(len(b) != SizeCSPAT00600OutBlock2,
@@ -207,7 +222,7 @@ func New현물_정상주문_응답2(b []byte) (s *S현물_정상_주문_응답2,
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	if lib.F2문자열_공백제거(g.OrdNo) == "" { // 주문 에러발생시 공백 문자열이 수신됨.
-		return nil, lib.New에러("New현물_정상주문_응답2() : 주문번호 생성 에러.")
+		return nil, lib.New에러("New현물_정상_주문_응답2() : 주문번호 생성 에러.")
 	}
 
 	s = new(S현물_정상_주문_응답2)
