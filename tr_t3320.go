@@ -39,6 +39,27 @@ import (
 	"github.com/ghts/lib"
 )
 
+func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_요약_응답, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
+
+	질의값 := lib.New질의값_단일_종목()
+	질의값.M구분 = TR조회
+	질의값.M코드 = TR기업정보_요약
+	질의값.M종목코드 = 종목코드
+
+	i응답값 := F질의_단일TR(질의값)
+
+	switch 값 := i응답값.(type) {
+	case *S기업정보_요약_응답:
+		값.M종목코드 = 종목코드
+		return 값, nil
+	case error:
+		return nil, 값
+	default:
+		panic(lib.New에러with출력("예상하지 못한 자료형 : '%T'", i응답값))
+	}
+}
+
 type S기업정보_요약_응답 struct {
 	M종목코드 string
 	M응답1  *S기업정보_요약_응답1
@@ -97,27 +118,6 @@ type S기업정보_요약_응답2 struct {
 }
 
 func (s *S기업정보_요약_응답2) G응답2() I이중_응답2 { return s }
-
-func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_요약_응답, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
-
-	질의값 := lib.New질의값_단일_종목()
-	질의값.M구분 = TR조회
-	질의값.M코드 = TR기업정보_요약
-	질의값.M종목코드 = 종목코드
-
-	i응답값 := F질의_단일TR(질의값)
-
-	switch 값 := i응답값.(type) {
-	case *S기업정보_요약_응답:
-		값.M종목코드 = 종목코드
-		return 값, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러with출력("예상하지 못한 자료형 : '%T'", i응답값))
-	}
-}
 
 func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답1, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()

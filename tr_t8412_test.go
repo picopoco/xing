@@ -55,7 +55,8 @@ func TestF현물_차트_분_t8412(t *testing.T) {
 	for _, 값 := range 값_모음 {
 		lib.F테스트_같음(t, 값.M종목코드, 종목코드)
 		lib.F테스트_참임(t, 값.M일자_시각.After(이전_일자_시각) || 값.M일자_시각.Equal(이전_일자_시각))
-		lib.F테스트_같음(t, lib.F2일자(값.M일자_시각), 전일.G값())
+		lib.F테스트_같음(t, lib.F2일자(값.M일자_시각), 전일.G값(),
+			값.M일자_시각.Format(lib.P일자_형식), 전일.G값().Format(lib.P일자_형식))
 		lib.F테스트_참임(t, 값.M고가 >= 값.M시가)
 		lib.F테스트_참임(t, 값.M고가 >= 값.M종가)
 		lib.F테스트_참임(t, 값.M저가 <= 값.M시가)

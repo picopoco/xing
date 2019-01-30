@@ -60,7 +60,7 @@ func TestF현물_차트_일주월_t8413(t *testing.T) {
 		lib.F테스트_같음(t, 값.M종목코드, 종목코드)
 		lib.F테스트_참임(t, 값.M일자.After(이전_일자) || 값.M일자.Equal(이전_일자))
 		이전_일자 = 값.M일자
-		lib.F테스트_참임(t, 값.M일자.Equal(시작일) || 값.M일자.After(시작일))
+		lib.F테스트_참임(t, 값.M일자.Equal(시작일) || 값.M일자.After(시작일), 값.M일자, 시작일)
 		lib.F테스트_참임(t, 값.M일자.Equal(당일.G값()) || 값.M일자.Before(당일.G값()))
 		lib.F테스트_참임(t, 값.M고가 >= 값.M시가)
 		lib.F테스트_참임(t, 값.M고가 >= 값.M종가)

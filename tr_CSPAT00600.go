@@ -60,8 +60,10 @@ type S질의값_정상_주문 struct {
 	*lib.S질의값_정상_주문
 	M계좌_비밀번호 string
 	M신용거래_구분 lib.T신용거래_구분
-	M대출일     time.Time
+	M대출일     string
 }
+
+func (s *S질의값_정상_주문) S대출일(값 time.Time) { s.M대출일 = 값.Format("20060102") }
 
 type S현물_정상_주문_응답 struct {
 	M응답1 *S현물_정상_주문_응답1
@@ -146,7 +148,7 @@ func NewCSPAT00600InBlock(질의값 *S질의값_정상_주문) (g *CSPAT00600InB
 	case lib.P신용거래_해당없음:
 		lib.F바이트_복사_문자열(g.LoanDt[:], "        ")
 	default:
-		lib.F바이트_복사_문자열(g.LoanDt[:], 질의값.M대출일.Format("20000102"))
+		lib.F바이트_복사_문자열(g.LoanDt[:], 질의값.M대출일.Format("20060102"))
 	}
 
 	lib.F바이트_복사_문자열(g.OrdCndiTpCode[:], string(f2Xing주문조건(질의값.M주문조건)))
