@@ -35,59 +35,59 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"math"
+	"strings"
 	"testing"
 )
 
 func TestF기업정보_요약_t3320(t *testing.T) {
 	t.Parallel()
 
-	lib.F메모("t3320은 아직 테스트 케이스를 작성하지 못했음.")
-	t.SkipNow()
+	접속됨, 에러 := F접속됨()
+	lib.F테스트_에러없음(t, 에러)
+	lib.F테스트_참임(t, 접속됨)
 
-	//접속됨, 에러 := F접속됨()
-	//lib.F테스트_에러없음(t, 에러)
-	//lib.F테스트_참임(t, 접속됨)
-	//
-	//종목코드 := "051910" // LG전자
+	종목코드 := "051910" // LG전자
 
-	//값, 에러 := F기업정보_요약_t3320(종목코드)
-	//lib.F테스트_에러없음(t, 에러)
+	값, 에러 := F기업정보_요약_t3320(종목코드)
+	lib.F테스트_에러없음(t, 에러)
 
-	//값1 := 값.M응답1
-	//값1.M업종구분명 = lib.F2문자열(g.Upgubunnm)
-	//값1.M시장구분 = lib.F2문자열(g.Sijangcd)
-	//값1.M시장구분명 = lib.F2문자열(g.Marketnm)
-	//값1.M한글기업명 = lib.F2문자열(g.Company)
-	//값1.M본사주소 = lib.F2문자열(g.Baddress)
-	//값1.M본사전화번호 = lib.F2문자열(g.Btelno)
-	//값1.M최근결산년도 = lib.F2문자열(g.Gsyyyy)
-	//값1.M결산월    = lib.F2문자열(g.Gsmm)
-	//값1.M최근결산년월 = lib.F2문자열(g.Gsym)
-	//값1.M주당액면가  = lib.F2정수64_단순형(g.Lstprice)
-	//값1.M주식수    = lib.F2정수64_단순형(g.Gstock)
-	//값1.M홈페이지   = lib.F2문자열(g.Homeurl)
-	//값1.M그룹명    = lib.F2문자열(g.Grdnm)
-	//값1.M외국인  = lib.F2실수_단순형(g.Foreignratio)
-	//값1.M주담전화   = lib.F2문자열(g.Irtel)
-	//값1.M자본금    = lib.F2실수_단순형(g.Capital)
-	//값1.M시가총액   = lib.F2실수_단순형(g.Sigavalue)
-	//값1.M배당금    = lib.F2실수_단순형(g.Cashsis)
-	//값1.M배당수익율  = lib.F2실수_단순형(g.Cashrate)
-	//값1.M현재가    = lib.F2정수64_단순형(g.Price)
-	//값1.M전일종가   = lib.F2정수64_단순형(g.Jnilclose)
-	//
-	//값2 := 값.M응답2
-	//값2.M기업코드      = lib.F2문자열(g.Gicode)
-	//값2.M결산년월      = lib.F2문자열(g.Gsym)
-	//값2.M결산구분      = lib.F2문자열(g.Gsgb)
-	//값2.PER      = lib.F2실수_단순형(g.Per)
+	값1 := 값.M응답1
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M업종구분명), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M시장구분), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M시장구분명), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M한글기업명), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M본사주소), "")
+	lib.F테스트_다름(t, lib.F정규식_검색(값1.M본사전화번호, []string{`[1-9]+`}), "")
+	lib.F테스트_다름(t, lib.F정규식_검색(값1.M최근결산년도, []string{`[1-9]+`}), "")
+	lib.F테스트_다름(t, lib.F정규식_검색(값1.M결산월, []string{`[1-9]+`}), "")
+	lib.F테스트_다름(t, lib.F정규식_검색(값1.M최근결산년월, []string{`[1-9]+`}), "")
+	lib.F테스트_참임(t, 값1.M주당액면가 > 0)
+	lib.F테스트_참임(t, 값1.M주식수 > 0)
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M홈페이지), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값1.M그룹명), "")
+	lib.F테스트_참임(t, 값1.M외국인 > 0)
+	lib.F테스트_다름(t, lib.F정규식_검색(값1.M주담전화, []string{`[1-9]+`}), "")
+	lib.F테스트_참임(t, 값1.M자본금 > 0)
+	lib.F테스트_참임(t, 값1.M시가총액 > 0)
+	lib.F테스트_참임(t, 값1.M배당금 > 0)
+	lib.F테스트_참임(t, 값1.M배당수익율 > 0)
+	lib.F테스트_참임(t, 값1.M현재가 > 0)
+	lib.F테스트_참임(t, 값1.M전일종가 > 0)
+	lib.F테스트_참임(t, 값1.M현재가 > int64(float64(값1.M전일종가)*0.4) || 값1.M현재가 < int64(float64(값1.M전일종가)*1.4))
+
+	값2 := 값.M응답2
+	lib.F테스트_다름(t, strings.TrimSpace(값2.M기업코드), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값2.M결산년월), "")
+	lib.F테스트_다름(t, strings.TrimSpace(값2.M결산구분), "")
+	lib.F테스트_참임(t, math.Abs(값2.PER) < 30, 값2.PER)
 	//값2.EPS      = lib.F2실수_단순형(g.Eps)
-	//값2.PBR      = lib.F2실수_단순형(g.Pbr)
-	//값2.ROA      = lib.F2실수_단순형(g.Roa)
-	//값2.ROE      = lib.F2실수_단순형(g.Roe)
+	lib.F테스트_참임(t, 값2.PBR > 0)
+	lib.F테스트_참임(t, math.Abs(값2.ROA) < 100, 값2.ROA)
+	lib.F테스트_참임(t, math.Abs(값2.ROE) < 100, 값2.ROE)
 	//값2.EBITDA   = lib.F2실수_단순형(g.Ebitda)
-	//값2.EVEBITDA = lib.F2실수_단순형(g.Evebitda)
-	//값2.M액면가      = lib.F2실수_단순형(g.Par)
+	lib.F테스트_참임(t, math.Abs(값2.EVEBITDA) < 30)
+	lib.F테스트_참임(t, 값2.M액면가 > 0)
 	//값2.SPS      = lib.F2실수_단순형(g.Sps)
 	//값2.CPS      = lib.F2실수_단순형(g.Cps)
 	//값2.BPS      = lib.F2실수_단순형(g.Bps)
@@ -95,5 +95,5 @@ func TestF기업정보_요약_t3320(t *testing.T) {
 	//값2.T_EPS    = lib.F2실수_단순형(g.Teps)
 	//값2.PEG      = lib.F2실수_단순형(g.Peg)
 	//값2.T_PEG    = lib.F2실수_단순형(g.Tpeg)
-	//값2.M최근분기년도    = lib.F2문자열(g.Tgsym)
+	lib.F테스트_다름(t, lib.F정규식_검색(값2.M최근분기년도, []string{`[1-9]+`}), "")
 }

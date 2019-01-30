@@ -119,6 +119,13 @@ type S기업정보_요약_응답2 struct {
 
 func (s *S기업정보_요약_응답2) G응답2() I이중_응답2 { return s }
 
+func NewT3320InBlock(질의값 *lib.S질의값_단일_종목) (g *T3320InBlock) {
+	g = new(T3320InBlock)
+	lib.F바이트_복사_문자열(g.Gicode[:], 질의값.M종목코드)
+
+	return g
+}
+
 func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답1, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
@@ -142,12 +149,12 @@ func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답
 	값.M주식수 = lib.F2정수64_단순형(g.Gstock)
 	값.M홈페이지 = lib.F2문자열(g.Homeurl)
 	값.M그룹명 = lib.F2문자열(g.Grdnm)
-	값.M외국인 = lib.F2실수_단순형(g.Foreignratio)
+	값.M외국인 = lib.F2실수_소숫점_추가(g.Foreignratio, 2)
 	값.M주담전화 = lib.F2문자열(g.Irtel)
 	값.M자본금 = lib.F2실수_단순형(g.Capital)
 	값.M시가총액 = lib.F2실수_단순형(g.Sigavalue)
 	값.M배당금 = lib.F2실수_단순형(g.Cashsis)
-	값.M배당수익율 = lib.F2실수_단순형(g.Cashrate)
+	값.M배당수익율 = lib.F2실수_소숫점_추가(g.Cashrate, 2)
 	값.M현재가 = lib.F2정수64_단순형(g.Price)
 	값.M전일종가 = lib.F2정수64_단순형(g.Jnilclose)
 
@@ -167,22 +174,24 @@ func NewS기업정보_요약_응답2(b []byte) (값 *S기업정보_요약_응답
 	값.M기업코드 = lib.F2문자열(g.Gicode)
 	값.M결산년월 = lib.F2문자열(g.Gsym)
 	값.M결산구분 = lib.F2문자열(g.Gsgb)
-	값.PER = lib.F2실수_단순형(g.Per)
+	값.PER = lib.F2실수_소숫점_추가(g.Per, 2)
 	값.EPS = lib.F2실수_단순형(g.Eps)
-	값.PBR = lib.F2실수_단순형(g.Pbr)
-	값.ROA = lib.F2실수_단순형(g.Roa)
-	값.ROE = lib.F2실수_단순형(g.Roe)
-	값.EBITDA = lib.F2실수_단순형(g.Ebitda)
-	값.EVEBITDA = lib.F2실수_단순형(g.Evebitda)
-	값.M액면가 = lib.F2실수_단순형(g.Par)
-	값.SPS = lib.F2실수_단순형(g.Sps)
-	값.CPS = lib.F2실수_단순형(g.Cps)
+	값.PBR = lib.F2실수_소숫점_추가(g.Pbr, 2)
+	값.ROA = lib.F2실수_소숫점_추가(g.Roa, 2)
+	값.ROE = lib.F2실수_소숫점_추가(g.Roe, 2)
+	값.EBITDA = lib.F2실수_소숫점_추가(g.Ebitda, 2)
+	값.EVEBITDA = lib.F2실수_소숫점_추가(g.Evebitda, 2)
+	값.M액면가 = lib.F2실수_소숫점_추가(g.Par, 2)
+	값.SPS = lib.F2실수_소숫점_추가(g.Sps, 2)
+	값.CPS = lib.F2실수_소숫점_추가(g.Cps, 2)
 	값.BPS = lib.F2실수_단순형(g.Bps)
-	값.T_PER = lib.F2실수_단순형(g.Tper)
+	값.T_PER = lib.F2실수_소숫점_추가(g.Tper, 2)
 	값.T_EPS = lib.F2실수_단순형(g.Teps)
-	값.PEG = lib.F2실수_단순형(g.Peg)
-	값.T_PEG = lib.F2실수_단순형(g.Tpeg)
+	값.PEG = lib.F2실수_소숫점_추가(g.Peg, 2)
+	값.T_PEG = lib.F2실수_소숫점_추가(g.Tpeg, 2)
 	값.M최근분기년도 = lib.F2문자열(g.Tgsym)
+
+	lib.F체크포인트(값)
 
 	return 값, nil
 }
