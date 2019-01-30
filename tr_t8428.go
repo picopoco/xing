@@ -66,8 +66,6 @@ func F증시주변자금추이_t8428(시장_구분 lib.T시장구분, 추가_옵
 		}
 	}
 
-	lib.F메모("TR응답에 연속 조회 추가 존재 여부를 포함시켜서 반복 여부 판단 조건으로 사용하는 것을 생각해 볼 것.")
-
 	for {
 		질의값 := New질의값_증시주변자금추이()
 		질의값.M구분 = TR조회
@@ -206,7 +204,7 @@ func NewT8428InBlock(질의값 *S질의값_증시주변자금추이) (g *T8428In
 func New증시주변자금추이_응답_헤더(b []byte) (값 *S증시_주변자금추이_응답_헤더, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
-	lib.F조건부_패닉(len(b) != SizeT8413OutBlock,
+	lib.F조건부_패닉(len(b) != SizeT8428OutBlock,
 		"예상하지 못한 길이 : '%v", len(b))
 
 	g := new(T8428OutBlock)
