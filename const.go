@@ -825,13 +825,13 @@ const (
 	P자료형_S현물_종목조회_응답_반복값        = "S현물_종목조회_응답_반복값"
 	P자료형_S현물_종목조회_응답_반복값_모음     = "S현물_종목조회_응답_반복값_모음"
 
-	P자료형_CSPAT00600OutBlock = "CSPAT00600OutBlock"
+	P자료형_CSPAT00600OutBlock  = "CSPAT00600OutBlock"
 	P자료형_CSPAT00600OutBlock1 = "CSPAT00600OutBlock1"
 	P자료형_CSPAT00600OutBlock2 = "CSPAT00600OutBlock2"
-	P자료형_CSPAT00700OutBlock = "CSPAT00700OutBlock"
+	P자료형_CSPAT00700OutBlock  = "CSPAT00700OutBlock"
 	P자료형_CSPAT00700OutBlock1 = "CSPAT00700OutBlock1"
 	P자료형_CSPAT00700OutBlock2 = "CSPAT00700OutBlock2"
-	P자료형_CSPAT00800OutBlock = "CSPAT00800OutBlock"
+	P자료형_CSPAT00800OutBlock  = "CSPAT00800OutBlock"
 	P자료형_CSPAT00800OutBlock1 = "CSPAT00800OutBlock1"
 	P자료형_CSPAT00800OutBlock2 = "CSPAT00800OutBlock2"
 	P자료형_T0167OutBlock       = "T0167OutBlock"
@@ -1012,15 +1012,15 @@ const (
 	SizeDVIOutBlock         = int(unsafe.Sizeof(DVIOutBlock{}))
 	SizeJIFOutBlock         = int(unsafe.Sizeof(JIFOutBlock{}))
 	SizeCSPAT00600InBlock1  = int(unsafe.Sizeof(CSPAT00600InBlock1{}))
-	SizeCSPAT00600OutBlock = int(unsafe.Sizeof(CSPAT00600OutBlock{}))
+	SizeCSPAT00600OutBlock  = int(unsafe.Sizeof(CSPAT00600OutBlock{}))
 	SizeCSPAT00600OutBlock1 = int(unsafe.Sizeof(CSPAT00600OutBlock1{}))
 	SizeCSPAT00600OutBlock2 = int(unsafe.Sizeof(CSPAT00600OutBlock2{}))
 	SizeCSPAT00700InBlock1  = int(unsafe.Sizeof(CSPAT00700InBlock1{}))
-	SizeCSPAT00700OutBlock = int(unsafe.Sizeof(CSPAT00700OutBlock{}))
+	SizeCSPAT00700OutBlock  = int(unsafe.Sizeof(CSPAT00700OutBlock{}))
 	SizeCSPAT00700OutBlock1 = int(unsafe.Sizeof(CSPAT00700OutBlock1{}))
 	SizeCSPAT00700OutBlock2 = int(unsafe.Sizeof(CSPAT00700OutBlock2{}))
 	SizeCSPAT00800InBlock1  = int(unsafe.Sizeof(CSPAT00800InBlock1{}))
-	SizeCSPAT00800OutBlock = int(unsafe.Sizeof(CSPAT00800OutBlock{}))
+	SizeCSPAT00800OutBlock  = int(unsafe.Sizeof(CSPAT00800OutBlock{}))
 	SizeCSPAT00800OutBlock1 = int(unsafe.Sizeof(CSPAT00800OutBlock1{}))
 	SizeCSPAT00800OutBlock2 = int(unsafe.Sizeof(CSPAT00800OutBlock2{}))
 	SizeT0167OutBlock       = int(unsafe.Sizeof(T0167OutBlock{}))

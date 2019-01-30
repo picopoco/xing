@@ -190,7 +190,6 @@ func New질의값_현물_차트_틱() *S질의값_현물_차트_틱 {
 }
 
 func NewT8411InBlock(질의값 *S질의값_현물_차트_틱) (g *T8411InBlock) {
-
 	g = new(T8411InBlock)
 	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M종목코드)
 	lib.F바이트_복사_정수(g.Ncnt[:], 질의값.M단위)
