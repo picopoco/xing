@@ -48,16 +48,13 @@ func F현물_시세_조회_t1102(종목코드 string) (응답값 *S현물_시세
 	질의값.M코드 = TR현물_시세_조회
 	질의값.M종목코드 = 종목코드
 
-	i응답값 := F질의_단일TR(질의값)
+	i응답값, 에러 := F질의_단일TR(질의값)
+	lib.F확인(에러)
 
-	switch 값 := i응답값.(type) {
-	case *S현물_시세조회_응답:
-		return 값, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
+	응답값, ok := i응답값.(*S현물_시세조회_응답)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+	return 응답값, nil
 }
 
 // t1102 현물 시세(현재가) 조회 응답

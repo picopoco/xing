@@ -90,17 +90,14 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 		질의값.M종목코드 = 종목코드
 		질의값.M연속키 = 연속키
 
-		i응답값 := F질의_단일TR(질의값)
+		i응답값, 에러 := F질의_단일TR(질의값)
+		lib.F확인(에러)
 
-		switch 값 := i응답값.(type) {
-		case *S_ETF시간별_추이_응답:
-			연속키 = 값.M헤더.M연속키
-			응답값_모음 = append(응답값_모음, 값.M반복값_모음.M배열...)
-		case error:
-			return nil, 값
-		default:
-			return nil, lib.New에러("예상하지 못한 자료형 : '%T'", i응답값)
-		}
+		값, ok := i응답값.(*S_ETF시간별_추이_응답)
+		lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+		연속키 = 값.M헤더.M연속키
+		응답값_모음 = append(응답값_모음, 값.M반복값_모음.M배열...)
 
 		if !시각.Equal(time.Time{}) {
 			원하는_일자까지_검색 := false

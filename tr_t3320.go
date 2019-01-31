@@ -39,6 +39,8 @@ import (
 	"github.com/ghts/lib"
 )
 
+// t3320 은 참고자료로서 정보의 정확성이나 완전성은 보장하기는 어렵습니다
+// HTS 3302 화면
 func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_요약_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
@@ -47,17 +49,14 @@ func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_�
 	질의값.M코드 = TR기업정보_요약
 	질의값.M종목코드 = 종목코드
 
-	i응답값 := F질의_단일TR(질의값)
+	i응답값, 에러 := F질의_단일TR(질의값)
+	lib.F확인(에러)
 
-	switch 값 := i응답값.(type) {
-	case *S기업정보_요약_응답:
-		값.M종목코드 = 종목코드
-		return 값, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러with출력("예상하지 못한 자료형 : '%T'", i응답값))
-	}
+	응답값, ok := i응답값.(*S기업정보_요약_응답)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+	응답값.M종목코드 = 종목코드
+	return 응답값, nil
 }
 
 type S기업정보_요약_응답 struct {

@@ -40,22 +40,51 @@ import (
 	"time"
 )
 
+func New시각_조회_응답_t0167(시각 time.Time, 에러 error) *S시각_조회_응답_t0167 {
+	s := new(S시각_조회_응답_t0167)
+	s.M시각 = 시각
+	s.M에러 = 에러
+
+	return s
+}
+
+type S시각_조회_응답_t0167 struct {
+	M시각 time.Time
+	M에러 error
+}
+
+func (s S시각_조회_응답_t0167) G값() (time.Time, error) {
+	return s.M시각, s.M에러
+}
+
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
-func F시각_조회_t0167() (시각 time.Time, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 시각 = time.Time{} }}.S실행()
+func F시각_조회_t0167() (ch응답 chan *S시각_조회_응답_t0167) {
+	ch응답 = make(chan *S시각_조회_응답_t0167, 1)
+
+	ch질의 <- lib.New작업(f시각_조회_작업, ch응답)
+
+	return ch응답
+}
+
+func f시각_조회_작업(인수 interface{}) {
+	var 에러 error
+	var ch응답 chan *S시각_조회_응답_t0167
+
+	defer lib.S예외처리{M에러: &에러, M함수: func() {
+		if ch응답 != nil {
+			ch응답 <- New시각_조회_응답_t0167(time.Time{}, 에러)
+		}}}.S실행()
+
+	ch응답 = 인수.(chan *S시각_조회_응답_t0167)
 
 	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
+	i응답값, 에러 := F질의_단일TR(질의값)
+	lib.F확인(에러)
 
-	i응답값 := F질의_단일TR(질의값, lib.P20초)
+	값, ok := i응답값.(time.Time)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T", i응답값)
 
-	switch 값 := i응답값.(type) {
-	case time.Time:
-		return 값, nil
-	case error:
-		return time.Time{}, 값
-	default:
-		return time.Time{}, lib.New에러("예상하지 못한 자료형 : '%T", i응답값)
-	}
+	ch응답 <- New시각_조회_응답_t0167(값, nil)
 }
 
 func New시간조회_응답(b []byte) (값 time.Time, 에러 error) {

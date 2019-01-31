@@ -80,6 +80,9 @@ type SC4_OutBlock C.SC4_OutBlock    // 주식 주문 거부 실시간 정보
 // 조회 TR 구조체
 //------------------------------------------------------------------------------
 
+// 시간 조회 (t0167)
+type T0167OutBlock C.T0167OutBlock
+
 // 현물 현재가 호가 조회 (t1101)
 type T1101InBlock C.T1101InBlock
 type T1101OutBlock C.T1101OutBlock
@@ -103,24 +106,26 @@ type T1310InBlock C.T1310InBlock
 type T1310OutBlock C.T1310OutBlock
 type T1310OutBlock1 C.T1310OutBlock1
 
-// 시간 조회
-type T0167OutBlock C.T0167OutBlock
-
-// ETF 현재가 조회
+// ETF 현재가 조회 (t1901)
 type T1901InBlock C.T1901InBlock
 type T1901OutBlock C.T1901OutBlock
 
-// ETF 시간별 추이
+// ETF 시간별 추이 (t1902)
 type T1902InBlock C.T1902InBlock
 type T1902OutBlock C.T1902OutBlock
 type T1902OutBlock1 C.T1902OutBlock1
 
-// 기업 정보 요약
+// 기업 정보 요약 (t3320)
 type T3320InBlock C.T3320InBlock
 type T3320OutBlock C.T3320OutBlock
 type T3320OutBlock1 C.T3320OutBlock1
 
-// 현물 차트 틱
+// 재무 순위 종합 (t3341)
+type T3341InBlock C.T3341InBlock
+type T3341OutBlock C.T3341OutBlock
+type T3341OutBlock1 C.T3341OutBlock1
+
+// 현물 차트 틱 (t8411)
 type T8411InBlock C.T8411InBlock
 type T8411OutBlock C.T8411OutBlock
 type T8411OutBlock1 C.T8411OutBlock1

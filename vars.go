@@ -47,9 +47,13 @@ var (
 	})
 	소켓SUB_실시간_정보 lib.I소켓Raw
 
+	ch질의 = make(chan *lib.S작업, 1000)
 	ch신호_C32_모음 []chan T신호_C32
 
 	대기소_C32 = newC32_콜백_대기_저장소()
+
+	tr코드별_10분당_전송_제한 = make(map[string]lib.I전송_권한)
+	tr코드별_초당_전송_제한   = make(map[string]lib.I전송_권한)
 
 	전일, 당일    lib.I안전한_시각
 	최근_영업일_모음 []time.Time

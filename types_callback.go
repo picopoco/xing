@@ -36,6 +36,7 @@ package xing
 import (
 	"github.com/ghts/lib"
 	"sync"
+	"time"
 )
 
 type I콜백 interface {
@@ -179,6 +180,7 @@ type c32_콜백_대기_항목 struct {
 	메시지_수신 bool
 	응답_완료  bool
 	회신_완료  bool
+	생성된_시각 time.Time
 }
 
 func (s *c32_콜백_대기_항목) G회신값() interface{} {
@@ -217,6 +219,7 @@ func (s *c32_콜백_대기_항목) S회신() {
 func newC32_콜백_대기_저장소() *c32_콜백_저장소 {
 	s := new(c32_콜백_저장소)
 	s.저장소 = make(map[int]*c32_콜백_대기_항목)
+	s.최근_정리_시간 = time.Now()
 
 	return s
 }
@@ -225,9 +228,12 @@ func newC32_콜백_대기_저장소() *c32_콜백_저장소 {
 type c32_콜백_저장소 struct {
 	sync.RWMutex
 	저장소 map[int]*c32_콜백_대기_항목
+	최근_정리_시간 time.Time
 }
 
 func (s *c32_콜백_저장소) G값(식별번호 int) *c32_콜백_대기_항목 {
+	s.s정리()
+
 	s.RLock()
 	값 := s.저장소[식별번호]
 	s.RUnlock()
@@ -236,10 +242,13 @@ func (s *c32_콜백_저장소) G값(식별번호 int) *c32_콜백_대기_항목 
 }
 
 func (s *c32_콜백_저장소) S추가(식별번호 int, TR코드 string) chan interface{} {
+	s.s정리()
+
 	대기_항목 := new(c32_콜백_대기_항목)
 	대기_항목.식별번호 = 식별번호
 	대기_항목.ch회신 = make(chan interface{}, 1)
 	대기_항목.TR코드 = TR코드
+	대기_항목.생성된_시각 = lib.F지금()
 
 	s.Lock()
 	s.저장소[식별번호] = 대기_항목
@@ -256,6 +265,28 @@ func (s *c32_콜백_저장소) S회신(식별번호 int) {
 	delete(s.저장소, 식별번호)
 	s.Unlock()
 }
+
+func (s *c32_콜백_저장소) s정리() {
+	s.RLock()
+	최근_정리_시간 := s.최근_정리_시간
+	s.RUnlock()
+
+	지금 := lib.F지금()
+
+	if 지금.Sub(최근_정리_시간) < lib.P1분 {
+		return	// 정리한 지 얼마 안 되었음.
+	}
+
+	s.Lock()
+	defer s.Unlock()
+
+	for idx, 대기_항목 := range s.저장소 {
+		if 지금.Sub(대기_항목.생성된_시각) > lib.P40초 {
+			delete(s.저장소, idx)
+		}
+	}
+}
+
 
 func new대기_중_데이터_저장소() *s소켓_메시지_대기_저장소 {
 	s := new(s소켓_메시지_대기_저장소)

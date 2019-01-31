@@ -35,26 +35,58 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-
-	"testing"
-	"time"
 )
 
-func TestF시각_조회_t0167(t *testing.T) {
-	t.Parallel()
+func go_TR호출(ch초기화 chan lib.T신호) (에러 error){
+	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	lib.F테스트_참임(t, lib.F확인(F접속됨()).(bool))
+	const 도우미_Go루틴_수량 = 10
+	ch종료 := lib.F공통_종료_채널()
+	ch도우미_초기화 := make(chan lib.T신호, 도우미_Go루틴_수량)
+	ch도우미_종료 := make(chan error, 도우미_Go루틴_수량)
 
-	for i := 0; i < 5; i++ {
-		시각, 에러 := (<-F시각_조회_t0167()).G값()
+	for i := 0; i < 도우미_Go루틴_수량; i++ {
+		go go_TR호출_도우미(ch도우미_초기화, ch도우미_종료)
+	}
 
-		lib.F테스트_에러없음(t, 에러)
-		lib.F테스트_같음(t, 시각.Year(), time.Now().Year())
-		lib.F테스트_같음(t, 시각.Month(), time.Now().Month())
-		lib.F테스트_같음(t, 시각.Day(), time.Now().Day())
+	for i := 0; i < 도우미_Go루틴_수량; i++ {
+		<-ch도우미_초기화
+	}
 
-		지금 := time.Now()
-		차이 := 시각.Sub(지금)
-		lib.F테스트_참임(t, 차이 > (-1*lib.P1시간) && 차이 < lib.P1시간, 시각, 지금)
+	ch초기화 <- lib.P신호_초기화
+
+	for {
+		select {
+		case <-ch종료:
+			return
+		case 에러 := <-ch도우미_종료:
+			select {
+			case <-ch종료:
+				return nil
+			default:
+			}
+
+			lib.F에러_출력(에러)
+			go go_TR호출_도우미(ch도우미_초기화, ch도우미_종료)
+			<-ch도우미_초기화
+		}
 	}
 }
+
+func go_TR호출_도우미(ch초기화 chan lib.T신호, ch도우미_종료 chan error) (에러 error) {
+	defer func() { ch도우미_종료 <- 에러 }()
+	defer lib.S예외처리{M에러: &에러}.S실행()
+
+	ch종료 := lib.F공통_종료_채널()
+	ch초기화 <- lib.P신호_초기화
+
+	for {
+		select {
+		case <-ch종료:
+			return nil
+		case 작업 := <-ch질의:
+			작업.S실행()
+		}
+	}
+}
+

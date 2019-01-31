@@ -54,6 +54,7 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 	}}.S실행()
 
 	lib.F확인(F질의값_종목코드_검사(질의값))
+	f전송_권한_획득(질의값.TR코드())
 
 	소켓REQ := 소켓REQ_저장소.G소켓()
 	defer 소켓REQ_저장소.S회수(소켓REQ)
@@ -65,18 +66,8 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 	return 소켓REQ.G질의_응답_검사(lib.P변환형식_기본값, 질의값)
 }
 
-func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}) {
-	var 에러 error
-
+func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 interface{}, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = 에러 }}.S실행()
-
-	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
-	식별번호, ok := i식별번호.(int)
-	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T', '%v'\n"+
-		"Xing API에서 식별번호를 부여받고, 콜백을 통해서 응답이 있는 경우에만 사용할 것.\n"+
-		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호, i식별번호)
-
-	ch회신 := 대기소_C32.S추가(식별번호, 질의값.TR코드())
 
 	타임아웃 := lib.P1분
 
@@ -87,11 +78,25 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 		}
 	}
 
+	i식별번호 := F질의(질의값, 옵션_모음...).G해석값_단순형(0)
+	식별번호, ok := i식별번호.(int)
+
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T', '%v'\n"+
+		"Xing API에서 식별번호를 부여받고, 콜백을 통해서 응답이 있는 경우에만 사용할 것.\n"+
+		"그렇지 않은 경우에는 F질의()를 사용할 것.", i식별번호, i식별번호)
+
+	ch회신 := 대기소_C32.S추가(식별번호, 질의값.TR코드())
+
 	select {
-	case 값 = <-ch회신:
-		return 값
+	case 값 := <-ch회신:
+		switch 변환값 := 값.(type) {
+		case error:
+			return nil, 변환값
+		default:
+			return 값, nil
+		}
 	case <-time.After(타임아웃):
-		return lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
+		return nil, lib.New에러("타임아웃. 식별번호 : '%v'", 식별번호)
 	}
 }
 
@@ -152,78 +157,6 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 	계좌_상세명 = lib.F확인(회신_메시지.G해석값(0)).(string)
 
 	return 계좌_상세명, nil
-}
-
-func F_10분_쿼터_잔여량(TR코드_모음 []string) (잔여량_맵 map[string]int, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 잔여량_맵 = nil }}.S실행()
-
-	for _, TR코드 := range TR코드_모음 {
-		if !f처리_가능한_TR코드(TR코드) {
-			return nil, lib.New에러with출력("잘못된 TR코드 : '%v'", TR코드)
-		}
-	}
-
-	질의값 := lib.New질의값_문자열_모음(TR_10분_쿼터_잔여량, "", TR코드_모음)
-
-	var 응답값 *lib.S바이트_변환_모음
-
-	for {
-		응답값 = F질의(질의값, lib.P5초)
-
-		if 응답값 == nil {
-			lib.F메모("C32 재시작 디버깅 해야함.")
-			//C32_재시작()
-			continue
-		}
-
-		break
-	}
-
-	잔여량_맵 = make(map[string]int)
-	var 잔여량_모음 []int
-	lib.F확인(응답값.G값(0, &잔여량_모음))
-
-	for i, TR코드 := range TR코드_모음 {
-		잔여량_맵[TR코드] = 잔여량_모음[i]
-	}
-
-	return 잔여량_맵, nil
-}
-
-func f전일_당일_설정() (에러 error) {
-	const 수량 = 30
-
-	질의값_기간별_조회 := New질의값_현물_기간별_조회()
-	질의값_기간별_조회.M구분 = TR조회
-	질의값_기간별_조회.M코드 = TR현물_기간별_조회
-	질의값_기간별_조회.M종목코드 = "069500"
-	질의값_기간별_조회.M일주월_구분 = P일주월_일
-	질의값_기간별_조회.M연속키 = ""
-	질의값_기간별_조회.M수량 = 수량
-
-	i응답값 := F질의_단일TR(질의값_기간별_조회)
-
-	switch 응답값 := i응답값.(type) {
-	case error:
-		return 응답값
-	case *S현물_기간별_조회_응답:
-		lib.F조건부_패닉(응답값.M헤더.M수량 != int64(수량), "예상하지 못한 수량 : '%v' '%v'", 응답값.M헤더.M수량, 수량)
-		lib.F조건부_패닉(len(응답값.M반복값_모음.M배열) != 수량, "예상하지 못한 수량 : '%v' '%v'", len(응답값.M반복값_모음.M배열), 수량)
-		lib.F조건부_패닉(응답값.M반복값_모음.M배열[0].M일자.Before(응답값.M반복값_모음.M배열[1].M일자), "예상하지 못한 순서")
-
-		당일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[0].M일자)
-		전일 = lib.New안전한_시각(응답값.M반복값_모음.M배열[1].M일자)
-
-		최근_영업일_모음 = make([]time.Time, 수량, 수량)
-
-		for i, 값 := range 응답값.M반복값_모음.M배열 {
-			최근_영업일_모음[i] = lib.F2일자(값.M일자)
-		}
-
-		return nil
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
 }
 
 func F전일() time.Time {

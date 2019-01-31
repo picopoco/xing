@@ -48,16 +48,13 @@ func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가
 	질의값.M코드 = TR현물_호가_조회
 	질의값.M종목코드 = 종목코드
 
-	i응답값 := F질의_단일TR(질의값)
+	i응답값, 에러 := F질의_단일TR(질의값)
+	lib.F확인(에러)
 
-	switch 값 := i응답값.(type) {
-	case *S현물_호가조회_응답:
-		return 값, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
+	응답값, ok := i응답값.(*S현물_호가조회_응답)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+	return 응답값, nil
 }
 
 // t1101 현물 호가 조회 응답

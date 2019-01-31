@@ -92,24 +92,20 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 		질의값.M종료시각 = 종료시각.Format("1504")
 		질의값.M연속키 = 연속키
 
-		i응답값 := F질의_단일TR(질의값)
+		i응답값, 에러 := F질의_단일TR(질의값)
 
-		switch 값 := i응답값.(type) {
-		case *S현물_전일당일분틱조회_응답:
-			연속키 = 값.M헤더.M연속키
-			응답값_모음_역순 = append(응답값_모음_역순, 값.M반복값_모음.M배열...)
-		case error:
-			//체크("** 에러 발생 **", 값.Error())
-			if strings.Contains(값.Error(), "원주문번호를 잘못") ||
-				strings.Contains(값.Error(), "접수 대기 상태입니다") {
-				//체크("** 예상된 에러 **")
-				continue // 재시도
-			}
-
-			return nil, 값
-		default:
-			panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
+		if strings.Contains(에러.Error(), "원주문번호를 잘못") ||
+			strings.Contains(에러.Error(), "접수 대기 상태입니다") {
+			continue // 재시도
 		}
+
+		lib.F확인(에러)
+
+		값, ok := i응답값.(*S현물_전일당일분틱조회_응답)
+		lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+		연속키 = 값.M헤더.M연속키
+		응답값_모음_역순 = append(응답값_모음_역순, 값.M반복값_모음.M배열...)
 
 		if 수량 > 0 && len(응답값_모음_역순) >= 수량 {
 			break

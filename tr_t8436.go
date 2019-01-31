@@ -56,16 +56,13 @@ func F주식종목조회_t8436(시장_구분 lib.T시장구분) (응답값_모�
 	}
 
 	질의값 := lib.New질의값_문자열(TR조회, TR현물_종목_조회, 시장구분_문자열)
-	i응답값 := F질의_단일TR(질의값)
+	i응답값, 에러 := F질의_단일TR(질의값)
+	lib.F확인(에러)
 
-	switch 값 := i응답값.(type) {
-	case *S현물_종목조회_응답_반복값_모음:
-		return 값.M배열, nil
-	case error:
-		return nil, 값
-	default:
-		panic(lib.New에러("예상하지 못한 자료형 : '%T'", i응답값))
-	}
+	값, ok := i응답값.(*S현물_종목조회_응답_반복값_모음)
+	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
+
+	return 값.M배열, nil
 }
 
 type S현물_종목조회_응답_반복값 struct {
