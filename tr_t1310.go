@@ -38,7 +38,6 @@ import (
 	"encoding/binary"
 	"github.com/ghts/lib"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -93,12 +92,6 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 		질의값.M연속키 = 연속키
 
 		i응답값, 에러 := F질의_단일TR(질의값)
-
-		if strings.Contains(에러.Error(), "원주문번호를 잘못") ||
-			strings.Contains(에러.Error(), "접수 대기 상태입니다") {
-			continue // 재시도
-		}
-
 		lib.F확인(에러)
 
 		값, ok := i응답값.(*S현물_전일당일분틱조회_응답)
