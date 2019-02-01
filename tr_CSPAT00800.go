@@ -47,8 +47,9 @@ func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응�
 	for i := 0; i < 10; i++ { // 최대 10번 재시도
 		i응답값, 에러 := F질의_단일TR(질의값)
 
-		if strings.Contains(에러.Error(), "원주문번호를 잘못") ||
-			strings.Contains(에러.Error(), "접수 대기 상태") {
+		if 에러 != nil && (
+			strings.Contains(에러.Error(), "원주문번호를 잘못") ||
+			strings.Contains(에러.Error(), "접수 대기 상태")) {
 			continue // 재시도
 		}
 
