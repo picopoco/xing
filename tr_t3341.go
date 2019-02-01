@@ -39,6 +39,7 @@ import (
 	"github.com/ghts/lib"
 )
 
+// HTS 3303 화면
 func F재무_순위_종합_t3341(시장구분 lib.T시장구분, 재무순위_구분 T재무순위_구분,
 	추가_인수_모음 ...interface{}) (응답값_모음 []*S재무순위_응답_반복값_t3341, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
@@ -101,12 +102,11 @@ func F재무_순위_종합_t3341(시장구분 lib.T시장구분, 재무순위_�
 	return 응답값_모음, nil
 }
 
-// HTS 3303 화면
 type S질의값_재무순위_t3341 struct {
 	*lib.S질의값_기본형
-	M시장구분 lib.T시장구분
+	M시장구분    lib.T시장구분
 	M재무순위_구분 T재무순위_구분
-	M연속키 string
+	M연속키     string
 }
 
 type S재무순위_응답_t3341 struct {
@@ -115,29 +115,29 @@ type S재무순위_응답_t3341 struct {
 }
 
 type S재무순위_응답_헤더_t3341 struct {
-	M수량 int
+	M수량  int
 	M연속키 string
 }
 
 func (s *S재무순위_응답_헤더_t3341) G헤더_TR데이터() I헤더_TR데이터 { return s }
 
-// HTS 3303화면과 동일합니다.
-// long으로 들어오는 데이터를 소수점 2째자리로 변경하셔야 합니다.
+// 게시판 질답 내용 중 발췌.
+// HTS 3303화면과 동일합니다. long으로 들어오는 데이터를 소수점 2째자리로 변경하셔야 합니다.
 type S재무순위_응답_반복값_t3341 struct {
-	M순위 int
-	M종목코드 string
-	M기업명 string
-	M매출액_증가율 float64
+	M순위       int
+	M종목코드     string
+	M기업명      string
+	M매출액_증가율  float64
 	M영업이익_증가율 float64
 	M경상이익_증가율 float64
-	M부채비율 float64
-	M유보율 float64
-	EPS float64
-	BPS float64
-	ROE float64
-	PER float64
-	PBR float64
-	PEG float64
+	M부채비율     float64
+	M유보율      float64
+	EPS       float64
+	BPS       float64
+	ROE       float64
+	PER       float64
+	PBR       float64
+	PEG       float64
 }
 
 type S재무순위_응답_반복값_모음_t3341 struct {
@@ -189,14 +189,14 @@ func NewT3341InBlock(질의값 *S질의값_재무순위_t3341) (g *T3341InBlock)
 
 	g = new(T3341InBlock)
 	lib.F바이트_복사_문자열(g.Gubun[:], xing시장구분)
-	lib.F바이트_복사_정수(g.Gubun1[:], xing재무순위_구분)
-	lib.F바이트_복사_정수(g.Gubun2[:], "1")
-	lib.F바이트_복사_정수(g.Idx[:], 질의값.M연속키)
+	lib.F바이트_복사_문자열(g.Gubun1[:], xing재무순위_구분)
+	lib.F바이트_복사_문자열(g.Gubun2[:], "1")
+	lib.F바이트_복사_문자열(g.Idx[:], 질의값.M연속키)
 
 	return g
 }
 
-func New재무순위_응답_헤더(b []byte) (값 *S재무순위_응답_헤더_t3341, 에러 error) {
+func NewS재무순위_응답_헤더(b []byte) (값 *S재무순위_응답_헤더_t3341, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
 	lib.F조건부_패닉(len(b) != SizeT3341OutBlock, "예상하지 못한 길이 : '%v", len(b))
@@ -211,29 +211,41 @@ func New재무순위_응답_헤더(b []byte) (값 *S재무순위_응답_헤더_t
 	return 값, nil
 }
 
-func New재무순위_응답_반복값(b []byte) (값 *S재무순위_응답_반복값_t3341, 에러 error) {
+func NewS재무순위_응답_반복값_모음(b []byte) (값 *S재무순위_응답_반복값_모음_t3341, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
-	lib.F조건부_패닉(len(b) != SizeT3341OutBlock1, "예상하지 못한 길이 : '%v", len(b))
+	나머지 := len(b) % SizeT3341OutBlock1
+	lib.F조건부_패닉(나머지 != 0, "예상하지 못한 길이. '%v' '%v'", len(b), 나머지)
 
-	g := new(T3341OutBlock1)
-	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
+	버퍼 := bytes.NewBuffer(b)
+	수량 := len(b) / SizeT3341OutBlock1
+	g_모음 := make([]*T3341OutBlock1, 수량, 수량)
 
-	값 = new(S재무순위_응답_반복값_t3341)
-	값.M종목코드 = lib.F2문자열(g.Shcode)
-	값.M순위 = lib.F2정수_단순형(g.Rank)
-	값.M기업명 = lib.F2문자열(g.Hname)
-	값.M매출액_증가율 = lib.F2실수_소숫점_추가(g.Salesgrowth, 2)
-	값.M영업이익_증가율 = lib.F2실수_소숫점_추가(g.Operatingincomegrowt, 2)
-	값.M경상이익_증가율 = lib.F2실수_소숫점_추가(g.Ordinaryincomegrowth, 2)
-	값.M부채비율 = lib.F2실수_소숫점_추가(g.Liabilitytoequity, 2)
-	값.M유보율 = lib.F2실수_소숫점_추가(g.Enterpriseratio, 2)
-	값.EPS = lib.F2실수_소숫점_추가(g.Eps, 2)
-	값.BPS = lib.F2실수_소숫점_추가(g.Bps, 2)
-	값.ROE = lib.F2실수_소숫점_추가(g.Roe, 2)
-	값.PER = lib.F2실수_소숫점_추가(g.Per, 2)
-	값.PBR = lib.F2실수_소숫점_추가(g.Pbr, 2)
-	값.PEG = lib.F2실수_소숫점_추가(g.Peg, 2)
+	값 = new(S재무순위_응답_반복값_모음_t3341)
+	값.M배열 = make([]*S재무순위_응답_반복값_t3341, 수량, 수량)
+
+	for i, g := range g_모음 {
+		g = new(T3341OutBlock1)
+		lib.F확인(binary.Read(버퍼, binary.BigEndian, g))
+
+		s := new(S재무순위_응답_반복값_t3341)
+		s.M종목코드 = lib.F2문자열(g.Shcode)
+		s.M순위 = lib.F2정수_단순형(g.Rank)
+		s.M기업명 = lib.F2문자열_EUC_KR_공백제거(g.Hname)
+		s.M매출액_증가율 = lib.F2실수_소숫점_추가_단순형(g.Salesgrowth, 2)
+		s.M영업이익_증가율 = lib.F2실수_소숫점_추가_단순형(g.Operatingincomegrowt, 2)
+		s.M경상이익_증가율 = lib.F2실수_소숫점_추가_단순형(g.Ordinaryincomegrowth, 2)
+		s.M부채비율 = lib.F2실수_소숫점_추가_단순형(g.Liabilitytoequity, 2)
+		s.M유보율 = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Enterpriseratio, 2)
+		s.EPS = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Eps, 2)
+		s.BPS = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Bps, 2)
+		s.ROE = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Roe, 2)
+		s.PER = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Per, 2)
+		s.PBR = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Pbr, 2)
+		s.PEG = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Peg, 2)
+
+		값.M배열[i] = s
+	}
 
 	return 값, nil
 }

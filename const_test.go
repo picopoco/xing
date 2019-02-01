@@ -14,6 +14,7 @@ func TestP자료형_문자열(t *testing.T) {
 	lib.F테스트_같음(t, P자료형_S질의값_취소_주문, f자료형_문자열(S질의값_취소_주문{}))
 	lib.F테스트_같음(t, P자료형_S질의값_현물_전일당일_분틱_조회, f자료형_문자열(S질의값_현물_전일당일_분틱_조회{}))
 	lib.F테스트_같음(t, P자료형_S질의값_현물_기간별_조회, f자료형_문자열(S질의값_현물_기간별_조회{}))
+	lib.F테스트_같음(t, P자료형_S질의값_재무순위_t3341, f자료형_문자열(S질의값_재무순위_t3341{}))
 	lib.F테스트_같음(t, P자료형_S질의값_현물_차트_틱, f자료형_문자열(S질의값_현물_차트_틱{}))
 	lib.F테스트_같음(t, P자료형_S질의값_현물_차트_분, f자료형_문자열(S질의값_현물_차트_분{}))
 	lib.F테스트_같음(t, P자료형_S질의값_현물_차트_일주월, f자료형_문자열(S질의값_현물_차트_일주월{}))
@@ -96,6 +97,8 @@ func TestP자료형_문자열(t *testing.T) {
 	lib.F테스트_같음(t, P자료형_T1902OutBlock1, f자료형_문자열(T1902OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_T3320OutBlock, f자료형_문자열(T3320OutBlock{}))
 	lib.F테스트_같음(t, P자료형_T3320OutBlock1, f자료형_문자열(T3320OutBlock1{}))
+	lib.F테스트_같음(t, P자료형_T3341OutBlock, f자료형_문자열(T3341OutBlock{}))
+	lib.F테스트_같음(t, P자료형_T3341OutBlock1, f자료형_문자열(T3341OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_T8411OutBlock, f자료형_문자열(T8411OutBlock{}))
 	lib.F테스트_같음(t, P자료형_T8411OutBlock1, f자료형_문자열(T8411OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_T8412OutBlock, f자료형_문자열(T8412OutBlock{}))
@@ -112,4 +115,9 @@ func f자료형_문자열(값 interface{}) string {
 	시작_인덱스 := strings.Index(자료형, ".") + 1
 
 	return 자료형[시작_인덱스:]
+}
+
+func TestT재무순위_구분(t *testing.T) {
+	lib.F테스트_같음(t, P재무순위_PEG.String(), "PEG")
+	lib.F테스트_같음(t, P재무순위_PEG.T3341(), "b")
 }

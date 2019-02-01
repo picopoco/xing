@@ -89,6 +89,10 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		s := new(S질의값_현물_기간별_조회)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
+	case P자료형_S질의값_재무순위_t3341:
+		s := new(S질의값_재무순위_t3341)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
 	case P자료형_S질의값_현물_차트_틱:
 		s := new(S질의값_현물_차트_틱)
 		lib.F확인(바이트_변환값.G값(s))
@@ -409,6 +413,10 @@ func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) 
 		return NewS기업정보_요약_응답1(b)
 	case P자료형_T3320OutBlock1:
 		return NewS기업정보_요약_응답2(b)
+	case P자료형_T3341OutBlock:
+		return NewS재무순위_응답_헤더(b)
+	case P자료형_T3341OutBlock1:
+		return NewS재무순위_응답_반복값_모음(b)
 	case P자료형_T8411OutBlock:
 		return New현물_차트_틱_응답_헤더(b)
 	case P자료형_T8411OutBlock1:

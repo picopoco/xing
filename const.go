@@ -844,12 +844,12 @@ func (p T재무순위_구분) String() string {
 	case P재무순위_PEG:
 		return "PEG"
 	default:
-		return lib.F2문자열("예상하지 못한 T재무순위_구분 값 : '%v'", p)
+		return lib.F2문자열("예상하지 못한 T재무순위_구분 값 : '%s'" + string(p))
 	}
 }
 
 func (p T재무순위_구분) T3341() string {
-	return lib.F2문자열("%x", p + 1)
+	return lib.F2문자열("%x", int(p+1))
 }
 
 type T수정구분 uint32
@@ -1010,6 +1010,7 @@ const (
 	P자료형_S질의값_취소_주문         = "S질의값_취소_주문"
 	P자료형_S질의값_현물_전일당일_분틱_조회 = "S질의값_현물_전일당일_분틱_조회"
 	P자료형_S질의값_현물_기간별_조회     = "S질의값_현물_기간별_조회"
+	P자료형_S질의값_재무순위_t3341    = "S질의값_재무순위_t3341"
 	P자료형_S질의값_현물_차트_틱       = "S질의값_현물_차트_틱"
 	P자료형_S질의값_현물_차트_분       = "S질의값_현물_차트_분"
 	P자료형_S질의값_현물_차트_일주월     = "S질의값_현물_차트_일주월"
@@ -1091,6 +1092,8 @@ const (
 	P자료형_T1902OutBlock1      = "T1902OutBlock1"
 	P자료형_T3320OutBlock       = "T3320OutBlock"
 	P자료형_T3320OutBlock1      = "T3320OutBlock1"
+	P자료형_T3341OutBlock       = "T3341OutBlock"
+	P자료형_T3341OutBlock1      = "T3341OutBlock1"
 	P자료형_T8411OutBlock       = "T8411OutBlock"
 	P자료형_T8411OutBlock1      = "T8411OutBlock1"
 	P자료형_T8412OutBlock       = "T8412OutBlock"

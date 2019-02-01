@@ -35,13 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
-	"time"
 )
-
-var idx1902 = lib.New안전한_일련번호()
-var idx8411 = lib.New안전한_일련번호()
-var idx8412 = lib.New안전한_일련번호()
-var idx8413 = lib.New안전한_일련번호()
 
 func f전송_권한_획득(TR코드 string) {
 	switch TR코드 {
@@ -51,19 +45,8 @@ func f전송_권한_획득(TR코드 string) {
 		return
 	}
 
-	전송_권한 := f10분당_전송_제한_확인(TR코드)
+	f10분당_전송_제한_확인(TR코드)
 	f초당_전송_제한_확인(TR코드)
-
-	switch TR코드 {
-	case "t1902":
-		println(lib.F2문자열("%v : %v : %v : %v", TR코드, idx1902.G값(), 전송_권한.G남은_수량(), time.Now().Format("15:04:05.999")))
-	case "t8411":
-		println(lib.F2문자열("%v : %v : %v : %v", TR코드, idx8411.G값(), 전송_권한.G남은_수량(), time.Now().Format("15:04:05.999")))
-	case "t8412":
-		println(lib.F2문자열("%v : %v : %v : %v", TR코드, idx8412.G값(), 전송_권한.G남은_수량(), time.Now().Format("15:04:05.999")))
-	case "t8413":
-		println(lib.F2문자열("%v : %v : %v : %v", TR코드, idx8413.G값(), 전송_권한.G남은_수량(), time.Now().Format("15:04:05.999")))
-	}
 }
 
 func f10분당_전송_제한_확인(TR코드 string) lib.I전송_권한 {
