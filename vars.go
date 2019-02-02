@@ -59,7 +59,7 @@ var (
 	최근_영업일_모음 []time.Time
 
 	xing_C32_실행_잠금 sync.Mutex
-	xing_C32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_C32/xing_C32.bat`
+	xing_C32_경로    = lib.GOPATH() + `/src/github.com/ghts/xing_C32/xing_C32.bat`
 
 	//xing_COM32_실행_잠금 sync.Mutex
 	//xing_COM32_경로    = lib.F_GOPATH() + `/src/github.com/ghts/xing_COM32/xing_COM32.bat`

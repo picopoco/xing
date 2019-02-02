@@ -34,10 +34,8 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 package xing
 
 import (
-	"fmt"
 	"github.com/ghts/lib"
 	"nanomsg.org/go-mangos"
-	"strings"
 )
 
 func go_TR콜백_처리(ch초기화 chan lib.T신호) (에러 error) {
@@ -136,97 +134,4 @@ func go루틴_콜백_처리_도우미(ch초기화 chan lib.T신호, ch도우미_
 			소켓REP_TR콜백.S회신Raw(수신_메시지, 변환_형식, lib.P신호_OK)
 		}
 	}
-}
-
-func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
-	defer lib.S예외처리{M에러: &에러}.S실행()
-
-	식별번호, 대기_항목, TR코드 := f콜백_데이터_식별번호(값)
-
-	//lib.F체크포인트(식별번호, TR코드, 값.G콜백(), 대기_항목.데이터_수신, 대기_항목.메시지_수신, 대기_항목.응답_완료, 대기_항목.에러)
-
-	if 식별번호 == 0 || 대기_항목 == nil || TR코드 == "" {
-		if 값.G콜백() == P콜백_타임아웃 {
-			lib.F체크포인트()
-			return nil
-		}
-
-		panic(lib.New에러("대기 항목 없음. '%v' '%v' '%v' '%v'", 값.G콜백(), 식별번호, 대기_항목, TR코드))
-	}
-
-	lib.F조건부_패닉(식별번호 == 0 || 대기_항목 == nil || TR코드 == "", "대기항목 없음.")
-	lib.F조건부_패닉(!f처리_가능한_TR코드(TR코드), "처리 불가 TR코드 : '%v'", TR코드)
-	lib.F조건부_패닉(대기_항목 == nil, "TR 식별번호 '%v' : nil 대기항목.", 식별번호)
-
-	대기_항목.Lock()
-	defer 대기_항목.Unlock()
-
-	switch 값.G콜백() {
-	case P콜백_TR데이터:
-		if 에러 = f데이터_복원(대기_항목, 값.(*S콜백_TR데이터).M데이터); 에러 != nil && 대기_항목.에러 == nil {
-			switch {
-			case strings.Contains(에러.Error(), "New현물_정정_주문_응답2() : 주문번호 생성 에러"),
-				strings.Contains(에러.Error(), "New현물_취소_주문_응답2() : 주문번호 생성 에러"):
-				return // skip
-			default:
-				lib.F에러_출력(에러)
-			}
-
-			lib.F체크포인트(식별번호, TR코드, 값.G콜백(), 대기_항목.데이터_수신, 대기_항목.메시지_수신, 대기_항목.응답_완료, 대기_항목.에러)
-		}
-	case P콜백_메시지_및_에러:
-		변환값 := 값.(*S콜백_메시지_및_에러)
-
-		//lib.F체크포인트(변환값.M코드, 변환값.M내용)
-
-		if f에러_발생(TR코드, 변환값.M코드, 변환값.M내용) {
-			대기_항목.에러 = fmt.Errorf("%s : %s", 변환값.M코드, 변환값.M내용)
-		}
-
-		대기_항목.메시지_수신 = true
-	case P콜백_TR완료:
-		대기_항목.응답_완료 = true
-	case P콜백_타임아웃:
-		대기_항목.에러 = lib.New에러with출력("타임아웃.")
-	default:
-		panic(lib.New에러with출력("예상하지 못한 경우. 콜백 구분값 : '%v', 자료형 : '%T'", 값.G콜백(), 값))
-	}
-
-	//lib.F체크포인트(식별번호, TR코드, 값.G콜백(), 대기_항목.데이터_수신, 대기_항목.메시지_수신, 대기_항목.응답_완료, 대기_항목.에러)
-
-	// TR응답 데이터 수신 및 완료 확인이 되었는 지 확인.
-	switch {
-	case 대기_항목.에러 != nil && 대기_항목.메시지_수신 && 대기_항목.응답_완료:
-		대기소_C32.S회신(식별번호)
-	case !대기_항목.데이터_수신, !대기_항목.응답_완료, !대기_항목.메시지_수신:
-		return
-	default:
-		대기소_C32.S회신(식별번호)
-	}
-
-	return
-}
-
-func f콜백_신호_처리기(콜백 I콜백) (에러 error) {
-	defer lib.S예외처리{M에러: &에러}.S실행()
-
-	콜백_정수값, ok := 콜백.(*S콜백_정수값)
-	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", 콜백)
-
-	정수값 := 콜백_정수값.M정수값
-	신호 := T신호_C32(정수값)
-
-	//lib.F체크포인트("콜백 신호 수신", 신호)
-
-	switch 신호 {
-	case P신호_C32_READY, P신호_C32_종료:
-		select {
-		case ch신호_C32_모음[정수값] <- 신호:
-		default:
-		}
-	default:
-		return lib.New에러with출력("예상하지 못한 신호 : '%v'", 신호)
-	}
-
-	return nil
 }
