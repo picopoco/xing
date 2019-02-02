@@ -93,8 +93,6 @@ func f초기화_xing_C32() (에러 error) {
 	xing_C32_실행_잠금.Lock()
 	defer xing_C32_실행_잠금.Unlock()
 
-	lib.F체크포인트()
-
 	if !lib.F인터넷에_접속됨() {
 		lib.F문자열_출력("인터넷을 확인하십시오.")
 		return
@@ -103,11 +101,7 @@ func f초기화_xing_C32() (에러 error) {
 		return nil
 	}
 
-	lib.F체크포인트()
-
 	lib.F확인(lib.F외부_프로세스_실행(xing_C32_경로))
-
-	lib.F체크포인트()
 
 	return nil
 }
