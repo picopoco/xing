@@ -117,9 +117,9 @@ func TestF영업일_기준_전일_당일(t *testing.T) {
 }
 
 func TestC32_재시작(t *testing.T) {
-	lib.F메모("C32 재시작은 아직 문제를 해결하지 못했음.")
+	//lib.F메모("C32 재시작은 아직 문제를 해결하지 못했음.")
 
-	t.SkipNow()
+	//t.SkipNow()
 
 	lib.F테스트_에러없음(t, C32_재시작())
 }

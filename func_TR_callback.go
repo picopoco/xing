@@ -33,7 +33,11 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import "github.com/ghts/lib"
+import (
+	"github.com/ghts/lib"
+
+	"strings"
+)
 
 func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
@@ -77,7 +81,7 @@ func f콜백_TR데이터_처리기(값 I콜백) (에러 error) {
 		//lib.F체크포인트(변환값.M코드, 변환값.M내용)
 
 		if f에러_발생(TR코드, 변환값.M코드, 변환값.M내용) {
-			대기_항목.에러 = fmt.Errorf("%s : %s", 변환값.M코드, 변환값.M내용)
+			대기_항목.에러 = lib.New에러("%s : %s", 변환값.M코드, 변환값.M내용)
 		}
 
 		대기_항목.메시지_수신 = true
@@ -169,4 +173,3 @@ func f콜백_신호_처리기(콜백 I콜백) (에러 error) {
 
 	return nil
 }
-
