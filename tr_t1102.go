@@ -61,31 +61,31 @@ func F현물_시세_조회_t1102(종목코드 string) (응답값 *S현물_시세
 
 // t1102 현물 시세(현재가) 조회 응답
 type S현물_시세조회_응답 struct {
-	M종목코드     string
-	M일자       time.Time
-	M종목명      string
-	M현재가      int64
-	M전일대비구분   T전일대비_구분
-	M전일대비등락폭  int64
-	M등락율      float64
-	M거래량      int64
-	M기준가      int64
-	M가중평균     int64
-	M상한가      int64
-	M하한가      int64
-	M전일거래량    int64
-	M거래량차     int64
-	M시가       int64
-	M시가시간     time.Time
-	M고가       int64
-	M고가시간     time.Time
-	M저가       int64
-	M저가시간     time.Time
-	M52주_최고가  int64
-	M52주_최고가일 time.Time
-	M52주_최저가  int64
-	M52주_최저가일 time.Time
-	M소진율      float64
+	M종목코드          string
+	M일자            time.Time
+	M종목명           string
+	M현재가           int64
+	M전일대비구분        T전일대비_구분
+	M전일대비등락폭       int64
+	M등락율           float64
+	M거래량           int64
+	M기준가           int64
+	M가중평균          int64
+	M상한가           int64
+	M하한가           int64
+	M전일거래량         int64
+	M거래량차          int64
+	M시가            int64
+	M시가시간          time.Time
+	M고가            int64
+	M고가시간          time.Time
+	M저가            int64
+	M저가시간          time.Time
+	M52주_최고가       int64
+	M52주_최고가일      time.Time
+	M52주_최저가       int64
+	M52주_최저가일      time.Time
+	M소진율           float64
 	PER            float64
 	PBR            float64
 	M상장주식수_천       int64
@@ -141,8 +141,8 @@ type S현물_시세조회_응답 struct {
 	M저유동성종목여부      bool
 	M이상급등종목여부      bool
 	M대차불가여부        bool
-	M매도_거래원_정보_모음	[]*S거래원_정보_t1102
-	M매수_거래원_정보_모음	[]*S거래원_정보_t1102
+	M매도_거래원_정보_모음  []*S거래원_정보_t1102
+	M매수_거래원_정보_모음  []*S거래원_정보_t1102
 	M외국계_매도_거래원_정보 *S거래원_정보_t1102
 	M외국계_매수_거래원_정보 *S거래원_정보_t1102
 }
@@ -160,7 +160,7 @@ type S거래원_정보_t1102 struct {
 func New거래원_정보_모음_t1102(수량 int) []*S거래원_정보_t1102 {
 	거래원_정보_모음 := make([]*S거래원_정보_t1102, 수량)
 
-	for i:=0 ; i<수량 ; i++ {
+	for i := 0; i < 수량; i++ {
 		거래원_정보_모음[i] = new(S거래원_정보_t1102)
 	}
 
@@ -256,7 +256,6 @@ func New현물_시세조회_응답(b []byte) (s *S현물_시세조회_응답, �
 	s.M정적VI하한가 = lib.F2정수64_단순형(g.Svi_dnlmtprice)
 	s.M저유동성종목여부 = lib.F2참거짓(g.Low_lqdt_gu, 1, true)
 	s.M이상급등종목여부 = lib.F2참거짓(g.Abnormal_rise_gu, 1, true)
-
 
 	대차불가표시_문자열 := lib.F2문자열_EUC_KR_공백제거(g.Lend_text)
 	switch 대차불가표시_문자열 {
@@ -361,7 +360,7 @@ func New현물_시세조회_응답(b []byte) (s *S현물_시세조회_응답, �
 
 	s.M외국계_매수_거래원_정보 = new(S거래원_정보_t1102)
 	s.M외국계_매수_거래원_정보.M거래_수량 = lib.F2정수64_단순형(g.Fwsvl)
-	s.M외국계_매수_거래원_정보.M평균_단가 =  lib.F2정수64_단순형_공백은_0(g.Ftradmsavg)
+	s.M외국계_매수_거래원_정보.M평균_단가 = lib.F2정수64_단순형_공백은_0(g.Ftradmsavg)
 	s.M외국계_매수_거래원_정보.M거래_대금 = lib.F2정수64_단순형_공백은_0(g.Ftradmsval)
 	s.M외국계_매수_거래원_정보.M전일대비_증감 = lib.F2정수64_단순형(g.Ftradmscha)
 	s.M외국계_매수_거래원_정보.M비율 = lib.F2실수_소숫점_추가_단순형(g.Ftradmsdiff, 2)
