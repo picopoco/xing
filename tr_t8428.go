@@ -42,6 +42,7 @@ import (
 	"time"
 )
 
+// HTS 1503 화면
 func F증시주변자금추이_t8428(시장_구분 lib.T시장구분, 추가_옵션_모음 ...interface{}) (응답값_모음 []*S증시_주변자금추이_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -235,10 +236,10 @@ func New증시주변자금추이_응답_반복값_모음(b []byte) (값 *S증시
 
 		s := new(S증시_주변자금추이_응답_반복값)
 		s.M일자 = lib.F2포맷된_시각_단순형("20060102", lib.F2문자열(g.Date))
-		s.M지수 = lib.F2실수_단순형(g.Jisu)
+		s.M지수 = lib.F2실수_소숫점_추가_단순형(g.Jisu, 2)
 		s.M전일대비_구분 = T전일대비_구분(lib.F2정수64_단순형(g.Sign))
-		s.M전일대비_등락폭 = s.M전일대비_구분.G부호보정_실수64(lib.F2실수_단순형(g.Change))
-		s.M전일대비_등락율 = s.M전일대비_구분.G부호보정_실수64(lib.F2실수_단순형(g.Diff))
+		s.M전일대비_등락폭 = s.M전일대비_구분.G부호보정_실수64(lib.F2실수_소숫점_추가_단순형(g.Change, 2))
+		s.M전일대비_등락율 = s.M전일대비_구분.G부호보정_실수64(lib.F2실수_소숫점_추가_단순형(g.Diff, 2))
 		s.M거래량 = lib.F2정수64_단순형(g.Volume)
 		s.M고객예탁금_억 = lib.F2정수64_단순형(g.Custmoney)
 		s.M예탁증감_억 = lib.F2정수64_단순형(g.Yecha)
@@ -246,7 +247,7 @@ func New증시주변자금추이_응답_반복값_모음(b []byte) (값 *S증시
 		if strings.Contains(strings.ToLower(lib.F2문자열(g.Vol)), "inf") {
 			s.M회전율 = math.Inf(1)
 		} else {
-			s.M회전율 = lib.F2실수_단순형(g.Vol)
+			s.M회전율 = lib.F2실수_소숫점_추가_단순형(g.Vol, 2)
 		}
 
 		s.M미수금_억 = lib.F2정수64_단순형(g.Outmoney)
