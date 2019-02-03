@@ -37,7 +37,7 @@ import (
 	"github.com/ghts/lib"
 )
 
-func go_TR호출(ch초기화 chan lib.T신호) (에러 error){
+func go_TR호출(ch초기화 chan lib.T신호) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
 	const 도우미_Go루틴_수량 = 10
@@ -89,4 +89,3 @@ func go_TR호출_도우미(ch초기화 chan lib.T신호, ch도우미_종료 chan
 		}
 	}
 }
-

@@ -154,4 +154,3 @@ func F계좌_상세명(계좌_번호 string) (계좌_상세명 string, 에러 er
 
 	return 계좌_상세명, nil
 }
-

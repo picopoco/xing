@@ -46,6 +46,8 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 	var 수량 int
 	var 시각 time.Time
 
+	F접속_확인()
+
 	for _, 추가_옵션 := range 추가_옵션_모음 {
 		switch 변환값 := 추가_옵션.(type) {
 		case int:

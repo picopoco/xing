@@ -44,6 +44,8 @@ func F기간별_주가_조회_t1305(종목코드 string, 일주월_구분 T일�
 	응답값_모음 []*S현물_기간별_조회_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
+	F접속_확인()
+
 	var 수량 int
 	var 일자 time.Time
 

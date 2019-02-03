@@ -58,7 +58,7 @@ const (
 	TR서버_이름
 	TR에러_코드
 	TR에러_메시지
-	TR코드별_쿼터
+	TR코드별_전송_제한
 	TR계좌_수량
 	TR계좌_번호
 	TR계좌_이름
@@ -94,8 +94,8 @@ func TR구분_String(v lib.TR구분) string {
 		return "에러_코드"
 	case TR에러_메시지:
 		return "에러_메시지"
-	case TR코드별_쿼터:
-		return "TR코드별_쿼터"
+	case TR코드별_전송_제한:
+		return "TR코드별_전송_제한"
 	case TR계좌_수량:
 		return "계좌_수량"
 	case TR계좌_번호:

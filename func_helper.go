@@ -152,11 +152,9 @@ func f접속유지_도우미() {
 	ch종료 := lib.F공통_종료_채널()
 
 	for {
-		lib.F대기(lib.P1초)
+		F접속_확인()
 
-		if 접속됨, 에러 := F접속됨(); 에러 != nil || !접속됨 {
-			C32_재시작()
-		}
+		lib.F대기(lib.P1초)
 
 		//if _, 에러 := (<-F시각_조회_t0167()).G값(); 에러 == nil {
 		//	에러_연속_발생_횟수 = 0
@@ -204,7 +202,6 @@ func f에러_발생(TR코드, 코드, 내용 string) bool {
 		panic(lib.New에러with출력("판별 불가능한 TR코드 : '%v'\n코드 : '%v'\n내용 : '%v'", TR코드, 코드, 내용))
 	}
 }
-
 
 func f데이터_복원_이중_응답(대기_항목 *c32_콜백_대기_항목, 수신값 *lib.S바이트_변환) (에러 error) {
 	완전값 := new(S이중_응답_일반형)
@@ -315,8 +312,23 @@ func f처리_가능한_TR코드(TR코드 string) bool {
 	}
 }
 
+func F접속_확인() error {
+	if !접속_여부.G값() {
+		return C32_재시작()
+	}
+
+	return nil
+}
+
 func C32_재시작() (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
+
+	xing_C32_재실행_잠금.Lock()
+	defer xing_C32_재실행_잠금.Unlock()
+
+	if 접속_여부.G값() {
+		return // 이미 재시작 되었음. 재접속 필요없음.
+	}
 
 	lib.F문자열_출력("** C32 재시작 **")
 

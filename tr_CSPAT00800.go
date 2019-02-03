@@ -44,18 +44,19 @@ import (
 func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
+	F접속_확인()
+
 	for i := 0; i < 10; i++ { // 최대 10번 재시도
 		i응답값, 에러 := F질의_단일TR(질의값)
 
-		if 에러 != nil && (
-			strings.Contains(에러.Error(), "원주문번호를 잘못") ||
+		if 에러 != nil && (strings.Contains(에러.Error(), "원주문번호를 잘못") ||
 			strings.Contains(에러.Error(), "접수 대기 상태")) {
 			continue // 재시도
 		}
 
 		lib.F확인(에러)
 
-		응답값, ok  := i응답값.(*S현물_취소_주문_응답)
+		응답값, ok := i응답값.(*S현물_취소_주문_응답)
 		lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
 
 		return 응답값, nil

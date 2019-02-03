@@ -59,6 +59,9 @@ func (s S시각_조회_응답_t0167) G값() (time.Time, error) {
 
 // 가장 간단한 질의. 접속 유지 및 질의 기능 테스트 용도로 적합함.
 func F시각_조회_t0167() (ch응답 chan *S시각_조회_응답_t0167) {
+
+	F접속_확인()
+
 	ch응답 = make(chan *S시각_조회_응답_t0167, 1)
 
 	ch질의 <- lib.New작업(f시각_조회_작업, ch응답)
@@ -73,7 +76,8 @@ func f시각_조회_작업(인수 interface{}) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() {
 		if ch응답 != nil {
 			ch응답 <- New시각_조회_응답_t0167(time.Time{}, 에러)
-		}}}.S실행()
+		}
+	}}.S실행()
 
 	ch응답 = 인수.(chan *S시각_조회_응답_t0167)
 
