@@ -46,7 +46,11 @@ func F질의(질의값 lib.I질의값, 옵션_모음 ...interface{}) (값 *lib.S
 	}}.S실행()
 
 	lib.F확인(F질의값_종목코드_검사(질의값))
-	f전송_권한_획득(질의값.TR코드())
+
+	switch 질의값.TR구분() {
+	case TR조회, TR주문:
+		f전송_권한_획득(질의값.TR코드())
+	}
 
 	소켓REQ := 소켓REQ_저장소.G소켓()
 	defer 소켓REQ_저장소.S회수(소켓REQ)

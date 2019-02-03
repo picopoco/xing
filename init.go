@@ -199,7 +199,11 @@ func tr수신_소켓_동작_확인(ch완료 chan lib.T신호) {
 }
 
 func f접속_확인(ch완료 chan lib.T신호) {
-	defer func() { ch완료 <- lib.P신호_종료 }()
+	defer func() {
+		if ch완료 != nil {
+			ch완료 <- lib.P신호_종료
+		}
+	}()
 
 	for i := 0; i < 100; i++ {
 		if 접속됨, 에러 := F접속됨(); 에러 != nil {
@@ -208,6 +212,8 @@ func f접속_확인(ch완료 chan lib.T신호) {
 		} else if !접속됨 {
 			panic(lib.New에러("이 시점에 접속되어 있어야 함."))
 		}
+
+		접속_여부.S값(true)
 
 		return
 	}
@@ -269,7 +275,7 @@ func f전일_당일_설정() (에러 error) {
 func C32_종료() (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	lib.F체크포인트()
+	defer 접속_여부.S값(false)
 
 	// 종료 신호 전송
 	func() {
