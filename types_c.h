@@ -37,6 +37,7 @@ typedef void (__stdcall *ETK_GetServerName)(char* pszName);
 typedef int (__stdcall *ETK_GetErrorMessage)(int nErrorCode, char* pszMsg, int nMsgSize);
 typedef int (__stdcall *ETK_GetTRCountPerSec)(LPCTSTR pszCode);
 typedef int (__stdcall *ETK_GetTRCountBaseSec)(LPCTSTR pszCode);
+typedef int (__stdcall *ETK_GetTRCountRequest)(LPCTSTR pszCode);
 typedef int (__stdcall *ETK_GetTRCountLimit)(LPCTSTR pszCode);
 //typedef int (__stdcall *ETK_RequestService)(HWND hWnd, LPCTSTR pszCode, LPCTSTR pszData);
 //typedef int (__stdcall *ETK_RemoveService)(HWND hWnd, LPCTSTR pszCode, LPCTSTR pszData);

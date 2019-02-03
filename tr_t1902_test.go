@@ -59,8 +59,6 @@ func TestETF_시간별_추이_t1902(t *testing.T) {
 	이전_시각 := 초기값
 
 	for _, 값 := range 값_모음 {
-		lib.F체크포인트(값.M시각)
-
 		lib.F테스트_같음(t, 값.M시각.Year(), 당일.Year())
 		lib.F테스트_같음(t, 값.M시각.Month(), 당일.Month())
 		lib.F테스트_같음(t, 값.M시각.Day(), 당일.Day())

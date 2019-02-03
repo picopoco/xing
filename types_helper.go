@@ -81,6 +81,7 @@ type TR코드별_전송_제한_정보 struct {
 	M초당_전송_제한   int
 	M초_베이스      int
 	M10분당_전송_제한 int
+	M10분간_전송한_수량 int
 }
 
 type TR코드별_전송_제한_정보_모음 struct {

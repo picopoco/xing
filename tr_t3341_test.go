@@ -65,7 +65,6 @@ func TestF재무_순위_종합_t3341(t *testing.T) {
 	lib.F테스트_에러없음(t, 에러)
 
 	for _, 값 := range 값_모음 {
-		lib.F체크포인트(값)
 		lib.F테스트_참임(t, 값.M순위 > 0 && 값.M순위 <= 수량)
 		lib.F테스트_참임(t, F종목코드_존재함(값.M종목코드))
 		lib.F테스트_참임(t, strings.TrimSpace(값.M기업명) != "")
