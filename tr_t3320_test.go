@@ -43,9 +43,7 @@ import (
 func TestF기업정보_요약_t3320(t *testing.T) {
 	t.Parallel()
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
 	종목코드 := "051910" // LG전자
 
@@ -66,9 +64,9 @@ func TestF기업정보_요약_t3320(t *testing.T) {
 	lib.F테스트_참임(t, 값1.M주식수 > 0)
 	lib.F테스트_다름(t, strings.TrimSpace(값1.M홈페이지), "")
 	lib.F테스트_다름(t, strings.TrimSpace(값1.M그룹명), "")
-	lib.F테스트_참임(t, 값1.M외국인 > 0)
+	lib.F테스트_참임(t, 값1.M외국인_비중 > 0)
 	lib.F테스트_다름(t, lib.F정규식_검색(값1.M주담전화, []string{`[1-9]+`}), "")
-	lib.F테스트_참임(t, 값1.M자본금 > 0)
+	lib.F테스트_참임(t, 값1.M자본금_억 > 0)
 	lib.F테스트_참임(t, 값1.M시가총액 > 0)
 	lib.F테스트_참임(t, 값1.M배당금 > 0)
 	lib.F테스트_참임(t, 값1.M배당수익율 > 0)
@@ -77,7 +75,7 @@ func TestF기업정보_요약_t3320(t *testing.T) {
 	lib.F테스트_참임(t, 값1.M현재가 > int64(float64(값1.M전일종가)*0.4) || 값1.M현재가 < int64(float64(값1.M전일종가)*1.4))
 
 	값2 := 값.M응답2
-	lib.F테스트_다름(t, strings.TrimSpace(값2.M기업코드), "")
+	lib.F테스트_같음(t, strings.TrimSpace(값2.M종목코드), 종목코드)
 	lib.F테스트_다름(t, strings.TrimSpace(값2.M결산년월), "")
 	lib.F테스트_다름(t, strings.TrimSpace(값2.M결산구분), "")
 	lib.F테스트_참임(t, math.Abs(값2.PER) < 30, 값2.PER)

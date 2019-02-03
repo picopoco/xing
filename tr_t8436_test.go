@@ -42,9 +42,7 @@ import (
 func TestF주식종목조회_API용_t8436(t *testing.T) {
 	t.Parallel()
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
 	시장_구분 := ([]lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥})[lib.F임의_범위_이내_정수값(0, 2)]
 

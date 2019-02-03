@@ -42,9 +42,7 @@ import (
 func TestF현물_차트_틱_t8411(t *testing.T) {
 	t.Parallel()
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
 	const 종목코드 = "069500" // 코덱스200
 	var 이전_일자_시각 time.Time

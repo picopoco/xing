@@ -77,10 +77,10 @@ func (s *s소켓_메시지_대기_저장소) s재전송_도우미(메시지 *lib
 }
 
 type TR코드별_전송_제한_정보 struct {
-	TR코드        string
-	M초당_전송_제한   int
-	M초_베이스      int
-	M10분당_전송_제한 int
+	TR코드         string
+	M초당_전송_제한    int
+	M초_베이스       int
+	M10분당_전송_제한  int
 	M10분간_전송한_수량 int
 }
 

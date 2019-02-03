@@ -49,10 +49,7 @@ func TestCSPAT00800현물_취소_주문(t *testing.T) {
 		t.SkipNow()
 	}
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
-
+	lib.F테스트_에러없음(t, F접속_확인())
 	lib.F테스트_에러없음(t, F주문_응답_실시간_정보_구독())
 
 	var 종목 = lib.New종목("069500", "KODEX 200", lib.P시장구분_ETF)

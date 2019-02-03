@@ -61,12 +61,19 @@ func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가
 
 // t1101 현물 호가 조회 응답
 type S현물_호가조회_응답 struct {
-	M한글명         string
+	M종목코드        string
+	M시각          time.Time
+	M종목명         string
 	M현재가         int64
+	M상한가         int64
+	M하한가         int64
+	M시가          int64
+	M고가          int64
+	M저가          int64
 	M전일대비구분      T전일대비_구분
 	M전일대비등락폭     int64
 	M등락율         float64
-	M누적거래량       int64
+	M거래량         int64
 	M전일종가        int64
 	M매도호가_모음     []int64
 	M매수호가_모음     []int64
@@ -78,7 +85,6 @@ type S현물_호가조회_응답 struct {
 	M매수호가수량합     int64
 	M직전매도대비수량합   int64
 	M직전매수대비수량합   int64
-	M수신시간        time.Time
 	M예상체결가격      int64
 	M예상체결수량      int64
 	M예상체결전일구분    T전일대비_구분
@@ -87,12 +93,6 @@ type S현물_호가조회_응답 struct {
 	M시간외매도잔량     int64
 	M시간외매수잔량     int64
 	M동시호가_구분     T동시호가_구분
-	M종목코드        string
-	M상한가         int64
-	M하한가         int64
-	M시가          int64
-	M고가          int64
-	M저가          int64
 }
 
 func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, 에러 error) {
@@ -104,13 +104,17 @@ func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, �
 	g := new(T1101OutBlock)
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
+	시각_문자열 := lib.F2문자열_공백제거(g.Hotime)
+
 	s = new(S현물_호가조회_응답)
-	s.M한글명 = lib.F2문자열_EUC_KR(g.Hname)
+	s.M종목코드 = lib.F2문자열_공백제거(g.Shcode)
+	s.M시각 = lib.F2일자별_시각_단순형_공백은_초기값(당일.G값(), "150405.999", 시각_문자열[:6]+"."+시각_문자열[6:])
+	s.M종목명 = lib.F2문자열_EUC_KR(g.Hname)
 	s.M현재가 = lib.F2정수64_단순형(g.Price)
 	s.M전일대비구분 = T전일대비_구분(lib.F2정수64_단순형(g.Sign))
 	s.M전일대비등락폭 = lib.F2정수64_단순형(g.Change)
 	s.M등락율 = lib.F2실수_소숫점_추가_단순형(g.Diff, 2)
-	s.M누적거래량 = lib.F2정수64_단순형(g.Volume)
+	s.M거래량 = lib.F2정수64_단순형(g.Volume)
 	s.M전일종가 = lib.F2정수64_단순형(g.Jnilclose)
 	s.M매도호가_모음 = make([]int64, 10)
 	s.M매수호가_모음 = make([]int64, 10)
@@ -182,11 +186,6 @@ func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, �
 	s.M매수호가수량합 = lib.F2정수64_단순형(g.Bid)
 	s.M직전매도대비수량합 = lib.F2정수64_단순형(g.Preoffercha)
 	s.M직전매수대비수량합 = lib.F2정수64_단순형(g.Prebidcha)
-
-	if 시각_문자열 := lib.F2문자열_공백제거(g.Hotime); 시각_문자열 != "" {
-		s.M수신시간 = lib.F2일자별_시각_단순형(당일.G값(), "150405.999", 시각_문자열[:6]+"."+시각_문자열[6:])
-	}
-
 	s.M예상체결가격 = lib.F2정수64_단순형(g.Yeprice)
 	s.M예상체결수량 = lib.F2정수64_단순형(g.Yevolume)
 	s.M예상체결전일구분 = T전일대비_구분(lib.F2정수64_단순형(g.Yesign))
@@ -195,7 +194,6 @@ func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, �
 	s.M시간외매도잔량 = lib.F2정수64_단순형(g.Tmoffer)
 	s.M시간외매수잔량 = lib.F2정수64_단순형(g.Tmbid)
 	s.M동시호가_구분 = T동시호가_구분(lib.F2정수64_단순형(g.Status))
-	s.M종목코드 = lib.F2문자열_공백제거(g.Shcode)
 	s.M상한가 = lib.F2정수64_단순형(g.Uplmtprice)
 	s.M하한가 = lib.F2정수64_단순형(g.Dnlmtprice)
 	s.M시가 = lib.F2정수64_단순형(g.Open)

@@ -35,6 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"time"
 
 	"testing"
 )
@@ -44,6 +45,7 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 
 	종목코드 := F임의_종목().G코드()
 	일주월_구분 := ([]T일주월_구분{P일주월_일, P일주월_주, P일주월_월})[lib.F임의_범위_이내_정수값(0, 2)]
+	var 이전_일자 time.Time
 
 	값_모음, 에러 := F기간별_주가_조회_t1305(종목코드, 일주월_구분, 300)
 	lib.F테스트_에러없음(t, 에러)
@@ -54,6 +56,8 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		lib.F테스트_같음(t, 값.M일자.Minute(), 0)
 		lib.F테스트_같음(t, 값.M일자.Second(), 0)
 		lib.F테스트_같음(t, 값.M일자.Nanosecond(), 0)
+		lib.F테스트_참임(t, 값.M일자.After(이전_일자) || 값.M일자.Equal(이전_일자))
+		이전_일자 = 값.M일자
 
 		if i > 0 {
 			차이 := lib.F절대값_실수(값.M일자.Sub(값_모음[i-1].M일자).Hours() / 24)
@@ -156,8 +160,8 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 			t.FailNow()
 		}
 
-		lib.F테스트_참임(t, 값.M누적거래량 >= 0)
-		lib.F테스트_참임(t, 값.M누적거래대금_백만 >= 0)
+		lib.F테스트_참임(t, 값.M거래량 >= 0)
+		lib.F테스트_참임(t, 값.M거래대금_백만 >= 0)
 		//lib.F테스트_참임(t, 값.M거래_증가율)
 		lib.F테스트_참임(t, 값.M체결강도 >= 0)
 		lib.F테스트_참임(t, 값.M소진율 >= 0)

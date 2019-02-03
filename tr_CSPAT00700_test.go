@@ -49,9 +49,7 @@ func TestCSPAT00700현물_정정_주문(t *testing.T) {
 		t.SkipNow()
 	}
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
 	소켓SUB_실시간 := lib.NewNano소켓SUB_단순형(lib.P주소_Xing_실시간)
 	lib.F대기(lib.P1초)

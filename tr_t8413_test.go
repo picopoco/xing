@@ -42,9 +42,7 @@ import (
 func TestF현물_차트_일주월_t8413(t *testing.T) {
 	t.Parallel()
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
 	const 종목코드 = "069500" // 코덱스200
 	var 이전_일자 time.Time
@@ -54,7 +52,11 @@ func TestF현물_차트_일주월_t8413(t *testing.T) {
 	값_모음, 에러 := F현물_차트_일주월_t8413(종목코드, 시작일, 당일.G값(), P일주월_일, 2300)
 	lib.F테스트_에러없음(t, 에러)
 
-	for _, 값 := range 값_모음 {
+	for i, 값 := range 값_모음 {
+		if i == 0 {
+			lib.F체크포인트(값)
+		}
+
 		lib.F테스트_참임(t, 값.M일자.After(이전_일자) || 값.M일자.Equal(이전_일자))
 		lib.F테스트_참임(t, 값.M일자.Equal(시작일) || 값.M일자.After(시작일), 값.M일자, 시작일)
 		이전_일자 = 값.M일자

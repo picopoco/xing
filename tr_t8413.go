@@ -251,7 +251,7 @@ func New현물_차트_일주월_응답_반복값_모음(b []byte) (값 *S현물_
 		s.M거래량 = lib.F2정수64_단순형(g.Vol)
 		s.M거래대금_백만 = lib.F2정수64_단순형(g.Value)
 		s.M수정구분 = lib.F2정수64_단순형_공백은_0(g.Jongchk)
-		s.M수정비율 = lib.F2실수_단순형_공백은_0(g.Rate)
+		s.M수정비율 = lib.F2실수_소숫점_추가_단순형_공백은_0(g.Rate, 2)
 		s.M수정주가반영항목 = lib.F2정수64_단순형_공백은_0(g.Pricechk)
 		s.M수정비율반영거래대금 = lib.F2정수64_단순형_공백은_0(g.Ratevalue)
 		s.M종가등락구분 = T전일대비_구분(lib.F2정수_단순형(g.Sign))

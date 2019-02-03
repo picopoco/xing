@@ -43,16 +43,17 @@ import (
 func TestF현물_호가_조회_t1101(t *testing.T) {
 	t.Parallel()
 
-	접속됨, 에러 := F접속됨()
-	lib.F테스트_에러없음(t, 에러)
-	lib.F테스트_참임(t, 접속됨)
+	lib.F테스트_에러없음(t, F접속_확인())
 
-	종목코드 := "069500" // 코덱스200
+	//const 종목코드 = "069500" // 코덱스200
+	const 종목코드 = "000020"
 
 	값, 에러 := F현물_호가_조회_t1101(종목코드)
 	lib.F테스트_에러없음(t, 에러)
 
-	lib.F테스트_다름(t, 값.M한글명, "")
+	lib.F체크포인트(값)
+
+	lib.F테스트_다름(t, 값.M종목명, "")
 	lib.F테스트_참임(t, 값.M현재가 >= 0)
 	lib.F테스트_같음(t, 값.M전일대비구분, P구분_상한, P구분_상승, P구분_보합, P구분_하한, P구분_하락)
 	lib.F테스트_참임(t, 값.M전일대비등락폭 >= 0)
@@ -66,7 +67,7 @@ func TestF현물_호가_조회_t1101(t *testing.T) {
 		lib.F테스트_같음(t, 값.M등락율, 0)
 	}
 
-	lib.F테스트_참임(t, 값.M누적거래량 >= 0)
+	lib.F테스트_참임(t, 값.M거래량 >= 0)
 	lib.F테스트_참임(t, 값.M전일종가 >= 0)
 	lib.F테스트_같음(t, len(값.M매도호가_모음), 10)
 	lib.F테스트_같음(t, len(값.M매수호가_모음), 10)
@@ -93,10 +94,10 @@ func TestF현물_호가_조회_t1101(t *testing.T) {
 	}
 
 	if F한국증시_정규시장_거래시간임() {
-		lib.F테스트_참임(t, 값.M수신시간.After(time.Now().Add(-1*lib.P10분)),
-			값.M수신시간.Format("15:04:06"), time.Now().Add(-1*lib.P10분).Format("15:04:06"))
-		lib.F테스트_참임(t, 값.M수신시간.Before(time.Now().Add(lib.P10분)),
-			time.Now().Add(lib.P10분).Format("15:04:06"), 값.M수신시간.Format("15:04:06"))
+		lib.F테스트_참임(t, 값.M시각.After(time.Now().Add(-1*lib.P10분)),
+			값.M시각.Format("15:04:06"), time.Now().Add(-1*lib.P10분).Format("15:04:06"))
+		lib.F테스트_참임(t, 값.M시각.Before(time.Now().Add(lib.P10분)),
+			time.Now().Add(lib.P10분).Format("15:04:06"), 값.M시각.Format("15:04:06"))
 	}
 
 	if 값.M예상체결가격 != 0 {

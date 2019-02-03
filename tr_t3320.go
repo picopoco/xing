@@ -39,8 +39,7 @@ import (
 	"github.com/ghts/lib"
 )
 
-// t3320 은 참고자료로서 정보의 정확성이나 완전성은 보장하기는 어렵습니다
-// HTS 3302 화면
+// HTS 3302 화면. t3320 은 참고자료로서 정보의 정확성이나 완전성은 보장하기는 어렵습니다. 숫자 엉망이다.
 func F기업정보_요약_t3320(종목코드 string) (응답값 *S기업정보_요약_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
@@ -88,9 +87,9 @@ type S기업정보_요약_응답1 struct {
 	M주식수    int64
 	M홈페이지   string
 	M그룹명    string
-	M외국인    float64
+	M외국인_비중 float64
 	M주담전화   string
-	M자본금    float64
+	M자본금_억  float64
 	M시가총액   float64
 	M배당금    float64
 	M배당수익율  float64
@@ -101,7 +100,7 @@ type S기업정보_요약_응답1 struct {
 func (s *S기업정보_요약_응답1) G응답1() I이중_응답1 { return s }
 
 type S기업정보_요약_응답2 struct {
-	M기업코드    string
+	M종목코드    string
 	M결산년월    string
 	M결산구분    string
 	PER      float64
@@ -141,11 +140,11 @@ func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	값 = new(S기업정보_요약_응답1)
-	값.M업종구분명 = lib.F2문자열(g.Upgubunnm)
+	값.M업종구분명 = lib.F2문자열_EUC_KR(g.Upgubunnm)
 	값.M시장구분 = lib.F2문자열(g.Sijangcd)
-	값.M시장구분명 = lib.F2문자열(g.Marketnm)
-	값.M한글기업명 = lib.F2문자열(g.Company)
-	값.M본사주소 = lib.F2문자열(g.Baddress)
+	값.M시장구분명 = lib.F2문자열_EUC_KR(g.Marketnm)
+	값.M한글기업명 = lib.F2문자열_EUC_KR(g.Company)
+	값.M본사주소 = lib.F2문자열_EUC_KR(g.Baddress)
 	값.M본사전화번호 = lib.F2문자열(g.Btelno)
 	값.M최근결산년도 = lib.F2문자열(g.Gsyyyy)
 	값.M결산월 = lib.F2문자열(g.Gsmm)
@@ -153,10 +152,10 @@ func NewS기업정보_요약_응답1(b []byte) (값 *S기업정보_요약_응답
 	값.M주당액면가 = lib.F2정수64_단순형(g.Lstprice)
 	값.M주식수 = lib.F2정수64_단순형(g.Gstock)
 	값.M홈페이지 = lib.F2문자열(g.Homeurl)
-	값.M그룹명 = lib.F2문자열(g.Grdnm)
-	값.M외국인 = lib.F2실수_소숫점_추가_단순형(g.Foreignratio, 2)
+	값.M그룹명 = lib.F2문자열_EUC_KR(g.Grdnm)
+	값.M외국인_비중 = lib.F2실수_소숫점_추가_단순형(g.Foreignratio, 2)
 	값.M주담전화 = lib.F2문자열(g.Irtel)
-	값.M자본금 = lib.F2실수_단순형(g.Capital)
+	값.M자본금_억 = lib.F2실수_단순형(g.Capital)
 	값.M시가총액 = lib.F2실수_단순형(g.Sigavalue)
 	값.M배당금 = lib.F2실수_단순형(g.Cashsis)
 	값.M배당수익율 = lib.F2실수_소숫점_추가_단순형(g.Cashrate, 2)
@@ -176,7 +175,7 @@ func NewS기업정보_요약_응답2(b []byte) (값 *S기업정보_요약_응답
 	lib.F확인(binary.Read(bytes.NewBuffer(b), binary.BigEndian, g))
 
 	값 = new(S기업정보_요약_응답2)
-	값.M기업코드 = lib.F2문자열(g.Gicode)
+	값.M종목코드 = lib.F2문자열(g.Gicode)[1:]
 	값.M결산년월 = lib.F2문자열(g.Gsym)
 	값.M결산구분 = lib.F2문자열(g.Gsgb)
 	값.PER = lib.F2실수_소숫점_추가_단순형(g.Per, 2)
@@ -195,8 +194,6 @@ func NewS기업정보_요약_응답2(b []byte) (값 *S기업정보_요약_응답
 	값.PEG = lib.F2실수_소숫점_추가_단순형(g.Peg, 2)
 	값.T_PEG = lib.F2실수_소숫점_추가_단순형(g.Tpeg, 2)
 	값.M최근분기년도 = lib.F2문자열(g.Tgsym)
-
-	lib.F체크포인트(값)
 
 	return 값, nil
 }
