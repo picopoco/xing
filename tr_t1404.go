@@ -116,18 +116,18 @@ func (s *S관리종목_조회_응답_반복값_모음_t1404) G반복값_모음_T
 }
 
 type S관리종목_조회_응답_반복값_t1404 struct {
+	M종목코드       string
 	M종목명        string
 	M현재가        int64
 	M전일대비구분     T전일대비_구분
 	M전일대비_등락폭   int64
 	M전일대비_등락율   float64
 	M거래량        int64
-	M지정일        time.Time
 	M지정일_주가     int64
 	M지정일_대비_등락폭 int64
 	M지정일_대비_등락율 float64
 	M사유         T관리종목_지정_사유_구분
-	M종목코드       string
+	M지정일        time.Time
 	M해제일        time.Time
 }
 
