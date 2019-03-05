@@ -865,6 +865,85 @@ type T0167OutBlock struct {
 	Time [12]byte
 }
 
+type T0425InBlock struct {
+	Accno       [11]byte
+	X_accno     byte
+	Passwd      [8]byte
+	X_passwd    byte
+	Expcode     [12]byte
+	X_expcode   byte
+	Chegb       [1]byte
+	X_chegb     byte
+	Medosu      [1]byte
+	X_medosu    byte
+	Sortgb      [1]byte
+	X_sortgb    byte
+	Ordno       [10]byte
+	X_cts_ordno byte
+}
+type T0425OutBlock struct {
+	Tqty        [18]byte
+	X_tqty      byte
+	Tcheqty     [18]byte
+	X_tcheqty   byte
+	Tordrem     [18]byte
+	X_tordrem   byte
+	Cmss        [18]byte
+	X_cmss      byte
+	Tamt        [18]byte
+	X_tamt      byte
+	Tmdamt      [18]byte
+	X_tmdamt    byte
+	Tmsamt      [18]byte
+	X_tmsamt    byte
+	Tax         [18]byte
+	X_tax       byte
+	Ordno       [10]byte
+	X_cts_ordno byte
+}
+type T0425OutBlock1 struct {
+	Ordno        [10]byte
+	X_ordno      byte
+	Expcode      [12]byte
+	X_expcode    byte
+	Medosu       [10]byte
+	X_medosu     byte
+	Qty          [9]byte
+	X_qty        byte
+	Price        [9]byte
+	X_price      byte
+	Cheqty       [9]byte
+	X_cheqty     byte
+	Cheprice     [9]byte
+	X_cheprice   byte
+	Ordrem       [9]byte
+	X_ordrem     byte
+	Cfmqty       [9]byte
+	X_cfmqty     byte
+	Status       [10]byte
+	X_status     byte
+	Orgordno     [10]byte
+	X_orgordno   byte
+	Ordgb        [20]byte
+	X_ordgb      byte
+	Ordtime      [8]byte
+	X_ordtime    byte
+	Ordermtd     [10]byte
+	X_ordermtd   byte
+	Sysprocseq   [10]byte
+	X_sysprocseq byte
+	Hogagb       [2]byte
+	X_hogagb     byte
+	Price1       [8]byte
+	X_price1     byte
+	Orggb        [2]byte
+	X_orggb      byte
+	Singb        [2]byte
+	X_singb      byte
+	Loandt       [8]byte
+	X_loandt     byte
+}
+
 type T1101InBlock struct {
 	Shcode   [6]byte
 	X_shcode byte
@@ -1540,6 +1619,80 @@ type T1310OutBlock1 struct {
 	X_revolume byte
 	Rechecnt   [8]byte
 	X_rechecnt byte
+}
+
+type T1404InBlock struct {
+	Gubun        [1]byte
+	X_gubun      byte
+	Jongchk      [1]byte
+	X_jongchk    byte
+	Shcode       [6]byte
+	X_cts_shcode byte
+}
+type T1404OutBlock struct {
+	Shcode       [6]byte
+	X_cts_shcode byte
+}
+type T1404OutBlock1 struct {
+	Hname     [20]byte
+	X_hname   byte
+	Price     [8]byte
+	X_price   byte
+	Sign      [1]byte
+	X_sign    byte
+	Change    [8]byte
+	X_change  byte
+	Diff      [6]byte
+	X_diff    byte
+	Volume    [12]byte
+	X_volume  byte
+	Date      [8]byte
+	X_date    byte
+	Tprice    [8]byte
+	X_tprice  byte
+	Tchange   [8]byte
+	X_tchange byte
+	Tdiff     [6]byte
+	X_tdiff   byte
+	Reason    [4]byte
+	X_reason  byte
+	Shcode    [6]byte
+	X_shcode  byte
+	Edate     [8]byte
+	X_edate   byte
+}
+
+type T1405InBlock struct {
+	Gubun        [1]byte
+	X_gubun      byte
+	Jongchk      [1]byte
+	X_jongchk    byte
+	Shcode       [6]byte
+	X_cts_shcode byte
+}
+type T1405OutBlock struct {
+	Shcode       [6]byte
+	X_cts_shcode byte
+}
+type T1405OutBlock1 struct {
+	Hname    [20]byte
+	X_hname  byte
+	Price    [8]byte
+	X_price  byte
+	Sign     [1]byte
+	X_sign   byte
+	Change   [8]byte
+	X_change byte
+	Diff     [6]byte
+	X_diff   byte
+	Volume   [12]byte
+	X_volume byte
+	Date     [8]byte
+	X_date   byte
+	Edate    [8]byte
+	X_edate  byte
+	Shcode   [6]byte
+	X_shcode byte
 }
 
 type T1901InBlock struct {

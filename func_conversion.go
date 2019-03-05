@@ -69,44 +69,56 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		s := new(S현물_주문_응답_실시간_정보)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_정상_주문:
-		s := new(S질의값_정상_주문)
+	case P자료형_S질의값_정상_주문_CSPAT00600:
+		s := new(S질의값_정상_주문_CSPAT00600)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_정정_주문:
-		s := new(S질의값_정정_주문)
+	case P자료형_S질의값_정정_주문_CSPAT00700:
+		s := new(S질의값_정정_주문_CSPAT00700)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_취소_주문:
-		s := new(S질의값_취소_주문)
+	case P자료형_S질의값_취소_주문_CSPAT00800:
+		s := new(S질의값_취소_주문_CSPAT00800)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_현물_전일당일_분틱_조회:
-		s := new(S질의값_현물_전일당일_분틱_조회)
+	case P자료형_S질의값_체결_미체결_조회_t0425:
+		s := new(S질의값_체결_미체결_조회_t0425)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_현물_기간별_조회:
-		s := new(S질의값_현물_기간별_조회)
+	case P자료형_S질의값_현물_기간별_조회_t1305:
+		s := new(S질의값_현물_기간별_조회_t1305)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S질의값_현물_전일당일_분틱_조회_t1310:
+		s := new(S질의값_현물_전일당일_분틱_조회_t1310)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S질의값_관리종목_조회_t1404:
+		s := new(S질의값_관리종목_조회_t1404)
+		lib.F확인(바이트_변환값.G값(s))
+		return s, nil
+	case P자료형_S질의값_투자경고_조회_t1405:
+		s := new(S질의값_투자경고_조회_t1405)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S질의값_재무순위_t3341:
 		s := new(S질의값_재무순위_t3341)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_현물_차트_틱:
-		s := new(S질의값_현물_차트_틱)
+	case P자료형_S질의값_현물_차트_틱_t8411:
+		s := new(S질의값_현물_차트_틱_t8411)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_현물_차트_분:
-		s := new(S질의값_현물_차트_분)
+	case P자료형_S질의값_현물_차트_분_t8412:
+		s := new(S질의값_현물_차트_분_t8412)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_현물_차트_일주월:
-		s := new(S질의값_현물_차트_일주월)
+	case P자료형_S질의값_현물_차트_일주월_t8413:
+		s := new(S질의값_현물_차트_일주월_t8413)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S질의값_증시주변자금추이:
-		s := new(S질의값_증시주변자금추이)
+	case P자료형_S질의값_증시주변자금추이_t8428:
+		s := new(S질의값_증시주변자금추이_t8428)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S콜백_기본형:
@@ -166,7 +178,7 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_호가조회_응답:
-		s := new(S현물_호가조회_응답)
+		s := new(S현물_호가_조회_응답)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_시세조회_응답:
@@ -190,19 +202,19 @@ func F바이트_변환값_해석(바이트_변환값 *lib.S바이트_변환) (�
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_기간별_조회_응답:
-		s := new(S현물_기간별_조회_응답)
+		s := new(S현물_기간별_조회_응답_t1305)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S현물_기간별_조회_응답_헤더:
-		s := new(S현물_기간별_조회_응답_헤더)
+	case P자료형_S현물_기간별_조회_응답_헤더_t1305:
+		s := new(S현물_기간별_조회_응답_헤더_t1305)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S현물_기간별_조회_응답_반복값:
-		s := new(S현물_기간별_조회_응답_반복값)
+	case P자료형_S현물_기간별_조회_응답_반복값_t1305:
+		s := new(S현물_기간별_조회_응답_반복값_t1305)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
-	case P자료형_S현물_기간별_조회_응답_반복값_모음:
-		s := new(S현물_기간별_조회_응답_반복값_모음)
+	case P자료형_S현물_기간별_조회_응답_반복값_모음_t1305:
+		s := new(S현물_기간별_조회_응답_반복값_모음_t1305)
 		lib.F확인(바이트_변환값.G값(s))
 		return s, nil
 	case P자료형_S현물_전일당일분틱조회_응답:
@@ -339,31 +351,31 @@ func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) 
 	자료형_문자열 = 자료형_문자열[시작_인덱스:]
 
 	switch 자료형_문자열 {
-	case RT현물_주문_접수:
+	case RT현물_주문_접수_SC0:
 		return New현물_주문_접수(b)
-	case RT현물_주문_체결:
+	case RT현물_주문_체결_SC1:
 		return New현물_주문_체결(b)
-	case RT현물_주문_정정:
+	case RT현물_주문_정정_SC2:
 		return New현물_주문_정정(b)
-	case RT현물_주문_취소:
+	case RT현물_주문_취소_SC3:
 		return New현물_주문_취소(b)
-	case RT현물_주문_거부:
+	case RT현물_주문_거부_SC4:
 		return New현물_주문_거부(b)
-	case RT코스피_호가_잔량:
+	case RT코스피_호가_잔량_H1:
 		return New코스피_호가_잔량(b)
-	case RT코스피_시간외_호가_잔량:
+	case RT코스피_시간외_호가_잔량_H2:
 		return New코스피_시간외_호가_잔량(b)
-	case RT코스피_체결:
+	case RT코스피_체결_S3:
 		return New코스피_체결(b)
-	case RT코스피_예상_체결:
+	case RT코스피_예상_체결_YS3:
 		return New코스피_예상_체결(b)
-	case RT코스피_ETF_NAV:
+	case RT코스피_ETF_NAV_I5:
 		return New코스피_ETF_NAV(b)
-	case RT주식_VI발동해제:
+	case RT주식_VI발동해제_VI:
 		return New주식_VI발동해제(b)
-	case RT시간외_단일가VI발동해제:
+	case RT시간외_단일가VI발동해제_DVI:
 		return New시간외_단일가VI발동해제(b)
-	case RT장_운영정보:
+	case RT장_운영정보_JIF:
 		return New장_운영정보(b)
 	case RT코스닥_체결, RT코스닥_예상_체결,
 		RT코스피_거래원, RT코스닥_거래원,
@@ -392,9 +404,11 @@ func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) 
 	case P자료형_CSPAT00800OutBlock2:
 		return New현물_취소_주문_응답2(b)
 	case P자료형_T0167OutBlock:
-		return New시간조회_응답(b)
+		return New시간_조회_응답(b)
+	case P자료형_T0425OutBlockAll:
+		return New현물_체결_미체결_조회_응답_t0425(b)
 	case P자료형_T1101OutBlock:
-		return New현물_호가조회_응답(b)
+		return New현물_호가_조회_응답(b)
 	case P자료형_T1102OutBlock:
 		return New현물_시세조회_응답(b)
 	case P자료형_T1305OutBlock:
@@ -405,6 +419,14 @@ func f바이트_변환값_해석Raw(바이트_변환값 *lib.S바이트_변환) 
 		return New현물_당일전일분틱조회_응답_헤더(b)
 	case P자료형_T1310OutBlock1:
 		return New현물_당일전일분틱조회_응답_반복값_모음(b)
+	case P자료형_T1404OutBlock:
+		return New관리종목_조회_응답_헤더_t1404(b)
+	case P자료형_T1404OutBlock1:
+		return New관리종목_조회_응답_반복값_모음_t1404(b)
+	case P자료형_T1405OutBlock:
+		return New투자경고_조회_응답_헤더_t1405(b)
+	case P자료형_T1405OutBlock1:
+		return New투자경고_조회_응답_반복값_모음_t1405(b)
 	case P자료형_T1902OutBlock:
 		return NewETF시간별_추이_응답_헤더(b)
 	case P자료형_T1902OutBlock1:
@@ -488,17 +510,6 @@ func f2수정구분_모음(값 int64) (수정구분_모음 []T수정구분, 에�
 	return 수정구분_모음, nil
 }
 
-func f2매수매도(매수_매도 T매수_매도) (lib.T매수_매도, error) {
-	switch 매수_매도 {
-	case P매도:
-		return lib.P매도, nil
-	case P매수:
-		return lib.P매수, nil
-	default:
-		return lib.T매수_매도(0), lib.New에러("예상하지 못한 매수 매도 구분값. %v", 매수_매도)
-	}
-}
-
 func f2시장구분(값 interface{}) lib.T시장구분 {
 	문자열 := lib.F2문자열_EUC_KR_공백제거(값)
 
@@ -509,17 +520,6 @@ func f2시장구분(값 interface{}) lib.T시장구분 {
 		return lib.P시장구분_코스닥
 	default:
 		panic(lib.New에러("예상하지 못한 값 : '%v'", 문자열))
-	}
-}
-
-func f2Xing매수매도(매수_매도 lib.T매수_매도) T매수_매도 {
-	switch 매수_매도 {
-	case lib.P매도:
-		return P매도
-	case lib.P매수:
-		return P매수
-	default:
-		panic(lib.New에러("예상하지 못한 매수 매도 구분값. %v", 매수_매도))
 	}
 }
 

@@ -81,7 +81,7 @@ func f시각_조회_작업(인수 interface{}) {
 
 	ch응답 = 인수.(chan *S시각_조회_응답_t0167)
 
-	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회}
+	질의값 := lib.S질의값_기본형{M구분: TR조회, M코드: TR시간_조회_t0167}
 	i응답값, 에러 := F질의_단일TR(질의값)
 	lib.F확인(에러)
 
@@ -91,7 +91,7 @@ func f시각_조회_작업(인수 interface{}) {
 	ch응답 <- New시각_조회_응답_t0167(값, nil)
 }
 
-func New시간조회_응답(b []byte) (값 time.Time, 에러 error) {
+func New시간_조회_응답(b []byte) (값 time.Time, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = time.Time{} }}.S실행()
 
 	lib.F조건부_패닉(len(b) != SizeT0167OutBlock,

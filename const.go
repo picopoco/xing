@@ -60,7 +60,7 @@ const (
 	TR에러_메시지
 	TR코드별_전송_제한
 	TR계좌_수량
-	TR계좌_번호
+	TR계좌번호_모음
 	TR계좌_이름
 	TR계좌_상세명
 	TR계좌_별명
@@ -99,7 +99,7 @@ func TR구분_String(v lib.TR구분) string {
 		return "TR코드별_전송_제한"
 	case TR계좌_수량:
 		return "계좌_수량"
-	case TR계좌_번호:
+	case TR계좌번호_모음:
 		return "계좌_번호"
 	case TR계좌_이름:
 		return "계좌_이름"
@@ -119,6 +119,7 @@ const (
 	TR현물_취소_주문_CSPAT00800     = "CSPAT00800"
 	TR계좌_거래_내역_CDPCQ04700     = "CDPCQ04700"
 	TR시간_조회_t0167             = "t0167"
+	TR체결_미체결_조회_t0425         = "t0425"
 	TR현물_호가_조회_t1101          = "t1101"
 	TR현물_시세_조회_t1102          = "t1102"
 	TR현물_기간별_조회_t1305         = "t1305"
@@ -154,7 +155,6 @@ const (
 	TR주식_매매일지_수수료_금일      = "t0150"
 	TR주식_매매일지_수수료_날짜_지정   = "t0151"
 	TR주식_잔고_2             = "t0424"
-	TR주식_체결_미체결           = "t0425"
 	TR종목별_증시_일정           = "t3202"
 	TR해외_실시간_지수           = "t3518"
 	TR해외_지수_조회            = "t3521"
@@ -201,24 +201,6 @@ func (v T주문_응답_구분) String() string {
 		return "체결 확인"
 	default:
 		return lib.F2문자열("예상하지 못한 값 : '%v'", uint8(v))
-	}
-}
-
-const (
-	P매도 = T매수_매도("1")
-	P매수 = T매수_매도("2")
-)
-
-type T매수_매도 string
-
-func (p T매수_매도) String() string {
-	switch p {
-	case P매도:
-		return "매도"
-	case P매수:
-		return "매수"
-	default:
-		return lib.F2문자열("예상하지 못한 매수 매도 구분. '%v'", string(p))
 	}
 }
 
@@ -1411,6 +1393,132 @@ func (p T투자경고_질의_구분) String() string {
 	}
 }
 
+type T정렬_순서_t0425 uint8
+
+const (
+	P주문번호_역순 T정렬_순서_t0425 = (iota + 1)
+	P주문번호_순
+)
+
+func (p T정렬_순서_t0425) String() string {
+	switch p {
+	case P주문번호_역순:
+		return "주문번호 역순"
+	case P주문번호_순:
+		return "주문번호 순"
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '%v'", int(p)))
+	}
+}
+
+type T호가_유형_t0425 uint8
+
+const (
+	P호가_유형_보통      = 00
+	P호가_유형_시장가     = 03
+	P호가_유형_조건부_지정가 = 05
+	P호가_유형_최유리_지정가 = 06
+	P호가_유형_최우선_지정가 = 07
+	P호가_유형_보통_IOC  = 10
+	P호가_유형_시장가_IOC = 13
+	P호가_유형_최유리_IOC = 16
+	P호가_유형_보통_FOK  = 20
+	P호가_유형_시장가_FOK = 23
+	P호가_유형_최유리_FOK = 26
+	P호가_유형_장전_시간외  = 61
+	P호가_유형_장후_시간외  = 81
+	P호가_유형_시간외_단일가 = 82
+)
+
+func (p T호가_유형_t0425) String() string {
+	switch p {
+	case P호가_유형_보통:
+		return "보통"
+	case P호가_유형_시장가:
+		return "시장가"
+	case P호가_유형_조건부_지정가:
+		return "조건부 지정가"
+	case P호가_유형_최유리_지정가:
+		return "최유리 지정가"
+	case P호가_유형_최우선_지정가:
+		return "최우선 지정가"
+	case P호가_유형_보통_IOC:
+		return "보통 IOC"
+	case P호가_유형_시장가_IOC:
+		return "시장가 IOC"
+	case P호가_유형_최유리_IOC:
+		return "최유리 IOC"
+	case P호가_유형_보통_FOK:
+		return "보통 FOK"
+	case P호가_유형_시장가_FOK:
+		return "시장가 FOK"
+	case P호가_유형_최유리_FOK:
+		return "최유리 FOK"
+	case P호가_유형_장전_시간외:
+		return "장전 시간외"
+	case P호가_유형_장후_시간외:
+		return "장후 시간외"
+	case P호가_유형_시간외_단일가:
+		return "시간외 단일가"
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '%v'", int(p)))
+	}
+}
+
+type T주문_구분_t0425 string
+
+const (
+	P주문_구분_없음    = ""
+	P주문_구분_담보_대출 = "대"
+	P주문_구분_선물_대용 = "선"
+	P주문_구분_신용    = "신"
+)
+
+func (p T주문_구분_t0425) String() string {
+	switch p {
+	case P주문_구분_없음:
+		return "없음"
+	case P주문_구분_담보_대출:
+		return "담보 대출"
+	case P주문_구분_선물_대용:
+		return "선물 대용"
+	case P주문_구분_신용:
+		return "신용"
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '" + p + "'"))
+	}
+}
+
+type T신용_구분_t0425 uint8
+
+const (
+	P현금       = 0
+	P자기_융자    = 3
+	P자기_융자_상환 = 33
+	P유통_대주    = 5
+	P유통_대주_상환 = 55
+	P담보_대출    = 80
+)
+
+func (p T신용_구분_t0425) String() string {
+	switch p {
+	case P현금:
+		return "현금"
+	case P자기_융자:
+		return "자기 융자"
+	case P자기_융자_상환:
+		return "자기 융자 상환"
+	case P유통_대주:
+		return "유통 대주"
+	case P유통_대주_상환:
+		return "유통 대주 상환"
+	case P담보_대출:
+		return "담보 대출"
+	default:
+		panic(lib.New에러("예상하지 못한 값 : '%v'", int(p)))
+	}
+}
+
 const (
 	Sizeof_C_TR_DATA        = 107 // C.sizeof_TR_DATA
 	Sizeof_C_MSG_DATA       = 26  // C.sizeof_MSG_DATA
@@ -1441,6 +1549,9 @@ const (
 	SizeCSPAT00800OutBlock1 = int(unsafe.Sizeof(CSPAT00800OutBlock1{}))
 	SizeCSPAT00800OutBlock2 = int(unsafe.Sizeof(CSPAT00800OutBlock2{}))
 	SizeT0167OutBlock       = int(unsafe.Sizeof(T0167OutBlock{}))
+	SizeT0425InBlock        = int(unsafe.Sizeof(T0425InBlock{}))
+	SizeT0425OutBlock       = int(unsafe.Sizeof(T0425OutBlock{}))
+	SizeT0425OutBlock1      = int(unsafe.Sizeof(T0425OutBlock1{}))
 	SizeT1101InBlock        = int(unsafe.Sizeof(T1101InBlock{}))
 	SizeT1101OutBlock       = int(unsafe.Sizeof(T1101OutBlock{}))
 	SizeT1102InBlock        = int(unsafe.Sizeof(T1102InBlock{}))
@@ -1486,6 +1597,7 @@ const (
 	P자료형_S질의값_정상_주문_CSPAT00600    = "S질의값_정상_주문_CSPAT00600"
 	P자료형_S질의값_정정_주문_CSPAT00700    = "S질의값_정정_주문_CSPAT00700"
 	P자료형_S질의값_취소_주문_CSPAT00800    = "S질의값_취소_주문_CSPAT00800"
+	P자료형_S질의값_체결_미체결_조회_t0425     = "S질의값_체결_미체결_조회_t0425"
 	P자료형_S질의값_현물_기간별_조회_t1305     = "S질의값_현물_기간별_조회_t1305"
 	P자료형_S질의값_현물_전일당일_분틱_조회_t1310 = "S질의값_현물_전일당일_분틱_조회_t1310"
 	P자료형_S질의값_관리종목_조회_t1404       = "S질의값_관리종목_조회_t1404"
@@ -1564,6 +1676,7 @@ const (
 	P자료형_T0167OutBlock       = "T0167OutBlock"
 	P자료형_T1101OutBlock       = "T1101OutBlock"
 	P자료형_T1102OutBlock       = "T1102OutBlock"
+	P자료형_T0425OutBlockAll    = "T0425OutBlockAll"
 	P자료형_T1305OutBlock       = "T1305OutBlock"
 	P자료형_T1305OutBlock1      = "T1305OutBlock1"
 	P자료형_T1310OutBlock       = "T1310OutBlock"

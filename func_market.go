@@ -78,6 +78,26 @@ func F종목코드_모음_ETF() []string {
 	return 종목코드_모음
 }
 
+func F종목코드_모음_ETN() []string {
+	종목코드_모음 := make([]string, len(종목모음_ETN), len(종목모음_ETN))
+
+	for i, 종목 := range 종목모음_ETN {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
+func F종목코드_모음_ETF_ETN() []string {
+	종목코드_모음 := make([]string, len(종목모음_ETF_ETN), len(종목모음_ETF_ETN))
+
+	for i, 종목 := range 종목모음_ETF_ETN {
+		종목코드_모음[i] = 종목.G코드()
+	}
+
+	return 종목코드_모음
+}
+
 func F질의값_종목코드_검사(질의값_원본 lib.I질의값) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
@@ -121,6 +141,7 @@ func f종목모음_설정() (에러 error) {
 			종목모음_코스닥 = make([]*lib.S종목, 0)
 			종목모음_ETF = make([]*lib.S종목, 0)
 			종목모음_ETN = make([]*lib.S종목, 0)
+			종목모음_ETF_ETN = make([]*lib.S종목, 0)
 			종목모음_전체 = make([]*lib.S종목, 0)
 			종목맵_전체 = make(map[string]*lib.S종목)
 			기준가_맵 = make(map[string]int64)
@@ -132,6 +153,7 @@ func f종목모음_설정() (에러 error) {
 		len(종목모음_코스닥) > 0 &&
 		len(종목모음_ETF) > 0 &&
 		len(종목모음_ETN) > 0 &&
+		len(종목모음_ETF_ETN) > 0 &&
 		len(종목모음_전체) > 0 &&
 		len(종목맵_전체) > 0 &&
 		len(기준가_맵) > 0 &&
@@ -147,6 +169,7 @@ func f종목모음_설정() (에러 error) {
 	종목모음_코스닥 = make([]*lib.S종목, 0)
 	종목모음_ETF = make([]*lib.S종목, 0)
 	종목모음_ETN = make([]*lib.S종목, 0)
+	종목모음_ETF_ETN = make([]*lib.S종목, 0)
 	종목모음_전체 = make([]*lib.S종목, 0)
 	종목맵_전체 = make(map[string]*lib.S종목)
 	기준가_맵 = make(map[string]int64)
@@ -167,8 +190,10 @@ func f종목모음_설정() (에러 error) {
 			종목모음_코스닥 = append(종목모음_코스닥, 종목)
 		case lib.P시장구분_ETF:
 			종목모음_ETF = append(종목모음_ETF, 종목)
+			종목모음_ETF_ETN = append(종목모음_ETF_ETN, 종목)
 		case lib.P시장구분_ETN:
 			종목모음_ETN = append(종목모음_ETN, 종목)
+			종목모음_ETF_ETN = append(종목모음_ETF_ETN, 종목)
 		}
 	}
 

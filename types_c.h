@@ -986,6 +986,61 @@ typedef struct {
     char    ruseableamt[16];    //[long  ,   16] 재사용가능금액   StartPos 1313, Length 16
 } SC4_OutBlock;
 
+//------------------------------------------------------------------------------
+// 시간 조회 (t0167)
+//------------------------------------------------------------------------------
+typedef struct {
+    char    date[8];                            // 일자(YYYYMMDD)
+    char    time[12];                           // 시간(HHMMSSssssss)
+} T0167OutBlock;
+
+//------------------------------------------------------------------------------
+// 체결 / 미체결 (t0425)
+//------------------------------------------------------------------------------
+typedef struct {
+    char    accno               [  11];    char    _accno               ;    // [string,   11] 계좌번호                        StartPos 0, Length 11
+    char    passwd              [   8];    char    _passwd              ;    // [string,    8] 비밀번호                        StartPos 12, Length 8
+    char    expcode             [  12];    char    _expcode             ;    // [string,   12] 종목번호                        StartPos 21, Length 12
+    char    chegb               [   1];    char    _chegb               ;    // [string,    1] 체결구분                        StartPos 34, Length 1
+    char    medosu              [   1];    char    _medosu              ;    // [string,    1] 매매구분                        StartPos 36, Length 1
+    char    sortgb              [   1];    char    _sortgb              ;    // [string,    1] 정렬순서                        StartPos 38, Length 1
+    char    cts_ordno           [  10];    char    _cts_ordno           ;    // [string,   10] 주문번호                        StartPos 40, Length 10
+} T0425InBlock;
+
+typedef struct {
+    char    tqty                [  18];    char    _tqty                ;    // [long  ,   18] 총주문수량                      StartPos 0, Length 18
+    char    tcheqty             [  18];    char    _tcheqty             ;    // [long  ,   18] 총체결수량                      StartPos 19, Length 18
+    char    tordrem             [  18];    char    _tordrem             ;    // [long  ,   18] 총미체결수량                    StartPos 38, Length 18
+    char    cmss                [  18];    char    _cmss                ;    // [long  ,   18] 추정수수료                      StartPos 57, Length 18
+    char    tamt                [  18];    char    _tamt                ;    // [long  ,   18] 총주문금액                      StartPos 76, Length 18
+    char    tmdamt              [  18];    char    _tmdamt              ;    // [long  ,   18] 총매도체결금액                  StartPos 95, Length 18
+    char    tmsamt              [  18];    char    _tmsamt              ;    // [long  ,   18] 총매수체결금액                  StartPos 114, Length 18
+    char    tax                 [  18];    char    _tax                 ;    // [long  ,   18] 추정제세금                      StartPos 133, Length 18
+    char    cts_ordno           [  10];    char    _cts_ordno           ;    // [string,   10] 주문번호                        StartPos 152, Length 10
+} T0425OutBlock;
+
+typedef struct {
+    char    ordno               [  10];    char    _ordno               ;    // [long  ,   10] 주문번호                        StartPos 0, Length 10
+    char    expcode             [  12];    char    _expcode             ;    // [string,   12] 종목번호                        StartPos 11, Length 12
+    char    medosu              [  10];    char    _medosu              ;    // [string,   10] 구분                            StartPos 24, Length 10
+    char    qty                 [   9];    char    _qty                 ;    // [long  ,    9] 주문수량                        StartPos 35, Length 9
+    char    price               [   9];    char    _price               ;    // [long  ,    9] 주문가격                        StartPos 45, Length 9
+    char    cheqty              [   9];    char    _cheqty              ;    // [long  ,    9] 체결수량                        StartPos 55, Length 9
+    char    cheprice            [   9];    char    _cheprice            ;    // [long  ,    9] 체결가격                        StartPos 65, Length 9
+    char    ordrem              [   9];    char    _ordrem              ;    // [long  ,    9] 미체결잔량                      StartPos 75, Length 9
+    char    cfmqty              [   9];    char    _cfmqty              ;    // [long  ,    9] 확인수량                        StartPos 85, Length 9
+    char    status              [  10];    char    _status              ;    // [string,   10] 상태                            StartPos 95, Length 10
+    char    orgordno            [  10];    char    _orgordno            ;    // [long  ,   10] 원주문번호                      StartPos 106, Length 10
+    char    ordgb               [  20];    char    _ordgb               ;    // [string,   20] 유형                            StartPos 117, Length 20
+    char    ordtime             [   8];    char    _ordtime             ;    // [string,    8] 주문시간                        StartPos 138, Length 8
+    char    ordermtd            [  10];    char    _ordermtd            ;    // [string,   10] 주문매체                        StartPos 147, Length 10
+    char    sysprocseq          [  10];    char    _sysprocseq          ;    // [long  ,   10] 처리순번                        StartPos 158, Length 10
+    char    hogagb              [   2];    char    _hogagb              ;    // [string,    2] 호가유형                        StartPos 169, Length 2
+    char    price1              [   8];    char    _price1              ;    // [long  ,    8] 현재가                          StartPos 172, Length 8
+    char    orggb               [   2];    char    _orggb               ;    // [string,    2] 주문구분                        StartPos 181, Length 2
+    char    singb               [   2];    char    _singb               ;    // [string,    2] 신용구분                        StartPos 184, Length 2
+    char    loandt              [   8];    char    _loandt              ;    // [string,    8] 대출일자                        StartPos 187, Length 8
+} T0425OutBlock1;
 
 //------------------------------------------------------------------------------
 // 주식 현재가 호가 조회 (t1101)
@@ -1365,12 +1420,66 @@ typedef struct {
 } T1310OutBlock1;
 
 //------------------------------------------------------------------------------
-// 시간 조회 (t0167)
+// 관리/불성실/투자유의 조회 (t1404)
 //------------------------------------------------------------------------------
+
+// 기본입력
 typedef struct {
-    char    date[8];                            // 일자(YYYYMMDD)
-    char    time[12];                           // 시간(HHMMSSssssss)
-} T0167OutBlock;
+    char    gubun               [   1];    char    _gubun               ;    // [string,    1] 구분                            StartPos 0, Length 1
+    char    jongchk             [   1];    char    _jongchk             ;    // [string,    1] 종목체크                        StartPos 2, Length 1
+    char    cts_shcode          [   6];    char    _cts_shcode          ;    // [string,    6] 종목코드_CTS                    StartPos 4, Length 6
+} T1404InBlock;
+
+// 출력
+typedef struct {
+    char    cts_shcode          [   6];    char    _cts_shcode          ;    // [string,    6] 종목코드_CTS                    StartPos 0, Length 6
+} T1404OutBlock;
+
+// 출력1                          , occurs
+typedef struct {
+    char    hname               [  20];    char    _hname               ;    // [string,   20] 한글명                          StartPos 0, Length 20
+    char    price               [   8];    char    _price               ;    // [long  ,    8] 현재가                          StartPos 21, Length 8
+    char    sign                [   1];    char    _sign                ;    // [string,    1] 전일대비구분                    StartPos 30, Length 1
+    char    change              [   8];    char    _change              ;    // [long  ,    8] 전일대비                        StartPos 32, Length 8
+    char    diff                [   6];    char    _diff                ;    // [float ,  6.2] 등락율                          StartPos 41, Length 6
+    char    volume              [  12];    char    _volume              ;    // [long  ,   12] 누적거래량                      StartPos 48, Length 12
+    char    date                [   8];    char    _date                ;    // [string,    8] 지정일                          StartPos 61, Length 8
+    char    tprice              [   8];    char    _tprice              ;    // [long  ,    8] 지정일주가                      StartPos 70, Length 8
+    char    tchange             [   8];    char    _tchange             ;    // [long  ,    8] 지정일대비                      StartPos 79, Length 8
+    char    tdiff               [   6];    char    _tdiff               ;    // [float ,  6.2] 대비율                          StartPos 88, Length 6
+    char    reason              [   4];    char    _reason              ;    // [string,    4] 사유                            StartPos 95, Length 4
+    char    shcode              [   6];    char    _shcode              ;    // [string,    6] 종목코드                        StartPos 100, Length 6
+    char    edate               [   8];    char    _edate               ;    // [string,    8] 해제일                          StartPos 107, Length 8
+} T1404OutBlock1;
+
+//------------------------------------------------------------------------------
+// 투자경고/매매정지/정리매매조회 (t1405)
+//------------------------------------------------------------------------------
+
+// 기본입력
+typedef struct {
+    char    gubun               [   1];    char    _gubun               ;    // [string,    1] 구분                            StartPos 0, Length 1
+    char    jongchk             [   1];    char    _jongchk             ;    // [string,    1] 종목체크                        StartPos 2, Length 1
+    char    cts_shcode          [   6];    char    _cts_shcode          ;    // [string,    6] 종목코드_CTS                    StartPos 4, Length 6
+} T1405InBlock;
+
+// 출력
+typedef struct {
+    char    cts_shcode          [   6];    char    _cts_shcode          ;    // [string,    6] 종목코드_CTS                    StartPos 0, Length 6
+} T1405OutBlock;
+
+// 출력1                          , occurs
+typedef struct {
+    char    hname               [  20];    char    _hname               ;    // [string,   20] 한글명                          StartPos 0, Length 20
+    char    price               [   8];    char    _price               ;    // [long  ,    8] 현재가                          StartPos 21, Length 8
+    char    sign                [   1];    char    _sign                ;    // [string,    1] 전일대비구분                    StartPos 30, Length 1
+    char    change              [   8];    char    _change              ;    // [long  ,    8] 전일대비                        StartPos 32, Length 8
+    char    diff                [   6];    char    _diff                ;    // [float ,  6.2] 등락율                          StartPos 41, Length 6
+    char    volume              [  12];    char    _volume              ;    // [long  ,   12] 누적거래량                      StartPos 48, Length 12
+    char    date                [   8];    char    _date                ;    // [string,    8] 지정일                          StartPos 61, Length 8
+    char    edate               [   8];    char    _edate               ;    // [string,    8] 해제일                          StartPos 70, Length 8
+    char    shcode              [   6];    char    _shcode              ;    // [string,    6] 종목코드                        StartPos 79, Length 6
+} T1405OutBlock1;
 
 //------------------------------------------------------------------------------
 // ETF 현재가(시세) 조회 (t1901)

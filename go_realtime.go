@@ -73,19 +73,19 @@ func go_RT_주문처리결과(ch초기화 chan lib.T신호) (에러 error) {
 			실시간_데이터 := 수신값.S해석기(F바이트_변환값_해석).G해석값_단순형(0).(lib.I_TR코드)
 
 			switch 실시간_데이터.TR코드() {
-			case RT현물_주문_접수: // "SC0"
-			case RT현물_주문_체결: // "SC1"
-			case RT현물_주문_정정: // "SC2"
-			case RT현물_주문_취소: // "SC3"
-			case RT현물_주문_거부: // "SC4"
-			case RT코스피_호가_잔량: // "H1_"
-			case RT코스피_시간외_호가_잔량: // "H2_"
-			case RT코스피_체결: // "S3_"
-			case RT코스피_예상_체결: // "YS3"
-			case RT코스피_ETF_NAV: // "I5_"
-			case RT주식_VI발동해제: // "VI_"
-			case RT시간외_단일가VI발동해제: // "DVI"
-			case RT장_운영정보: // "JIF"
+			case RT현물_주문_접수_SC0: // "SC0"
+			case RT현물_주문_체결_SC1: // "SC1"
+			case RT현물_주문_정정_SC2: // "SC2"
+			case RT현물_주문_취소_SC3: // "SC3"
+			case RT현물_주문_거부_SC4: // "SC4"
+			case RT코스피_호가_잔량_H1: // "H1_"
+			case RT코스피_시간외_호가_잔량_H2: // "H2_"
+			case RT코스피_체결_S3: // "S3_"
+			case RT코스피_예상_체결_YS3: // "YS3"
+			case RT코스피_ETF_NAV_I5: // "I5_"
+			case RT주식_VI발동해제_VI: // "VI_"
+			case RT시간외_단일가VI발동해제_DVI: // "DVI"
+			case RT장_운영정보_JIF: // "JIF"
 			default:
 				panic(lib.New에러with출력("예상하지 못한 RT코드 : '%v'", 실시간_데이터.TR코드()))
 			}

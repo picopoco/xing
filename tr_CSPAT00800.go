@@ -41,7 +41,7 @@ import (
 	"time"
 )
 
-func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응답값 *S현물_취소_주문_응답, 에러 error) {
+func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문_CSPAT00800) (응답값 *S현물_취소_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -65,7 +65,7 @@ func F현물_취소주문_CSPAT00800(질의값 *S질의값_취소_주문) (응�
 	return nil, lib.New에러("취소 주문 TR 실행 실패.")
 }
 
-type S질의값_취소_주문 struct {
+type S질의값_취소_주문_CSPAT00800 struct {
 	*lib.S질의값_취소_주문
 	M계좌_비밀번호 string
 }
@@ -121,7 +121,7 @@ type S현물_취소_주문_응답2 struct {
 
 func (s *S현물_취소_주문_응답2) G응답2() I이중_응답2 { return s }
 
-func NewCSPAT00800InBlock(질의값 *S질의값_취소_주문) (g *CSPAT00800InBlock1) {
+func NewCSPAT00800InBlock(질의값 *S질의값_취소_주문_CSPAT00800) (g *CSPAT00800InBlock1) {
 	g = new(CSPAT00800InBlock1)
 	lib.F바이트_복사_정수(g.OrgOrdNo[:], 질의값.M원주문번호)
 	lib.F바이트_복사_문자열(g.AcntNo[:], 질의값.M계좌번호)
@@ -132,8 +132,8 @@ func NewCSPAT00800InBlock(질의값 *S질의값_취소_주문) (g *CSPAT00800InB
 	return g
 }
 
-func New질의값_취소_주문() *S질의값_취소_주문 {
-	s := new(S질의값_취소_주문)
+func New질의값_취소_주문() *S질의값_취소_주문_CSPAT00800 {
+	s := new(S질의값_취소_주문_CSPAT00800)
 	s.S질의값_취소_주문 = lib.New질의값_취소_주문()
 
 	return s

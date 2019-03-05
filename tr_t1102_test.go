@@ -43,10 +43,7 @@ import (
 func TestF현물_시세_조회_t1102(t *testing.T) {
 	t.Parallel()
 
-	lib.F테스트_에러없음(t, F접속_확인())
-
-	//const 종목코드 = "069500" // KODEX 200
-	const 종목코드 = "000020"
+	const 종목코드 = "069500" // KODEX 200
 	당일 := F당일()
 	개장_시간 := time.Date(당일.Year(), 당일.Month(), 당일.Day(), 8, 0, 0, 0, 당일.Location())
 

@@ -58,7 +58,7 @@ func New현물_주문_접수(b []byte) (값 *S현물_주문_응답_실시간_정
 	값 = new(S현물_주문_응답_실시간_정보)
 	값.M주문번호 = lib.F2정수64_단순형(g.Ordno)
 	값.M원_주문번호 = lib.F2정수64_단순형_공백은_0(g.Orgordno)
-	값.RT코드 = RT현물_주문_접수
+	값.RT코드 = RT현물_주문_접수_SC0
 	값.M응답_구분 = f2주문_응답_구분(g.Trcode)
 	값.M종목코드 = 종목코드
 	값.M수량 = lib.F2정수64_단순형(g.Ordqty)
@@ -88,7 +88,7 @@ func New현물_주문_체결(b []byte) (값 *S현물_주문_응답_실시간_정
 	값 = new(S현물_주문_응답_실시간_정보)
 	값.M주문번호 = lib.F2정수64_단순형(g.Ordno)
 	값.M원_주문번호 = lib.F2정수64_단순형_공백은_0(g.Orgordno)
-	값.RT코드 = RT현물_주문_체결
+	값.RT코드 = RT현물_주문_체결_SC1
 	값.M응답_구분 = f2주문_응답_구분(g.Trcode)
 	값.M종목코드 = 종목코드
 	값.M수량 = lib.F2정수64_단순형(g.Execqty)
@@ -117,7 +117,7 @@ func New현물_주문_정정(b []byte) (값 *S현물_주문_응답_실시간_정
 	값 = new(S현물_주문_응답_실시간_정보)
 	값.M주문번호 = lib.F2정수64_단순형(g.Ordno)
 	값.M원_주문번호 = lib.F2정수64_단순형(g.Orgordno)
-	값.RT코드 = RT현물_주문_정정
+	값.RT코드 = RT현물_주문_정정_SC2
 	값.M응답_구분 = f2주문_응답_구분(g.Trcode)
 	값.M종목코드 = 종목코드
 	값.M수량 = lib.F2정수64_단순형(g.Mdfycnfqty)
@@ -146,7 +146,7 @@ func New현물_주문_취소(b []byte) (값 *S현물_주문_응답_실시간_정
 	값 = new(S현물_주문_응답_실시간_정보)
 	값.M주문번호 = lib.F2정수64_단순형(g.Ordno)
 	값.M원_주문번호 = lib.F2정수64_단순형(g.Orgordno)
-	값.RT코드 = RT현물_주문_취소
+	값.RT코드 = RT현물_주문_취소_SC3
 	값.M응답_구분 = f2주문_응답_구분(g.Trcode)
 	값.M종목코드 = 종목코드
 	값.M수량 = lib.F2정수64_단순형(g.Canccnfqty)
@@ -174,7 +174,7 @@ func New현물_주문_거부(b []byte) (값 *S현물_주문_응답_실시간_정
 	값 = new(S현물_주문_응답_실시간_정보)
 	값.M주문번호 = lib.F2정수64_단순형(g.Ordno)
 	값.M원_주문번호 = lib.F2정수64_단순형(g.Orgordno)
-	값.RT코드 = RT현물_주문_거부
+	값.RT코드 = RT현물_주문_거부_SC4
 	값.M응답_구분 = f2주문_응답_구분(g.Trcode)
 	값.M종목코드 = 종목코드
 	값.M수량 = lib.F2정수64_단순형(g.Rjtqty)
@@ -304,9 +304,9 @@ func New코스피_체결(b []byte) (값 *S코스피_체결, 에러 error) {
 
 	switch lib.F2문자열(g.Cgubun) {
 	case "+":
-		값.M체결구분 = lib.P매수
+		값.M매도_매수_구분 = lib.P매수
 	case "-":
-		값.M체결구분 = lib.P매도
+		값.M매도_매수_구분 = lib.P매도
 	default:
 		panic(lib.New에러("예상하지 못한 체결구분 값 : '%v'", lib.F2문자열(g.Cgubun)))
 	}

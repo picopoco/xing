@@ -39,9 +39,9 @@ import (
 
 func f전송_권한_획득(TR코드 string) {
 	switch TR코드 {
-	case "", RT현물_주문_접수, RT현물_주문_체결, RT현물_주문_정정, RT현물_주문_취소, RT현물_주문_거부,
-		RT코스피_호가_잔량, RT코스피_시간외_호가_잔량, RT코스피_체결, RT코스피_예상_체결,
-		RT코스피_ETF_NAV, RT주식_VI발동해제, RT시간외_단일가VI발동해제, RT장_운영정보:
+	case "", RT현물_주문_접수_SC0, RT현물_주문_체결_SC1, RT현물_주문_정정_SC2, RT현물_주문_취소_SC3, RT현물_주문_거부_SC4,
+		RT코스피_호가_잔량_H1, RT코스피_시간외_호가_잔량_H2, RT코스피_체결_S3, RT코스피_예상_체결_YS3,
+		RT코스피_ETF_NAV_I5, RT주식_VI발동해제_VI, RT시간외_단일가VI발동해제_DVI, RT장_운영정보_JIF:
 		return
 	}
 

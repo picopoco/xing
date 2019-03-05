@@ -42,8 +42,6 @@ import (
 func TestF현물_차트_일주월_t8413(t *testing.T) {
 	t.Parallel()
 
-	lib.F테스트_에러없음(t, F접속_확인())
-
 	const 종목코드 = "069500" // 코덱스200
 	var 이전_일자 time.Time
 

@@ -40,27 +40,27 @@ import (
 	"time"
 )
 
-func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가조회_응답, 에러 error) {
+func F현물_호가_조회_t1101(종목코드 string) (응답값 *S현물_호가_조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
 
 	질의값 := lib.New질의값_단일_종목()
 	질의값.M구분 = TR조회
-	질의값.M코드 = TR현물_호가_조회
+	질의값.M코드 = TR현물_호가_조회_t1101
 	질의값.M종목코드 = 종목코드
 
 	i응답값, 에러 := F질의_단일TR(질의값)
 	lib.F확인(에러)
 
-	응답값, ok := i응답값.(*S현물_호가조회_응답)
+	응답값, ok := i응답값.(*S현물_호가_조회_응답)
 	lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
 
 	return 응답값, nil
 }
 
 // t1101 현물 호가 조회 응답
-type S현물_호가조회_응답 struct {
+type S현물_호가_조회_응답 struct {
 	M종목코드        string
 	M시각          time.Time
 	M종목명         string
@@ -95,7 +95,7 @@ type S현물_호가조회_응답 struct {
 	M동시호가_구분     T동시호가_구분
 }
 
-func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, 에러 error) {
+func New현물_호가_조회_응답(b []byte) (s *S현물_호가_조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { s = nil }}.S실행()
 
 	lib.F조건부_패닉(len(b) != SizeT1101OutBlock,
@@ -106,7 +106,7 @@ func New현물_호가조회_응답(b []byte) (s *S현물_호가조회_응답, �
 
 	시각_문자열 := lib.F2문자열_공백제거(g.Hotime)
 
-	s = new(S현물_호가조회_응답)
+	s = new(S현물_호가_조회_응답)
 	s.M종목코드 = lib.F2문자열_공백제거(g.Shcode)
 	s.M시각 = lib.F2일자별_시각_단순형_공백은_초기값(당일.G값(), "150405.999", 시각_문자열[:6]+"."+시각_문자열[6:])
 	s.M종목명 = lib.F2문자열_EUC_KR(g.Hname)

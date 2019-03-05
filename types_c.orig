@@ -83,6 +83,11 @@ type SC4_OutBlock C.SC4_OutBlock    // 주식 주문 거부 실시간 정보
 // 시간 조회 (t0167)
 type T0167OutBlock C.T0167OutBlock
 
+// 현물 체결 미체결 조회 (t0425)
+type T0425InBlock C.T0425InBlock
+type T0425OutBlock C.T0425OutBlock
+type T0425OutBlock1 C.T0425OutBlock1
+
 // 현물 현재가 호가 조회 (t1101)
 type T1101InBlock C.T1101InBlock
 type T1101OutBlock C.T1101OutBlock
@@ -105,6 +110,16 @@ type T1305OutBlock1 C.T1305OutBlock1
 type T1310InBlock C.T1310InBlock
 type T1310OutBlock C.T1310OutBlock
 type T1310OutBlock1 C.T1310OutBlock1
+
+// 관리/불성실/투자유의 조회 (t1404)
+type T1404InBlock C.T1404InBlock
+type T1404OutBlock C.T1404OutBlock
+type T1404OutBlock1 C.T1404OutBlock1
+
+// 투자경고/매매정지/정리매매 조회 (t1405)
+type T1405InBlock C.T1405InBlock
+type T1405OutBlock C.T1405OutBlock
+type T1405OutBlock1 C.T1405OutBlock1
 
 // ETF 현재가 조회 (t1901)
 type T1901InBlock C.T1901InBlock

@@ -88,7 +88,7 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 	for {
 		질의값 := lib.New질의값_단일종목_연속키()
 		질의값.M구분 = TR조회
-		질의값.M코드 = TR_ETF_시간별_추이
+		질의값.M코드 = TR_ETF_시간별_추이_t1902
 		질의값.M종목코드 = 종목코드
 		질의값.M연속키 = 연속키
 
@@ -208,8 +208,8 @@ func NewETF시간별_추이_응답_헤더(b []byte) (s *S_ETF시간별_추이_�
 	return s, nil
 }
 
-func NewETF시간별_추이_응답_반복값_모음(b []byte) (값 *S_ETF시간별_추이_응답_반복값_모음, 에러 error) {
-	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
+func NewETF시간별_추이_응답_반복값_모음(b []byte) (값_모음 *S_ETF시간별_추이_응답_반복값_모음, 에러 error) {
+	defer lib.S예외처리{M에러: &에러, M함수: func() { 값_모음 = nil }}.S실행()
 
 	나머지 := len(b) % SizeT1902OutBlock1
 	lib.F조건부_패닉(나머지 != 0, "예상하지 못한 길이. '%v' '%v'", len(b), 나머지)
@@ -218,37 +218,37 @@ func NewETF시간별_추이_응답_반복값_모음(b []byte) (값 *S_ETF시간�
 	수량 := len(b) / SizeT1902OutBlock1
 	g_모음 := make([]*T1902OutBlock1, 수량, 수량)
 
-	값 = new(S_ETF시간별_추이_응답_반복값_모음)
-	값.M배열 = make([]*S_ETF시간별_추이_응답_반복값, 수량, 수량)
+	값_모음 = new(S_ETF시간별_추이_응답_반복값_모음)
+	값_모음.M배열 = make([]*S_ETF시간별_추이_응답_반복값, 수량, 수량)
 
 	for i, g := range g_모음 {
 		g = new(T1902OutBlock1)
 		lib.F확인(binary.Read(버퍼, binary.BigEndian, g))
 
-		s := new(S_ETF시간별_추이_응답_반복값)
+		값 := new(S_ETF시간별_추이_응답_반복값)
 
-		if s.M시각, 에러 = lib.F2일자별_시각(당일.G값(), "15:04:05", g.Time); 에러 != nil {
-			s.M시각 = time.Time{} // ETF_시간별_추이_t1902() 에서 수정
+		if 값.M시각, 에러 = lib.F2일자별_시각(당일.G값(), "15:04:05", g.Time); 에러 != nil {
+			값.M시각 = time.Time{} // ETF_시간별_추이_t1902() 에서 수정
 		}
-		s.M현재가 = lib.F2정수64_단순형(g.Price)
-		s.M전일대비구분 = T전일대비_구분(lib.F2정수_단순형(g.Sign))
-		s.M전일대비등락폭 = s.M전일대비구분.G부호보정_정수64(lib.F2정수64_단순형(g.Change))
-		s.M누적_거래량 = lib.F2정수64_단순형(g.Volume)
-		s.M현재가_NAV_차이 = lib.F2실수_소숫점_추가_단순형(g.NavDiff, 2)
-		s.NAV = lib.F2실수_소숫점_추가_단순형(g.Nav, 2)
-		s.NAV전일대비등락폭 = lib.F2실수_소숫점_추가_단순형(g.NavChange, 2)
-		s.M추적오차 = lib.F2실수_소숫점_추가_단순형(g.Crate, 2)
-		s.M괴리율 = lib.F2실수_소숫점_추가_단순형(g.Grate, 2)
-		s.M지수 = lib.F2실수_소숫점_추가_단순형(g.Jisu, 2)
-		s.M지수_전일대비등락폭 = lib.F2실수_소숫점_추가_단순형(g.JiChange, 2)
-		s.M지수_전일대비등락율 = lib.F2실수_소숫점_추가_단순형(g.JiRate, 2)
+		값.M현재가 = lib.F2정수64_단순형(g.Price)
+		값.M전일대비구분 = T전일대비_구분(lib.F2정수_단순형(g.Sign))
+		값.M전일대비등락폭 = 값.M전일대비구분.G부호보정_정수64(lib.F2정수64_단순형(g.Change))
+		값.M누적_거래량 = lib.F2정수64_단순형(g.Volume)
+		값.M현재가_NAV_차이 = lib.F2실수_소숫점_추가_단순형(g.NavDiff, 2)
+		값.NAV = lib.F2실수_소숫점_추가_단순형(g.Nav, 2)
+		값.NAV전일대비등락폭 = lib.F2실수_소숫점_추가_단순형(g.NavChange, 2)
+		값.M추적오차 = lib.F2실수_소숫점_추가_단순형(g.Crate, 2)
+		값.M괴리율 = lib.F2실수_소숫점_추가_단순형(g.Grate, 2)
+		값.M지수 = lib.F2실수_소숫점_추가_단순형(g.Jisu, 2)
+		값.M지수_전일대비등락폭 = lib.F2실수_소숫점_추가_단순형(g.JiChange, 2)
+		값.M지수_전일대비등락율 = lib.F2실수_소숫점_추가_단순형(g.JiRate, 2)
 
-		if uint8(g.X_jichange) == 160 && s.M지수_전일대비등락폭 > 0 {
-			s.M지수_전일대비등락폭 = -1 * s.M지수_전일대비등락폭
+		if uint8(g.X_jichange) == 160 && 값.M지수_전일대비등락폭 > 0 {
+			값.M지수_전일대비등락폭 = -1 * 값.M지수_전일대비등락폭
 		}
 
-		값.M배열[i] = s
+		값_모음.M배열[i] = 값
 	}
 
-	return 값, nil
+	return 값_모음, nil
 }

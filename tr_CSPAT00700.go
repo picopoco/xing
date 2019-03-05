@@ -41,7 +41,7 @@ import (
 	"time"
 )
 
-func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응답값 *S현물_정정_주문_응답, 에러 error) {
+func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문_CSPAT00700) (응답값 *S현물_정정_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -65,7 +65,7 @@ func F현물_정정주문_CSPAT00700(질의값 *S질의값_정정_주문) (응�
 	return nil, lib.New에러("정정 주문 TR 실행 실패.")
 }
 
-type S질의값_정정_주문 struct {
+type S질의값_정정_주문_CSPAT00700 struct {
 	*lib.S질의값_정정_주문
 	M계좌_비밀번호 string
 	M주문조건    lib.T주문조건
@@ -118,7 +118,7 @@ type S현물_정정_주문_응답2 struct {
 	M유동성공급자여부  bool
 	M관리사원_번호   string
 	M주문금액      int64
-	M매매구분      lib.T매수_매도
+	M매도_매수_구분  lib.T매도_매수_구분
 	M예비_주문번호   int64
 	M반대매매_일련번호 int64
 	M예약_주문번호   int64
@@ -131,7 +131,7 @@ type S현물_정정_주문_응답2 struct {
 
 func (s *S현물_정정_주문_응답2) G응답2() I이중_응답2 { return s }
 
-func NewCSPAT00700InBlock(질의값 *S질의값_정정_주문) (g *CSPAT00700InBlock1) {
+func NewCSPAT00700InBlock(질의값 *S질의값_정정_주문_CSPAT00700) (g *CSPAT00700InBlock1) {
 	g = new(CSPAT00700InBlock1)
 	lib.F바이트_복사_정수(g.OrgOrdNo[:], 질의값.M원주문번호)
 	lib.F바이트_복사_문자열(g.AcntNo[:], 질의값.M계좌번호)
@@ -145,8 +145,8 @@ func NewCSPAT00700InBlock(질의값 *S질의값_정정_주문) (g *CSPAT00700InB
 	return g
 }
 
-func New질의값_정정_주문() *S질의값_정정_주문 {
-	s := new(S질의값_정정_주문)
+func New질의값_정정_주문() *S질의값_정정_주문_CSPAT00700 {
+	s := new(S질의값_정정_주문_CSPAT00700)
 	s.S질의값_정정_주문 = lib.New질의값_정정_주문()
 
 	return s
@@ -236,7 +236,7 @@ func New현물_정정_주문_응답2(b []byte) (s *S현물_정정_주문_응답2
 	s.M반대매매주문_구분 = lib.F2문자열_공백제거(g.CvrgOrdTp)
 	s.M관리사원_번호 = lib.F2문자열_공백제거(g.MgempNo)
 	s.M주문금액 = lib.F2정수64_단순형_공백은_0(g.OrdAmt)
-	s.M매매구분 = lib.F확인(f2매수매도(T매수_매도(lib.F2문자열_공백제거(g.BnsTpCode)))).(lib.T매수_매도)
+	s.M매도_매수_구분 = lib.T매도_매수_구분(lib.F2정수_단순형(g.BnsTpCode))
 	s.M예비_주문번호 = lib.F2정수64_단순형_공백은_0(g.SpareOrdNo)
 	s.M반대매매_일련번호 = lib.F2정수64_단순형_공백은_0(g.CvrgSeqno)
 	s.M예약_주문번호 = lib.F2정수64_단순형_공백은_0(g.RsvOrdNo)

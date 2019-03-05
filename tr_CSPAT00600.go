@@ -41,7 +41,7 @@ import (
 	"time"
 )
 
-func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응답값 *S현물_정상_주문_응답, 에러 error) {
+func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문_CSPAT00600) (응답값 *S현물_정상_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -55,14 +55,16 @@ func F현물_정상주문_CSPAT00600(질의값 *S질의값_정상_주문) (응�
 	return 응답값, nil
 }
 
-type S질의값_정상_주문 struct {
+type S질의값_정상_주문_CSPAT00600 struct {
 	*lib.S질의값_정상_주문
 	M계좌_비밀번호 string
 	M신용거래_구분 lib.T신용거래_구분
 	M대출일     string
 }
 
-func (s *S질의값_정상_주문) S대출일(값 time.Time) { s.M대출일 = 값.Format("20060102") }
+func (s *S질의값_정상_주문_CSPAT00600) S대출일(값 time.Time) {
+	s.M대출일 = 값.Format("20060102")
+}
 
 type S현물_정상_주문_응답 struct {
 	M응답1 *S현물_정상_주문_응답1
@@ -79,7 +81,7 @@ type S현물_정상_주문_응답1 struct {
 	M종목코드       string
 	M주문수량       int64
 	M주문가격       int64
-	M매매구분       lib.T매수_매도
+	M매도_매수_구분   lib.T매도_매수_구분
 	M호가유형       lib.T호가유형
 	M프로그램_호가유형  string
 	M공매도_가능     bool
@@ -124,21 +126,21 @@ type S현물_정상_주문_응답2 struct {
 
 func (s *S현물_정상_주문_응답2) G응답2() I이중_응답2 { return s }
 
-func New질의값_정상_주문() *S질의값_정상_주문 {
-	s := new(S질의값_정상_주문)
+func New질의값_정상_주문() *S질의값_정상_주문_CSPAT00600 {
+	s := new(S질의값_정상_주문_CSPAT00600)
 	s.S질의값_정상_주문 = lib.New질의값_정상_주문()
 
 	return s
 }
 
-func NewCSPAT00600InBlock(질의값 *S질의값_정상_주문) (g *CSPAT00600InBlock1) {
+func NewCSPAT00600InBlock(질의값 *S질의값_정상_주문_CSPAT00600) (g *CSPAT00600InBlock1) {
 	g = new(CSPAT00600InBlock1)
 	lib.F바이트_복사_문자열(g.AcntNo[:], 질의값.M계좌번호)
 	lib.F바이트_복사_문자열(g.InptPwd[:], 질의값.M계좌_비밀번호)
 	lib.F바이트_복사_문자열(g.IsuNo[:], 질의값.M종목코드)
 	lib.F바이트_복사_정수(g.OrdQty[:], 질의값.M주문수량)
 	lib.F바이트_복사_정수(g.OrdPrc[:], 질의값.M주문단가)
-	lib.F바이트_복사_문자열(g.BnsTpCode[:], string(f2Xing매수매도(질의값.M매수_매도)))
+	lib.F바이트_복사_문자열(g.BnsTpCode[:], lib.F2문자열(int(질의값.M매도_매수_구분)))
 	lib.F바이트_복사_문자열(g.OrdprcPtnCode[:], string(f2Xing호가유형(질의값.M호가유형)))
 	lib.F바이트_복사_문자열(g.MgntrnCode[:], string(f2Xing신용거래_구분(질의값.M신용거래_구분)))
 
@@ -191,7 +193,7 @@ func New현물_정상_주문_응답1(b []byte) (s *S현물_정상_주문_응답1
 	s.M종목코드 = lib.F2문자열_공백제거(g.IsuNo)
 	s.M주문수량 = lib.F2정수64_단순형(g.OrdQty)
 	s.M주문가격 = lib.F2정수64_단순형(g.OrdPrc)
-	s.M매매구분 = lib.F확인(f2매수매도(T매수_매도(lib.F2문자열_공백제거(g.BnsTpCode)))).(lib.T매수_매도)
+	s.M매도_매수_구분 = lib.T매도_매수_구분(lib.F2정수_단순형(g.BnsTpCode))
 	s.M호가유형 = f2호가유형(T호가유형(lib.F2문자열_공백제거(g.OrdprcPtnCode)))
 	s.M프로그램_호가유형 = lib.F2문자열_공백제거(g.PrgmOrdprcPtnCode)
 	s.M공매도_가능 = lib.F문자열_비교(g.StslAbleYn, "Y", true)

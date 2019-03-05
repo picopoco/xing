@@ -124,7 +124,7 @@ type S투자경고_조회_응답_반복값_t1405 struct {
 	M해제일      time.Time
 }
 
-func NewT1405InBlock(질의값 * S질의값_투자경고_조회_t1405) (g *T1405InBlock) {
+func NewT1405InBlock(질의값 *S질의값_투자경고_조회_t1405) (g *T1405InBlock) {
 	g = new(T1405InBlock)
 	lib.F바이트_복사_문자열(g.Gubun[:], strconv.Itoa(int(질의값.M시장_구분)))
 	lib.F바이트_복사_문자열(g.Jongchk[:], strconv.Itoa(int(질의값.M투자경고_질의_구분)))
@@ -133,7 +133,7 @@ func NewT1405InBlock(질의값 * S질의값_투자경고_조회_t1405) (g *T1405
 	return g
 }
 
-func New투자경고_조회_응답_헤더_t1405(b []byte) (값 * S투자경고_조회_응답_헤더_t1405, 에러 error) {
+func New투자경고_조회_응답_헤더_t1405(b []byte) (값 *S투자경고_조회_응답_헤더_t1405, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값 = nil }}.S실행()
 
 	lib.F조건부_패닉(len(b) != SizeT1405OutBlock, "예상하지 못한 길이 : '%v", len(b))
@@ -147,7 +147,7 @@ func New투자경고_조회_응답_헤더_t1405(b []byte) (값 * S투자경고_�
 	return 값, nil
 }
 
-func New투자경고_조회_응답_반복값_모음_t1405(b []byte) (값_모음 * S투자경고_조회_응답_반복값_모음_t1405, 에러 error) {
+func New투자경고_조회_응답_반복값_모음_t1405(b []byte) (값_모음 *S투자경고_조회_응답_반복값_모음_t1405, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 값_모음 = nil }}.S실행()
 
 	나머지 := len(b) % SizeT1405OutBlock1
