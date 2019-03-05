@@ -80,6 +80,16 @@ type SC4_OutBlock C.SC4_OutBlock    // 주식 주문 거부 실시간 정보
 // 조회 TR 구조체
 //------------------------------------------------------------------------------
 
+// 주식 당일 매매일지 수수료 (t0150)
+type T0150InBlock C.T0150InBlock
+type T0150OutBlock C.T0150OutBlock
+type T0150OutBlock1 C.T0150OutBlock1
+
+// 주식 당일/전일 매매일지 수수료 (t0151)
+type T0151InBlock C.T0151InBlock
+type T0151OutBlock C.T0151OutBlock
+type T0151OutBlock1 C.T0151OutBlock1
+
 // 시간 조회 (t0167)
 type T0167OutBlock C.T0167OutBlock
 

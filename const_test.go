@@ -92,7 +92,7 @@ func TestP자료형_문자열(t *testing.T) {
 	lib.F테스트_같음(t, P자료형_T0167OutBlock, f자료형_문자열(T0167OutBlock{}))
 	lib.F테스트_같음(t, P자료형_T1101OutBlock, f자료형_문자열(T1101OutBlock{}))
 	lib.F테스트_같음(t, P자료형_T1102OutBlock, f자료형_문자열(T1102OutBlock{}))
-	lib.F테스트_같음(t, P자료형_T0425OutBlockAll, f자료형_문자열(T0425OutBlock{}) + "All")
+	lib.F테스트_같음(t, P자료형_T0425OutBlockAll, f자료형_문자열(T0425OutBlock{})+"All")
 	lib.F테스트_같음(t, P자료형_T1305OutBlock, f자료형_문자열(T1305OutBlock{}))
 	lib.F테스트_같음(t, P자료형_T1305OutBlock1, f자료형_문자열(T1305OutBlock1{}))
 	lib.F테스트_같음(t, P자료형_T1310OutBlock, f자료형_문자열(T1310OutBlock{}))

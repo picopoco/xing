@@ -149,15 +149,15 @@ func NewT0425InBlock(질의값 *S질의값_체결_미체결_조회_t0425) (g *T0
 func New현물_체결_미체결_조회_응답_t0425(b []byte) (s *S현물_체결_미체결_조회_응답_t0425, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { s = nil }}.S실행()
 
-	lib.F조건부_패닉(len(b) < SizeT0425OutBlock + 5 , "예상하지 못한 길이 : '%v", len(b))
-	lib.F조건부_패닉((len(b) - (SizeT0425OutBlock + 5)) % SizeT0425OutBlock1 != 0, "예상하지 못한 길이 : '%v", len(b))
+	lib.F조건부_패닉(len(b) < SizeT0425OutBlock+5, "예상하지 못한 길이 : '%v", len(b))
+	lib.F조건부_패닉((len(b)-(SizeT0425OutBlock+5))%SizeT0425OutBlock1 != 0, "예상하지 못한 길이 : '%v", len(b))
 
 	s = new(S현물_체결_미체결_조회_응답_t0425)
 
 	s.M헤더, 에러 = new현물_체결_미체결_조회_응답_헤더_t0425(b[:SizeT0425OutBlock])
 	lib.F확인(에러)
 
-	s.M반복값_모음, 에러 = new현물_체결_미체결_조회_응답_반복값_모음_t0425(b[SizeT0425OutBlock + 5:])
+	s.M반복값_모음, 에러 = new현물_체결_미체결_조회_응답_반복값_모음_t0425(b[SizeT0425OutBlock+5:])
 	lib.F확인(에러)
 
 	return s, nil

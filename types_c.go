@@ -860,6 +860,97 @@ type SC4_OutBlock struct {
 	Ruseableamt      [16]byte
 }
 
+type T0150InBlock struct {
+	Accno   [11]byte
+	Medosu  [1]byte
+	Expcode [12]byte
+	Price   [9]byte
+	Middiv  [2]byte
+}
+type T0150OutBlock struct {
+	Mdqty    [9]byte
+	Mdamt    [18]byte
+	Mdfee    [18]byte
+	Mdtax    [18]byte
+	Mdargtax [18]byte
+	Tmdtax   [18]byte
+	Mdadjamt [18]byte
+	Msqty    [9]byte
+	Msamt    [18]byte
+	Msfee    [18]byte
+	Tmstax   [18]byte
+	Msadjamt [18]byte
+	Tqty     [9]byte
+	Tamt     [18]byte
+	Tfee     [18]byte
+	Tottax   [18]byte
+	Targtax  [18]byte
+	Ttax     [18]byte
+	Tadjamt  [18]byte
+	Medosu   [1]byte
+	Expcode  [12]byte
+	Price    [9]byte
+	Middiv   [2]byte
+}
+type T0150OutBlock1 struct {
+	Medosu  [10]byte
+	Expcode [12]byte
+	Qty     [9]byte
+	Price   [9]byte
+	Amt     [18]byte
+	Fee     [18]byte
+	Tax     [18]byte
+	Argtax  [18]byte
+	Adjamt  [18]byte
+	Middiv  [20]byte
+}
+
+type T0151InBlock struct {
+	Date    [8]byte
+	Accno   [11]byte
+	Medosu  [1]byte
+	Expcode [12]byte
+	Price   [9]byte
+	Middiv  [2]byte
+}
+type T0151OutBlock struct {
+	Mdqty    [9]byte
+	Mdamt    [18]byte
+	Mdfee    [18]byte
+	Mdtax    [18]byte
+	Mdargtax [18]byte
+	Tmdtax   [18]byte
+	Mdadjamt [18]byte
+	Msqty    [9]byte
+	Msamt    [18]byte
+	Msfee    [18]byte
+	Tmstax   [18]byte
+	Msadjamt [18]byte
+	Tqty     [9]byte
+	Tamt     [18]byte
+	Tfee     [18]byte
+	Tottax   [18]byte
+	Targtax  [18]byte
+	Ttax     [18]byte
+	Tadjamt  [18]byte
+	Medosu   [1]byte
+	Expcode  [12]byte
+	Price    [9]byte
+	Middiv   [2]byte
+}
+type T0151OutBlock1 struct {
+	Medosu  [10]byte
+	Expcode [12]byte
+	Qty     [9]byte
+	Price   [9]byte
+	Amt     [18]byte
+	Fee     [18]byte
+	Tax     [18]byte
+	Argtax  [18]byte
+	Adjamt  [18]byte
+	Middiv  [20]byte
+}
+
 type T0167OutBlock struct {
 	Date [8]byte
 	Time [12]byte
