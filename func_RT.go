@@ -35,36 +35,37 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 )
 
 func F실시간_정보_구독_단순TR(RT코드 string) (에러 error) {
-	return F질의(lib.New질의값_기본형(TR실시간_정보_구독, RT코드)).G에러()
+	return F질의(lib.New질의값_기본형(xt.TR실시간_정보_구독, RT코드)).G에러()
 }
 
 func F실시간_정보_해지_단순TR(RT코드 string) (에러 error) {
-	return F질의(lib.New질의값_기본형(TR실시간_정보_해지, RT코드)).G에러()
+	return F질의(lib.New질의값_기본형(xt.TR실시간_정보_해지, RT코드)).G에러()
 }
 
 func F실시간_정보_구독(RT코드 string, 종목코드_모음 []string) (에러 error) {
-	return F질의(lib.New질의값_복수종목(TR실시간_정보_구독, RT코드, 종목코드_모음)).G에러()
+	return F질의(lib.New질의값_복수종목(xt.TR실시간_정보_구독, RT코드, 종목코드_모음)).G에러()
 }
 
 func F실시간_정보_해지(RT코드 string, 종목코드_모음 []string) (에러 error) {
-	return F질의(lib.New질의값_복수종목(TR실시간_정보_해지, RT코드, 종목코드_모음)).G에러()
+	return F질의(lib.New질의값_복수종목(xt.TR실시간_정보_해지, RT코드, 종목코드_모음)).G에러()
 }
 
 func F실시간_정보_일괄_해지() (에러 error) {
-	return F질의(lib.New질의값_기본형(TR실시간_정보_일괄_해지, "")).G에러()
+	return F질의(lib.New질의값_기본형(xt.TR실시간_정보_일괄_해지, "")).G에러()
 }
 
 func F실시간_데이터_구독_ETF(종목코드_모음 []string) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	lib.F확인(F실시간_정보_구독(RT코스피_호가_잔량_H1, 종목코드_모음))
-	lib.F확인(F실시간_정보_구독(RT코스피_체결_S3, 종목코드_모음))
-	lib.F확인(F실시간_정보_구독(RT코스피_ETF_NAV_I5, 종목코드_모음))
-	lib.F확인(F실시간_정보_구독(RT코스피_시간외_호가_잔량_H2, 종목코드_모음))
-	lib.F확인(F실시간_정보_구독(RT코스피_예상_체결_YS3, 종목코드_모음))
+	lib.F확인(F실시간_정보_구독(xt.RT코스피_호가_잔량_H1, 종목코드_모음))
+	lib.F확인(F실시간_정보_구독(xt.RT코스피_체결_S3, 종목코드_모음))
+	lib.F확인(F실시간_정보_구독(xt.RT코스피_ETF_NAV_I5, 종목코드_모음))
+	lib.F확인(F실시간_정보_구독(xt.RT코스피_시간외_호가_잔량_H2, 종목코드_모음))
+	lib.F확인(F실시간_정보_구독(xt.RT코스피_예상_체결_YS3, 종목코드_모음))
 
 	return nil
 }
@@ -72,11 +73,11 @@ func F실시간_데이터_구독_ETF(종목코드_모음 []string) (에러 error
 func F실시간_데이터_해지_ETF(종목코드_모음 []string) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	lib.F확인(F실시간_정보_해지(RT코스피_호가_잔량_H1, 종목코드_모음))
-	lib.F확인(F실시간_정보_해지(RT코스피_체결_S3, 종목코드_모음))
-	lib.F확인(F실시간_정보_해지(RT코스피_ETF_NAV_I5, 종목코드_모음))
-	lib.F확인(F실시간_정보_해지(RT코스피_시간외_호가_잔량_H2, 종목코드_모음))
-	lib.F확인(F실시간_정보_해지(RT코스피_예상_체결_YS3, 종목코드_모음))
+	lib.F확인(F실시간_정보_해지(xt.RT코스피_호가_잔량_H1, 종목코드_모음))
+	lib.F확인(F실시간_정보_해지(xt.RT코스피_체결_S3, 종목코드_모음))
+	lib.F확인(F실시간_정보_해지(xt.RT코스피_ETF_NAV_I5, 종목코드_모음))
+	lib.F확인(F실시간_정보_해지(xt.RT코스피_시간외_호가_잔량_H2, 종목코드_모음))
+	lib.F확인(F실시간_정보_해지(xt.RT코스피_예상_체결_YS3, 종목코드_모음))
 
 	return nil
 }
@@ -88,11 +89,11 @@ func F주문_응답_실시간_정보_구독() (에러 error) {
 		return
 	}
 
-	lib.F확인(F실시간_정보_구독_단순TR(RT현물_주문_접수_SC0))
-	lib.F확인(F실시간_정보_구독_단순TR(RT현물_주문_체결_SC1))
-	lib.F확인(F실시간_정보_구독_단순TR(RT현물_주문_정정_SC2))
-	lib.F확인(F실시간_정보_구독_단순TR(RT현물_주문_취소_SC3))
-	lib.F확인(F실시간_정보_구독_단순TR(RT현물_주문_거부_SC4))
+	lib.F확인(F실시간_정보_구독_단순TR(xt.RT현물_주문_접수_SC0))
+	lib.F확인(F실시간_정보_구독_단순TR(xt.RT현물_주문_체결_SC1))
+	lib.F확인(F실시간_정보_구독_단순TR(xt.RT현물_주문_정정_SC2))
+	lib.F확인(F실시간_정보_구독_단순TR(xt.RT현물_주문_취소_SC3))
+	lib.F확인(F실시간_정보_구독_단순TR(xt.RT현물_주문_거부_SC4))
 
 	return nil
 }
@@ -106,11 +107,11 @@ func F주문_응답_실시간_정보_해지() (에러 error) {
 
 	defer 주문_응답_구독_중.S값(false)
 
-	lib.F확인(F실시간_정보_해지_단순TR(RT현물_주문_접수_SC0))
-	lib.F확인(F실시간_정보_해지_단순TR(RT현물_주문_체결_SC1))
-	lib.F확인(F실시간_정보_해지_단순TR(RT현물_주문_정정_SC2))
-	lib.F확인(F실시간_정보_해지_단순TR(RT현물_주문_취소_SC3))
-	lib.F확인(F실시간_정보_해지_단순TR(RT현물_주문_거부_SC4))
+	lib.F확인(F실시간_정보_해지_단순TR(xt.RT현물_주문_접수_SC0))
+	lib.F확인(F실시간_정보_해지_단순TR(xt.RT현물_주문_체결_SC1))
+	lib.F확인(F실시간_정보_해지_단순TR(xt.RT현물_주문_정정_SC2))
+	lib.F확인(F실시간_정보_해지_단순TR(xt.RT현물_주문_취소_SC3))
+	lib.F확인(F실시간_정보_해지_단순TR(xt.RT현물_주문_거부_SC4))
 
 	return nil
 }

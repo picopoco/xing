@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"testing"
 	"time"
 )
@@ -55,4 +56,18 @@ func TestF현물_차트_분_t8412(t *testing.T) {
 
 		F테스트_현물_차트_분_응답_반복값_t8412(t, 값, 종목코드)
 	}
+}
+
+func F테스트_현물_차트_분_응답_반복값_t8412(t *testing.T, 값 *xt.S현물_차트_분_응답_반복값, 종목코드 string) {
+	lib.F테스트_같음(t, 값.M종목코드, 종목코드)
+	lib.F테스트_참임(t, 값.M일자_시각.Before(lib.F금일()) || 값.M일자_시각.Equal(lib.F금일()))
+	lib.F테스트_같음(t, 값.M일자_시각.Second(), 0, 30)
+	lib.F테스트_참임(t, 값.M고가 >= 값.M시가)
+	lib.F테스트_참임(t, 값.M고가 >= 값.M종가)
+	lib.F테스트_참임(t, 값.M저가 <= 값.M시가)
+	lib.F테스트_참임(t, 값.M저가 <= 값.M종가)
+	lib.F테스트_참임(t, 값.M거래량 >= 0, 값.M종목코드, 값.M일자_시각, 값.M거래량)
+	lib.F테스트_참임(t, 값.M거래대금_백만 >= 0, 값.M일자_시각, 값.M거래량, 값.M거래대금_백만)
+	lib.F테스트_에러없음(t, lib.F마지막_에러값(값.G수정구분_모음()))
+	lib.F테스트_같음(t, 값.M종가등락구분, xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
 }

@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 
 	"testing"
 	"time"
@@ -52,15 +53,15 @@ func TestF현물_호가_조회_t1101(t *testing.T) {
 
 	lib.F테스트_다름(t, 값.M종목명, "")
 	lib.F테스트_참임(t, 값.M현재가 >= 0)
-	lib.F테스트_같음(t, 값.M전일대비구분, P구분_상한, P구분_상승, P구분_보합, P구분_하한, P구분_하락)
+	lib.F테스트_같음(t, 값.M전일대비구분, xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
 	lib.F테스트_참임(t, 값.M전일대비등락폭 >= 0)
 
 	switch 값.M전일대비구분 { // 등락율 확인
-	case P구분_상한, P구분_상승:
+	case xt.P구분_상한, xt.P구분_상승:
 		lib.F테스트_참임(t, 값.M등락율 >= 0)
-	case P구분_하한, P구분_하락:
+	case xt.P구분_하한, xt.P구분_하락:
 		lib.F테스트_참임(t, 값.M등락율 <= 0)
-	case P구분_보합:
+	case xt.P구분_보합:
 		lib.F테스트_같음(t, 값.M등락율, 0)
 	}
 
@@ -103,21 +104,21 @@ func TestF현물_호가_조회_t1101(t *testing.T) {
 		lib.F테스트_참임(t, 값.M예상체결수량 >= 0)
 	}
 
-	lib.F테스트_같음(t, 값.M예상체결전일구분, P구분_상한, P구분_상승, P구분_보합, P구분_하한, P구분_하락)
+	lib.F테스트_같음(t, 값.M예상체결전일구분, xt.P구분_상한, xt.P구분_상승, xt.P구분_보합, xt.P구분_하한, xt.P구분_하락)
 	lib.F테스트_참임(t, 값.M예상체결전일대비 >= 0)
 
 	switch 값.M예상체결전일구분 { // 예상 체결 등락율 확인
-	case P구분_상한, P구분_상승:
+	case xt.P구분_상한, xt.P구분_상승:
 		lib.F테스트_참임(t, 값.M예상체결등락율 >= 0)
-	case P구분_하한, P구분_하락:
+	case xt.P구분_하한, xt.P구분_하락:
 		lib.F테스트_참임(t, 값.M예상체결등락율 <= 0)
-	case P구분_보합:
+	case xt.P구분_보합:
 		lib.F테스트_같음(t, 값.M예상체결등락율, 0)
 	}
 
 	lib.F테스트_참임(t, 값.M시간외매도잔량 >= 0)
 	lib.F테스트_참임(t, 값.M시간외매수잔량 >= 0)
-	lib.F테스트_같음(t, 값.M동시호가_구분, P동시호가_아님, P동시호가_장중, P동시호가_시간외, P동시호가_동시)
+	lib.F테스트_같음(t, 값.M동시호가_구분, xt.P동시호가_아님, xt.P동시호가_장중, xt.P동시호가_시간외, xt.P동시호가_동시)
 	lib.F테스트_같음(t, len(값.M종목코드), 6)
 	lib.F테스트_참임(t, 값.M상한가 >= 값.M현재가)
 	lib.F테스트_참임(t, 값.M상한가 >= 값.M하한가)

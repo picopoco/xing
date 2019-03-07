@@ -33,16 +33,12 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-// #include "./types_c.h"
-import "C"
-
 import (
-	"fmt"
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"github.com/mitchellh/go-ps"
-	"reflect"
-	"unsafe"
 
+	"fmt"
 	"strings"
 	"time"
 )
@@ -178,27 +174,27 @@ func f접속유지_도우미() {
 
 func f에러_발생(TR코드, 코드, 내용 string) bool {
 	switch TR코드 {
-	case TR현물_정상_주문_CSPAT00600,
-		TR시간_조회_t0167,
-		TR체결_미체결_조회_t0425,
-		TR현물_호가_조회_t1101,
-		TR현물_시세_조회_t1102,
-		TR현물_기간별_조회_t1305,
-		TR현물_당일_전일_분틱_조회_t1310,
-		TR관리_불성실_투자유의_조회_t1404,
-		TR투자경고_매매정지_정리매매_조회_t1405,
-		TR_ETF_시간별_추이_t1902,
-		TR기업정보_요약_t3320,
-		TR재무순위_종합_t3341,
-		TR현물_차트_틱_t8411,
-		TR현물_차트_분_t8412,
-		TR현물_차트_일주월_t8413,
-		TR증시_주변_자금_추이_t8428,
-		TR현물_종목_조회_t8436:
+	case xt.TR현물_정상_주문_CSPAT00600,
+		xt.TR시간_조회_t0167,
+		xt.TR체결_미체결_조회_t0425,
+		xt.TR현물_호가_조회_t1101,
+		xt.TR현물_시세_조회_t1102,
+		xt.TR현물_기간별_조회_t1305,
+		xt.TR현물_당일_전일_분틱_조회_t1310,
+		xt.TR관리_불성실_투자유의_조회_t1404,
+		xt.TR투자경고_매매정지_정리매매_조회_t1405,
+		xt.TR_ETF_시간별_추이_t1902,
+		xt.TR기업정보_요약_t3320,
+		xt.TR재무순위_종합_t3341,
+		xt.TR현물_차트_틱_t8411,
+		xt.TR현물_차트_분_t8412,
+		xt.TR현물_차트_일주월_t8413,
+		xt.TR증시_주변_자금_추이_t8428,
+		xt.TR현물_종목_조회_t8436:
 		return 코드 != "00000"
-	case TR현물_정정_주문_CSPAT00700:
+	case xt.TR현물_정정_주문_CSPAT00700:
 		return 코드 != "00131"
-	case TR현물_취소_주문_CSPAT00800:
+	case xt.TR현물_취소_주문_CSPAT00800:
 		return 코드 != "00156"
 	default:
 		// 에러 출력 지우지 말 것.
@@ -207,10 +203,10 @@ func f에러_발생(TR코드, 코드, 내용 string) bool {
 }
 
 func f데이터_복원_이중_응답(대기_항목 *c32_콜백_대기_항목, 수신값 *lib.S바이트_변환) (에러 error) {
-	완전값 := new(S이중_응답_일반형)
+	완전값 := new(xt.S이중_응답_일반형)
 
 	if 대기_항목.대기값 != nil {
-		대기값 := 대기_항목.대기값.(I이중_응답)
+		대기값 := 대기_항목.대기값.(xt.I이중_응답)
 
 		if 대기값.G응답1() != nil {
 			완전값.M응답1 = 대기값.G응답1()
@@ -221,10 +217,10 @@ func f데이터_복원_이중_응답(대기_항목 *c32_콜백_대기_항목, �
 		}
 	}
 
-	switch 변환값 := 수신값.S해석기(F바이트_변환값_해석).G해석값_단순형().(type) {
+	switch 변환값 := 수신값.S해석기(xt.F바이트_변환값_해석).G해석값_단순형().(type) {
 	case error:
 		return 변환값
-	case I이중_응답:
+	case xt.I이중_응답:
 		if 변환값.G응답1() != nil {
 			완전값.M응답1 = 변환값.G응답1()
 		}
@@ -232,9 +228,9 @@ func f데이터_복원_이중_응답(대기_항목 *c32_콜백_대기_항목, �
 		if 변환값.G응답2() != nil {
 			완전값.M응답2 = 변환값.G응답2()
 		}
-	case I이중_응답1:
+	case xt.I이중_응답1:
 		완전값.M응답1 = 변환값
-	case I이중_응답2:
+	case xt.I이중_응답2:
 		완전값.M응답2 = 변환값
 	default:
 		panic(lib.New에러with출력("예상하지 못한 자료형 문자열 : '%v'", 수신값.G자료형_문자열()))
@@ -254,10 +250,10 @@ func f데이터_복원_이중_응답(대기_항목 *c32_콜백_대기_항목, �
 func f데이터_복원_반복_조회(대기_항목 *c32_콜백_대기_항목, 수신값 *lib.S바이트_변환) (에러 error) {
 	defer lib.S예외처리{M에러: &에러}.S실행()
 
-	완전값 := new(S헤더_반복값_일반형)
+	완전값 := new(xt.S헤더_반복값_일반형)
 
 	if 대기_항목.대기값 != nil {
-		대기값 := 대기_항목.대기값.(I헤더_반복값_TR데이터)
+		대기값 := 대기_항목.대기값.(xt.I헤더_반복값_TR데이터)
 
 		if 대기값.G헤더_TR데이터() != nil {
 			완전값.M헤더 = 대기값.G헤더_TR데이터()
@@ -268,13 +264,13 @@ func f데이터_복원_반복_조회(대기_항목 *c32_콜백_대기_항목, �
 		}
 	}
 
-	switch 변환값 := 수신값.S해석기(F바이트_변환값_해석).G해석값_단순형().(type) {
+	switch 변환값 := 수신값.S해석기(xt.F바이트_변환값_해석).G해석값_단순형().(type) {
 	default:
 		panic(lib.New에러with출력("예상하지 못한 자료형 : '%T' '%v'", 변환값, 수신값.G자료형_문자열()))
 	case error:
 		lib.F에러_출력(변환값.Error())
 		return 변환값
-	case I헤더_반복값_TR데이터:
+	case xt.I헤더_반복값_TR데이터:
 		if 변환값.G헤더_TR데이터() != nil {
 			완전값.M헤더 = 변환값.G헤더_TR데이터()
 		}
@@ -282,9 +278,9 @@ func f데이터_복원_반복_조회(대기_항목 *c32_콜백_대기_항목, �
 		if 변환값.G반복값_모음_TR데이터() != nil {
 			완전값.M반복값_모음 = 변환값.G반복값_모음_TR데이터()
 		}
-	case I헤더_TR데이터:
+	case xt.I헤더_TR데이터:
 		완전값.M헤더 = 변환값
-	case I반복값_모음_TR데이터:
+	case xt.I반복값_모음_TR데이터:
 		완전값.M반복값_모음 = 변환값
 	}
 
@@ -301,14 +297,14 @@ func f데이터_복원_반복_조회(대기_항목 *c32_콜백_대기_항목, �
 
 func f처리_가능한_TR코드(TR코드 string) bool {
 	switch TR코드 {
-	case TR현물_정상_주문_CSPAT00600, TR현물_정정_주문_CSPAT00700, TR현물_취소_주문_CSPAT00800,
-		TR시간_조회_t0167, TR체결_미체결_조회_t0425, TR현물_호가_조회_t1101, TR현물_시세_조회_t1102,
-		TR현물_기간별_조회_t1305, TR현물_당일_전일_분틱_조회_t1310,
-		TR관리_불성실_투자유의_조회_t1404, TR투자경고_매매정지_정리매매_조회_t1405,
-		TR_ETF_시간별_추이_t1902,
-		TR기업정보_요약_t3320, TR재무순위_종합_t3341,
-		TR현물_차트_틱_t8411, TR현물_차트_분_t8412, TR현물_차트_일주월_t8413,
-		TR증시_주변_자금_추이_t8428, TR현물_종목_조회_t8436:
+	case xt.TR현물_정상_주문_CSPAT00600, xt.TR현물_정정_주문_CSPAT00700, xt.TR현물_취소_주문_CSPAT00800,
+		xt.TR시간_조회_t0167, xt.TR체결_미체결_조회_t0425, xt.TR현물_호가_조회_t1101, xt.TR현물_시세_조회_t1102,
+		xt.TR현물_기간별_조회_t1305, xt.TR현물_당일_전일_분틱_조회_t1310,
+		xt.TR관리_불성실_투자유의_조회_t1404, xt.TR투자경고_매매정지_정리매매_조회_t1405,
+		xt.TR_ETF_시간별_추이_t1902,
+		xt.TR기업정보_요약_t3320, xt.TR재무순위_종합_t3341,
+		xt.TR현물_차트_틱_t8411, xt.TR현물_차트_분_t8412, xt.TR현물_차트_일주월_t8413,
+		xt.TR증시_주변_자금_추이_t8428, xt.TR현물_종목_조회_t8436:
 		return true
 	default:
 		lib.F문자열_출력("예상하지 못한 TR코드 : '%v'", TR코드)
@@ -347,124 +343,4 @@ func C32_재시작() (에러 error) {
 	return nil
 }
 
-func f자료형_크기_비교_확인() (에러 error) {
-	lib.S예외처리{M에러: &에러}.S실행()
 
-	lib.F조건부_패닉(Sizeof_C_TR_DATA != C.sizeof_TR_DATA, "C.TR_DATA 크기 불일치 ")
-	lib.F조건부_패닉(Sizeof_C_MSG_DATA != C.sizeof_MSG_DATA, "C.MSG_DATA 크기 불일치 ")
-	lib.F조건부_패닉(Sizeof_C_REALTIME_DATA != C.sizeof_REALTIME_DATA, "C.REALTIME_DATA 크기 불일치 ")
-	lib.F조건부_패닉(unsafe.Sizeof(TR_DATA{}) != unsafe.Sizeof(C.TR_DATA_UNPACKED{}), "TR_DATA 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(REALTIME_DATA{}) != unsafe.Sizeof(C.REALTIME_DATA_UNPACKED{}), "REALTIME_DATA_UNPACKED 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(MSG_DATA{}) != unsafe.Sizeof(C.MSG_DATA_UNPACKED{}), "MSG_DATA_UNPACKED 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00600InBlock1{}) != unsafe.Sizeof(C.CSPAT00600InBlock1{}), "CSPAT00600InBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00600OutBlock1{}) != unsafe.Sizeof(C.CSPAT00600OutBlock1{}), "CSPAT00600OutBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00600OutBlock2{}) != unsafe.Sizeof(C.CSPAT00600OutBlock2{}), "CSPAT00600OutBlock2 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00600OutBlock{}) != unsafe.Sizeof(C.CSPAT00600OutBlock{}), "CSPAT00600OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00700InBlock1{}) != unsafe.Sizeof(C.CSPAT00700InBlock1{}), "CSPAT00700InBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00700OutBlock1{}) != unsafe.Sizeof(C.CSPAT00700OutBlock1{}), "CSPAT00700OutBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00700OutBlock2{}) != unsafe.Sizeof(C.CSPAT00700OutBlock2{}), "CSPAT00700OutBlock2 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00700OutBlock{}) != unsafe.Sizeof(C.CSPAT00700OutBlock{}), "CSPAT00700OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00800InBlock1{}) != unsafe.Sizeof(C.CSPAT00800InBlock1{}), "CSPAT00800InBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00800OutBlock1{}) != unsafe.Sizeof(C.CSPAT00800OutBlock1{}), "CSPAT00800OutBlock1 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00800OutBlock2{}) != unsafe.Sizeof(C.CSPAT00800OutBlock2{}), "CSPAT00800OutBlock2 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(CSPAT00800OutBlock{}) != unsafe.Sizeof(C.CSPAT00800OutBlock{}), "CSPAT00800OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(SC0_OutBlock{}) != unsafe.Sizeof(C.SC0_OutBlock{}), "SC0_OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(SC1_OutBlock{}) != unsafe.Sizeof(C.SC1_OutBlock{}), "SC1_OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(SC2_OutBlock{}) != unsafe.Sizeof(C.SC2_OutBlock{}), "SC2_OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(SC3_OutBlock{}) != unsafe.Sizeof(C.SC3_OutBlock{}), "SC3_OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(SC4_OutBlock{}) != unsafe.Sizeof(C.SC4_OutBlock{}), "SC4_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T0167OutBlock{}) != unsafe.Sizeof(C.T0167OutBlock{}), "T0167OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1101InBlock{}) != unsafe.Sizeof(C.T1101InBlock{}), "T1101InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1101OutBlock{}) != unsafe.Sizeof(C.T1101OutBlock{}), "T1101OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1102InBlock{}) != unsafe.Sizeof(C.T1102InBlock{}), "T1102InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1102OutBlock{}) != unsafe.Sizeof(C.T1102OutBlock{}), "T1102OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1305InBlock{}) != unsafe.Sizeof(C.T1305InBlock{}), "T1305InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1305OutBlock{}) != unsafe.Sizeof(C.T1305OutBlock{}), "T1305OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1305OutBlock1{}) != unsafe.Sizeof(C.T1305OutBlock1{}), "T1305OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1310InBlock{}) != unsafe.Sizeof(C.T1310InBlock{}), "T1310InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1310OutBlock{}) != unsafe.Sizeof(C.T1310OutBlock{}), "T1310OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1310OutBlock1{}) != unsafe.Sizeof(C.T1310OutBlock1{}), "T1310OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1901InBlock{}) != unsafe.Sizeof(C.T1901InBlock{}), "T1901InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1901OutBlock{}) != unsafe.Sizeof(C.T1901OutBlock{}), "T1901OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T1902InBlock{}) != unsafe.Sizeof(C.T1902InBlock{}), "T1902InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1902OutBlock{}) != unsafe.Sizeof(C.T1902OutBlock{}), "T1902OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T1902OutBlock1{}) != unsafe.Sizeof(C.T1902OutBlock1{}), "T1902OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T3320InBlock{}) != unsafe.Sizeof(C.T3320InBlock{}), "T3320InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T3320OutBlock{}) != unsafe.Sizeof(C.T3320OutBlock{}), "T3320OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T3320OutBlock1{}) != unsafe.Sizeof(C.T3320OutBlock1{}), "T3320OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T8411InBlock{}) != unsafe.Sizeof(C.T8411InBlock{}), "T8411InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8411OutBlock{}) != unsafe.Sizeof(C.T8411OutBlock{}), "T8411OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8411OutBlock1{}) != unsafe.Sizeof(C.T8411OutBlock1{}), "T8411OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T8412InBlock{}) != unsafe.Sizeof(C.T8412InBlock{}), "T8412InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8412OutBlock{}) != unsafe.Sizeof(C.T8412OutBlock{}), "T8412OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8412OutBlock1{}) != unsafe.Sizeof(C.T8412OutBlock1{}), "T8412OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T8413InBlock{}) != unsafe.Sizeof(C.T8413InBlock{}), "T8413InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8413OutBlock{}) != unsafe.Sizeof(C.T8413OutBlock{}), "T8413OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8413OutBlock1{}) != unsafe.Sizeof(C.T8413OutBlock1{}), "T8413OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T8428InBlock{}) != unsafe.Sizeof(C.T8428InBlock{}), "T8428InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8428OutBlock{}) != unsafe.Sizeof(C.T8428OutBlock{}), "T8428OutBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8428OutBlock1{}) != unsafe.Sizeof(C.T8428OutBlock1{}), "T8428OutBlock1 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(T8436InBlock{}) != unsafe.Sizeof(C.T8436InBlock{}), "T8436InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(T8436OutBlock{}) != unsafe.Sizeof(C.T8436OutBlock{}), "T8436OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(H1_InBlock{}) != unsafe.Sizeof(C.H1_InBlock{}), "H1_InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(H1_OutBlock{}) != unsafe.Sizeof(C.H1_OutBlock{}), "H1_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(H2_InBlock{}) != unsafe.Sizeof(C.H2_InBlock{}), "H2_InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(H2_OutBlock{}) != unsafe.Sizeof(C.H2_OutBlock{}), "H2_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(S3_InBlock{}) != unsafe.Sizeof(C.S3_InBlock{}), "S3_InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(S3_OutBlock{}) != unsafe.Sizeof(C.S3_OutBlock{}), "S3_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(YS3InBlock{}) != unsafe.Sizeof(C.YS3InBlock{}), "YS3InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(YS3OutBlock{}) != unsafe.Sizeof(C.YS3OutBlock{}), "YS3OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(I5_InBlock{}) != unsafe.Sizeof(C.I5_InBlock{}), "I5_InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(I5_OutBlock{}) != unsafe.Sizeof(C.I5_OutBlock{}), "I5_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(VI_InBlock{}) != unsafe.Sizeof(C.VI_InBlock{}), "VI_InBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(VI_OutBlock{}) != unsafe.Sizeof(C.VI_OutBlock{}), "VI_OutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(DVIInBlock{}) != unsafe.Sizeof(C.DVIInBlock{}), "DVIInBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(DVIOutBlock{}) != unsafe.Sizeof(C.DVIOutBlock{}), "DVIOutBlock 크기 불일치")
-
-	lib.F조건부_패닉(unsafe.Sizeof(JIFInBlock{}) != unsafe.Sizeof(C.JIFInBlock{}), "JIFInBlock 크기 불일치")
-	lib.F조건부_패닉(unsafe.Sizeof(JIFOutBlock{}) != unsafe.Sizeof(C.JIFOutBlock{}), "JIFOutBlock 크기 불일치")
-
-	return nil
-}
-
-
-func f속성값_초기화(질의값 interface{}) interface{} {
-	값 := reflect.ValueOf(질의값).Elem()
-
-	for i:=0; i<값.NumField();i++{
-		switch {
-		case !strings.HasPrefix(값.Type().Field(i).Name, "X_"),
-			값.Field(i).Kind() != reflect.Uint8,
-			!값.Field(i).CanSet():
-			continue
-		}
-
-		값.Field(i).SetUint(0x20)
-	}
-
-	return 값.Interface()
-}

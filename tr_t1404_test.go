@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"testing"
 	"time"
 )
@@ -45,7 +46,7 @@ func Test관리_종목_t1404(t *testing.T) {
 	시장_구분_모음 := []lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥}
 	시장_구분 := 시장_구분_모음[lib.F임의_범위_이내_정수값(0, len(시장_구분_모음)-1)]
 
-	관리_질의_구분_모음 := []T관리_질의_구분{P구분_관리, P구분_불성실_공시, P구분_투자_유의, P구분_투자_환기}
+	관리_질의_구분_모음 := []xt.T관리_질의_구분{xt.P구분_관리, xt.P구분_불성실_공시, xt.P구분_투자_유의, xt.P구분_투자_환기}
 	관리_질의_구분 := 관리_질의_구분_모음[lib.F임의_범위_이내_정수값(0, len(관리_질의_구분_모음)-1)]
 
 	값_모음, 에러 := F관리종목_조회_t1404(시장_구분, 관리_질의_구분)

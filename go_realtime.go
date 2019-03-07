@@ -25,7 +25,7 @@ the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PAxt.RTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
@@ -35,6 +35,7 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"nanomsg.org/go-mangos"
 )
 
@@ -70,24 +71,24 @@ func go_RT_주문처리결과(ch초기화 chan lib.T신호) (에러 error) {
 			수신값 = lib.New바이트_변환_모음from바이트_배열_단순형(수신_메시지.Body)
 			lib.F조건부_패닉(수신값.G수량() != 1, "메시지 길이 : 예상값 1, 실제값 %v.", 수신값.G수량())
 
-			실시간_데이터 := 수신값.S해석기(F바이트_변환값_해석).G해석값_단순형(0).(lib.I_TR코드)
+			실시간_데이터 := 수신값.S해석기(xt.F바이트_변환값_해석).G해석값_단순형(0).(lib.I_TR코드)
 
 			switch 실시간_데이터.TR코드() {
-			case RT현물_주문_접수_SC0: // "SC0"
-			case RT현물_주문_체결_SC1: // "SC1"
-			case RT현물_주문_정정_SC2: // "SC2"
-			case RT현물_주문_취소_SC3: // "SC3"
-			case RT현물_주문_거부_SC4: // "SC4"
-			case RT코스피_호가_잔량_H1: // "H1_"
-			case RT코스피_시간외_호가_잔량_H2: // "H2_"
-			case RT코스피_체결_S3: // "S3_"
-			case RT코스피_예상_체결_YS3: // "YS3"
-			case RT코스피_ETF_NAV_I5: // "I5_"
-			case RT주식_VI발동해제_VI: // "VI_"
-			case RT시간외_단일가VI발동해제_DVI: // "DVI"
-			case RT장_운영정보_JIF: // "JIF"
+			case xt.RT현물_주문_접수_SC0: // "SC0"
+			case xt.RT현물_주문_체결_SC1: // "SC1"
+			case xt.RT현물_주문_정정_SC2: // "SC2"
+			case xt.RT현물_주문_취소_SC3: // "SC3"
+			case xt.RT현물_주문_거부_SC4: // "SC4"
+			case xt.RT코스피_호가_잔량_H1: // "H1_"
+			case xt.RT코스피_시간외_호가_잔량_H2: // "H2_"
+			case xt.RT코스피_체결_S3: // "S3_"
+			case xt.RT코스피_예상_체결_YS3: // "YS3"
+			case xt.RT코스피_ETF_NAV_I5: // "I5_"
+			case xt.RT주식_VI발동해제_VI: // "VI_"
+			case xt.RT시간외_단일가VI발동해제_DVI: // "DVI"
+			case xt.RT장_운영정보_JIF: // "JIF"
 			default:
-				panic(lib.New에러with출력("예상하지 못한 RT코드 : '%v'", 실시간_데이터.TR코드()))
+				panic(lib.New에러with출력("예상하지 못한 xt.RT코드 : '%v'", 실시간_데이터.TR코드()))
 			}
 		}
 	}

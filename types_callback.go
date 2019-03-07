@@ -35,139 +35,10 @@ package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"sync"
 	"time"
 )
-
-type I콜백 interface {
-	G콜백() T콜백
-}
-
-func New콜백_기본형(콜백 T콜백) *S콜백_기본형 {
-	s := new(S콜백_기본형)
-	s.M콜백 = 콜백
-
-	return s
-}
-
-type S콜백_기본형 struct {
-	M콜백 T콜백
-}
-
-func (s S콜백_기본형) G콜백() T콜백 {
-	return s.M콜백
-}
-
-func New콜백_정수값_기본형() *S콜백_정수값 {
-	s := new(S콜백_정수값)
-	s.S콜백_기본형 = new(S콜백_기본형)
-
-	return s
-}
-
-func New콜백_정수값(콜백 T콜백, 정수값 int) *S콜백_정수값 {
-	s := new(S콜백_정수값)
-	s.S콜백_기본형 = New콜백_기본형(콜백)
-	s.M정수값 = 정수값
-
-	return s
-}
-
-func New콜백_TR완료(식별번호 int) *S콜백_정수값 {
-	return New콜백_정수값(P콜백_TR완료, 식별번호)
-}
-
-func New콜백_타임아웃(식별번호 int) *S콜백_정수값 {
-	return New콜백_정수값(P콜백_타임아웃, 식별번호)
-}
-
-func New콜백_신호(신호 T신호_C32) *S콜백_정수값 {
-	return New콜백_정수값(P콜백_신호, int(신호))
-}
-
-type S콜백_정수값 struct {
-	*S콜백_기본형
-	M정수값 int
-}
-
-func New콜백_참거짓(콜백 T콜백, 참거짓 bool) *S콜백_참거짓 {
-	s := new(S콜백_참거짓)
-	s.S콜백_기본형 = New콜백_기본형(콜백)
-	s.M참거짓 = 참거짓
-
-	return s
-}
-
-type S콜백_참거짓 struct {
-	*S콜백_기본형
-	M참거짓 bool
-}
-
-func New콜백_문자열(콜백 T콜백, 문자열 string) *S콜백_문자열 {
-	s := new(S콜백_문자열)
-	s.S콜백_기본형 = New콜백_기본형(콜백)
-	s.M문자열 = 문자열
-
-	return s
-}
-
-type S콜백_문자열 struct {
-	*S콜백_기본형
-	M문자열 string
-}
-
-func New콜백_TR데이터NoID(데이터 *lib.S바이트_변환) *S콜백_TR데이터 {
-	s := new(S콜백_TR데이터)
-	s.S콜백_기본형 = New콜백_기본형(P콜백_TR데이터)
-	s.M데이터 = 데이터
-
-	return s
-}
-
-func New콜백_TR데이터(식별번호 int, 데이터 *lib.S바이트_변환, TR코드 string) *S콜백_TR데이터 {
-	s := New콜백_TR데이터NoID(데이터)
-	s.M식별번호 = 식별번호
-	s.TR코드 = TR코드
-
-	return s
-}
-
-type S콜백_TR데이터 struct {
-	*S콜백_기본형
-	M식별번호 int
-	TR코드  string
-	M데이터  *lib.S바이트_변환
-}
-
-func New콜백_메시지(코드, 내용 string) *S콜백_메시지_및_에러 {
-	return new콜백_메시지_및_에러(false, 코드, 내용)
-}
-
-func New콜백_에러(코드, 내용 string) *S콜백_메시지_및_에러 {
-	return new콜백_메시지_및_에러(true, 코드, 내용)
-}
-
-func new콜백_메시지_및_에러(에러_여부 bool, 코드, 내용 string) *S콜백_메시지_및_에러 {
-	s := new(S콜백_메시지_및_에러)
-	s.S콜백_기본형 = New콜백_기본형(P콜백_메시지_및_에러)
-	s.M에러여부 = 에러_여부
-	s.M코드 = 코드
-	s.M내용 = 내용
-
-	return s
-}
-
-type S콜백_메시지_및_에러 struct {
-	*S콜백_기본형
-	M식별번호 int
-	M에러여부 bool
-	M코드   string
-	M내용   string
-}
-
-func (s *S콜백_메시지_및_에러) String() string {
-	return s.M코드 + " : " + s.M내용
-}
 
 type c32_콜백_대기_항목 struct {
 	sync.Mutex
@@ -185,9 +56,9 @@ type c32_콜백_대기_항목 struct {
 
 func (s *c32_콜백_대기_항목) G회신값() interface{} {
 	switch 변환값 := s.대기값.(type) {
-	case *S이중_응답_일반형:
+	case *xt.S이중_응답_일반형:
 		return 변환값.G값(s.TR코드)
-	case *S헤더_반복값_일반형:
+	case *xt.S헤더_반복값_일반형:
 		return 변환값.G값(s.TR코드)
 	default:
 		return s.대기값

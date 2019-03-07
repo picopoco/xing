@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"time"
 
 	"testing"
@@ -44,7 +45,7 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 	t.Parallel()
 
 	종목코드 := F임의_종목().G코드()
-	일주월_구분 := ([]T일주월_구분{P일주월_일, P일주월_주, P일주월_월})[lib.F임의_범위_이내_정수값(0, 2)]
+	일주월_구분 := ([]xt.T일주월_구분{xt.P일주월_일, xt.P일주월_주, xt.P일주월_월})[lib.F임의_범위_이내_정수값(0, 2)]
 	var 이전_일자 time.Time
 
 	값_모음, 에러 := F기간별_주가_조회_t1305(종목코드, 일주월_구분, 300)
@@ -63,11 +64,11 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 			차이 := lib.F절대값_실수(값.M일자.Sub(값_모음[i-1].M일자).Hours() / 24)
 
 			switch 일주월_구분 {
-			case P일주월_일:
+			case xt.P일주월_일:
 				lib.F테스트_참임(t, 차이 >= 1 && 차이 < 13, 종목코드, 값_모음[i-1].M일자, 값.M일자, 차이)
-			case P일주월_주:
+			case xt.P일주월_주:
 				lib.F테스트_참임(t, 차이 >= 3 && 차이 < 20, 종목코드, 값_모음[i-1].M일자, 값.M일자, 차이)
-			case P일주월_월:
+			case xt.P일주월_월:
 				lib.F테스트_참임(t, 차이 >= 20 && 차이 < 45, 종목코드, 값_모음[i-1].M일자, 값.M일자, 차이)
 			default:
 				panic(lib.New에러("예상하지 못한 일주월 구분값 : '%v'", 일주월_구분))
@@ -87,13 +88,13 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		//lib.F테스트_참임(t, 값.M저가 >= 저가_한계, 값.M저가, 저가_한계)
 
 		switch 값.M전일대비구분 {
-		case P구분_상한, P구분_상승:
+		case xt.P구분_상한, xt.P구분_상승:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 > 0)
 			lib.F테스트_참임(t, 값.M전일대비등락율 > 0)
-		case P구분_보합:
+		case xt.P구분_보합:
 			lib.F테스트_같음(t, 값.M전일대비등락폭, 0)
 			lib.F테스트_같음(t, 값.M전일대비등락율, 0)
-		case P구분_하한, P구분_하락:
+		case xt.P구분_하한, xt.P구분_하락:
 			lib.F테스트_참임(t, 값.M전일대비등락폭 < 0,
 				"종목코드 : '%v', 구분 : '%v', 등락폭 : '%v'",
 				종목코드, 값.M전일대비구분, 값.M전일대비등락폭)
@@ -104,7 +105,7 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		default:
 			if lib.F2정수64_단순형(값.M전일대비등락폭) == 0 &&
 				lib.F2실수_단순형(값.M전일대비등락율) == 0.0 {
-				값.M전일대비구분 = P구분_보합
+				값.M전일대비구분 = xt.P구분_보합
 			} else {
 				lib.F문자열_출력("일주월 구분 : '%v', 종목코드 : '%v', 일자 : '%v', 전일대비구분 : '%v'",
 					일주월_구분, 값.M종목코드, 값.M일자.Format(lib.P일자_형식), 값.M전일대비구분)
@@ -113,13 +114,13 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		}
 
 		switch 값.M시가대비구분 {
-		case P구분_상한, P구분_상승:
+		case xt.P구분_상한, xt.P구분_상승:
 			lib.F테스트_참임(t, 값.M시가대비등락폭 > 0)
 			lib.F테스트_참임(t, 값.M시가대비등락율 > 0)
-		case P구분_보합:
+		case xt.P구분_보합:
 			lib.F테스트_참임(t, 값.M시가대비등락폭 == 0)
 			lib.F테스트_참임(t, 값.M시가대비등락율 == 0)
-		case P구분_하한, P구분_하락:
+		case xt.P구분_하한, xt.P구분_하락:
 			lib.F테스트_참임(t, 값.M시가대비등락폭 < 0)
 			lib.F테스트_참임(t, 값.M시가대비등락율 < 0)
 		default:
@@ -129,13 +130,13 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		}
 
 		switch 값.M고가대비구분 {
-		case P구분_상한, P구분_상승:
+		case xt.P구분_상한, xt.P구분_상승:
 			lib.F테스트_참임(t, 값.M고가대비등락폭 > 0)
 			lib.F테스트_참임(t, 값.M고가대비등락율 > 0)
-		case P구분_보합:
+		case xt.P구분_보합:
 			lib.F테스트_참임(t, 값.M고가대비등락폭 == 0)
 			lib.F테스트_참임(t, 값.M고가대비등락율 == 0)
-		case P구분_하한, P구분_하락:
+		case xt.P구분_하한, xt.P구분_하락:
 			lib.F테스트_참임(t, 값.M고가대비등락폭 < 0)
 			lib.F테스트_참임(t, 값.M고가대비등락율 < 0)
 		default:
@@ -145,13 +146,13 @@ func TestF기간별_주가_조회_t1305(t *testing.T) {
 		}
 
 		switch 값.M저가대비구분 {
-		case P구분_상한, P구분_상승:
+		case xt.P구분_상한, xt.P구분_상승:
 			lib.F테스트_참임(t, 값.M저가대비등락폭 > 0)
 			lib.F테스트_참임(t, 값.M저가대비등락율 > 0)
-		case P구분_보합:
+		case xt.P구분_보합:
 			lib.F테스트_참임(t, 값.M저가대비등락폭 == 0)
 			lib.F테스트_참임(t, 값.M저가대비등락율 == 0)
-		case P구분_하한, P구분_하락:
+		case xt.P구분_하한, xt.P구분_하락:
 			lib.F테스트_참임(t, 값.M저가대비등락폭 < 0)
 			lib.F테스트_참임(t, 값.M저가대비등락율 < 0)
 		default:

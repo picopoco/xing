@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"math"
 	"strings"
 	"testing"
@@ -46,10 +47,10 @@ func TestF재무_순위_종합_t3341(t *testing.T) {
 	시장구분_모음 := []lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥}
 	시장구분 := 시장구분_모음[lib.F임의_범위_이내_정수값(0, 2)]
 
-	재무순위_구분_모음 := []T재무순위_구분{P재무순위_매출액증가율,
-		P재무순위_영업이익증가율, P재무순위_세전계속이익증가율, P재무순위_부채비율,
-		P재무순위_유보율, P재무순위_EPS, P재무순위_BPS, P재무순위_ROE,
-		P재무순위_PER, P재무순위_PBR, P재무순위_PEG}
+	재무순위_구분_모음 := []xt.T재무순위_구분{xt.P재무순위_매출액증가율,
+		xt.P재무순위_영업이익증가율, xt.P재무순위_세전계속이익증가율, xt.P재무순위_부채비율,
+		xt.P재무순위_유보율, xt.P재무순위_EPS, xt.P재무순위_BPS, xt.P재무순위_ROE,
+		xt.P재무순위_PER, xt.P재무순위_PBR, xt.P재무순위_PEG}
 	재무순위_구분 := 재무순위_구분_모음[lib.F임의_범위_이내_정수값(0, len(재무순위_구분_모음)-1)]
 
 	const 수량 = 100

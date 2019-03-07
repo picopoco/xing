@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 
 	"testing"
 )
@@ -57,17 +58,17 @@ func TestF주식종목조회_API용_t8436(t *testing.T) {
 
 		switch 응답값.M시장구분 {
 		case lib.P시장구분_ETF:
-			lib.F테스트_다름(t, 응답값.M증권그룹, P증권그룹_주식)
-			lib.F테스트_같음(t, 응답값.M증권그룹, P증권그룹_상장지수펀드_ETF, P증권그룹_해외ETF)
+			lib.F테스트_다름(t, 응답값.M증권그룹, xt.P증권그룹_주식)
+			lib.F테스트_같음(t, 응답값.M증권그룹, xt.P증권그룹_상장지수펀드_ETF, xt.P증권그룹_해외ETF)
 		case lib.P시장구분_ETN:
-			lib.F테스트_다름(t, 응답값.M증권그룹, P증권그룹_주식)
-			lib.F테스트_같음(t, 응답값.M증권그룹, P증권그룹_ETN)
+			lib.F테스트_다름(t, 응답값.M증권그룹, xt.P증권그룹_주식)
+			lib.F테스트_같음(t, 응답값.M증권그룹, xt.P증권그룹_ETN)
 		case lib.P시장구분_코스피, lib.P시장구분_코스닥:
 			// 다음넷의 ETF종목정보가 불완전해서 주식만 테스트 함.
 			lib.F테스트_같음(t, 응답값.M시장구분, 종목.G시장구분())
 		}
 
-		if 응답값.M증권그룹 == P증권그룹_주식 {
+		if 응답값.M증권그룹 == xt.P증권그룹_주식 {
 			lib.F테스트_같음(t, 응답값.M시장구분, lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥)
 		}
 
@@ -97,9 +98,9 @@ func TestF주식종목조회_API용_t8436(t *testing.T) {
 		// 액면분할 하면 전일가가 하한가보다 높아짐.
 		//lib.F테스트_참임(t, 응답값.M전일가 == 0 || 응답값.M하한가 <= 응답값.M전일가, 응답값.M종목코드, 응답값.M하한가, 응답값.M전일가)
 		lib.F테스트_참임(t, 응답값.M하한가 == 0 || 응답값.M하한가 <= 응답값.M기준가, 응답값.M종목코드, 응답값.M하한가, 응답값.M기준가)
-		lib.F테스트_같음(t, 응답값.M증권그룹, P증권그룹_주식, P증권그룹_예탁증서,
-			P증권그룹_증권투자회사_뮤추얼펀드, P증권그룹_Reits종목, P증권그룹_상장지수펀드_ETF,
-			P증권그룹_선박투자회사, P증권그룹_인프라투융자회사, P증권그룹_해외ETF,
-			P증권그룹_해외원주, P증권그룹_ETN)
+		lib.F테스트_같음(t, 응답값.M증권그룹, xt.P증권그룹_주식, xt.P증권그룹_예탁증서,
+			xt.P증권그룹_증권투자회사_뮤추얼펀드, xt.P증권그룹_Reits종목, xt.P증권그룹_상장지수펀드_ETF,
+			xt.P증권그룹_선박투자회사, xt.P증권그룹_인프라투융자회사, xt.P증권그룹_해외ETF,
+			xt.P증권그룹_해외원주, xt.P증권그룹_ETN)
 	}
 }

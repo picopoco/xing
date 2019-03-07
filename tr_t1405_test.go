@@ -13,28 +13,29 @@
 GNU LGPL 2.1판은 이 프로그램과 함께 제공됩니다.
 만약, 이 문서가 누락되어 있다면 자유 소프트웨어 재단으로 문의하시기 바랍니다.
 (자유 소프트웨어 재단 : Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA)
+59 Temple xt.Place - Suite 330, Boston, MA 02111-1307, USA)
 
 Copyright (C) 2015-2019년 UnHa Kim (unha.kim@kuh.pe.kr)
 
 This file is part of GHTS.
 
 GHTS is free software: you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
+it under the terms of the GNU Lesser General xt.Public License as published by
 the Free Software Foundation, version 2.1 of the License.
 
 GHTS is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Lesser General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A xt.PARTICULAR xt.PURPOSE.  See the
+GNU Lesser General xt.Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
+You should have received a copy of the GNU Lesser General xt.Public License
 along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
 import (
 	"github.com/ghts/lib"
+	"github.com/ghts/xing_common"
 	"testing"
 	"time"
 )
@@ -45,7 +46,7 @@ func Test투자_경고_종목_t1405(t *testing.T) {
 	시장_구분_모음 := []lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥}
 	시장_구분 := 시장_구분_모음[lib.F임의_범위_이내_정수값(0, len(시장_구분_모음)-1)]
 
-	투자경고_질의_구분_모음 := []T투자경고_질의_구분{P투자경고, P매매정지, P정리매매, P투자주의, P투자위험, P위험예고, P단기과열지정, P단기과열지정예고}
+	투자경고_질의_구분_모음 := []xt.T투자경고_질의_구분{xt.P투자경고, xt.P매매정지, xt.P정리매매, xt.P투자주의, xt.P투자위험, xt.P위험예고, xt.P단기과열지정, xt.P단기과열지정예고}
 	투자경고_질의_구분 := 투자경고_질의_구분_모음[lib.F임의_범위_이내_정수값(0, len(투자경고_질의_구분_모음)-1)]
 
 	값_모음, 에러 := F투자경고_조회_t1405(시장_구분, 투자경고_질의_구분)
