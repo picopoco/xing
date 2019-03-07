@@ -127,6 +127,8 @@ func NewT3320InBlock(질의값 *lib.S질의값_단일_종목) (g *T3320InBlock) 
 	g = new(T3320InBlock)
 	lib.F바이트_복사_문자열(g.Gicode[:], 질의값.M종목코드)
 
+	f속성값_초기화(g)
+
 	return g
 }
 

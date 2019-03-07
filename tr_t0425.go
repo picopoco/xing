@@ -33,12 +33,12 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
+import "C"
 import (
-	"github.com/ghts/lib"
-	"strings"
-
 	"bytes"
 	"encoding/binary"
+	"github.com/ghts/lib"
+	"strings"
 	"time"
 )
 
@@ -47,7 +47,6 @@ func F현물_체결_미체결_조회_t0425(계좌번호, 비밀번호, 종목코
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F확인(F종목코드_검사(종목코드))
-	종목코드 = "A" + 종목코드 // 필요한가??
 
 	응답값_모음 = make([]*S현물_체결_미체결_조회_응답_반복값_t0425, 0)
 	연속키 := ""
@@ -63,6 +62,7 @@ func F현물_체결_미체결_조회_t0425(계좌번호, 비밀번호, 종목코
 		질의값.M체결구분 = 체결_구분
 		질의값.M매도_매수_구분 = 매도_매수_구분
 		질의값.M정렬순서 = P주문번호_순
+		//질의값.M정렬순서 = P주문번호_역순
 		질의값.M연속키 = 연속키
 
 		i응답값, 에러 := F질의_단일TR(질의값)
@@ -135,6 +135,7 @@ type S현물_체결_미체결_조회_응답_반복값_t0425 struct {
 
 func NewT0425InBlock(질의값 *S질의값_체결_미체결_조회_t0425) (g *T0425InBlock) {
 	g = new(T0425InBlock)
+
 	lib.F바이트_복사_문자열(g.Accno[:], 질의값.M계좌번호)
 	lib.F바이트_복사_문자열(g.Passwd[:], 질의값.M비밀번호)
 	lib.F바이트_복사_문자열(g.Expcode[:], 질의값.M종목코드)
@@ -142,6 +143,8 @@ func NewT0425InBlock(질의값 *S질의값_체결_미체결_조회_t0425) (g *T0
 	lib.F바이트_복사_문자열(g.Medosu[:], lib.F2문자열(int(질의값.M매도_매수_구분)))
 	lib.F바이트_복사_문자열(g.Sortgb[:], lib.F2문자열(int(질의값.M정렬순서)))
 	lib.F바이트_복사_문자열(g.Ordno[:], 질의값.M연속키)
+
+	f속성값_초기화(g)
 
 	return g
 }
@@ -153,7 +156,6 @@ func New현물_체결_미체결_조회_응답_t0425(b []byte) (s *S현물_체결
 	lib.F조건부_패닉((len(b)-(SizeT0425OutBlock+5))%SizeT0425OutBlock1 != 0, "예상하지 못한 길이 : '%v", len(b))
 
 	s = new(S현물_체결_미체결_조회_응답_t0425)
-
 	s.M헤더, 에러 = new현물_체결_미체결_조회_응답_헤더_t0425(b[:SizeT0425OutBlock])
 	lib.F확인(에러)
 
@@ -194,17 +196,19 @@ func new현물_체결_미체결_조회_응답_반복값_모음_t0425(b []byte) (
 	버퍼 := bytes.NewBuffer(b)
 	수량 := len(b) / SizeT0425OutBlock1
 	g_모음 := make([]*T0425OutBlock1, 수량, 수량)
-
 	값_모음 = make([]*S현물_체결_미체결_조회_응답_반복값_t0425, 수량, 수량)
 
 	for i, g := range g_모음 {
 		g = new(T0425OutBlock1)
 		lib.F확인(binary.Read(버퍼, binary.BigEndian, g))
 
+		주문시간_문자열 := string(g.Ordtime[:])
+		주문시간_문자열 = 주문시간_문자열[:6] + "." + 주문시간_문자열[6:]
+
 		값 := new(S현물_체결_미체결_조회_응답_반복값_t0425)
 		값.M주문_번호 = lib.F2정수64_단순형(g.Ordno)
 		값.M종목코드 = lib.F2문자열_공백제거(g.Expcode)
-		값.M매매_구분 = lib.F2문자열(g.Medosu)
+		값.M매매_구분 = lib.F2문자열_EUC_KR_공백제거(g.Medosu)
 		값.M주문_수량 = lib.F2정수64_단순형(g.Qty)
 		값.M주문_가격 = lib.F2정수64_단순형(g.Price)
 		값.M체결_수량 = lib.F2정수64_단순형(g.Cheqty)
@@ -214,10 +218,10 @@ func new현물_체결_미체결_조회_응답_반복값_모음_t0425(b []byte) (
 		값.M상태 = lib.F2문자열_EUC_KR_공백제거(g.Status)
 		값.M원_주문_번호 = lib.F2정수64_단순형_공백은_0(g.Orgordno)
 		값.M유형 = lib.F2문자열_EUC_KR_공백제거(g.Ordgb)
-		값.M주문_시간 = F2당일_시각_단순형("15:04:05", g.Ordtime)
+		값.M주문_시간 = F2당일_시각_단순형("150405.99", 주문시간_문자열)
 		값.M주문_매체 = lib.F2문자열_EUC_KR_공백제거(g.Ordermtd)
 		값.M처리_순번 = lib.F2정수64_단순형(g.Sysprocseq)
-		값.M호가_유형 = T호가_유형_t0425(lib.F2정수_단순형(g.Hogagb))
+		값.M호가_유형 = T호가_유형_t0425(lib.F2정수64_단순형_공백은_0(g.Hogagb))
 		값.M현재가 = lib.F2정수64_단순형(g.Price1)
 		값.M주문_구분 = T주문_구분_t0425(lib.F2문자열_공백제거(g.Orggb))
 		값.M신용_구분 = T신용_구분_t0425(lib.F2정수64_단순형_공백은_0(g.Singb))

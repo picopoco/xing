@@ -195,6 +195,8 @@ func NewT3341InBlock(질의값 *S질의값_재무순위_t3341) (g *T3341InBlock)
 	lib.F바이트_복사_문자열(g.Gubun2[:], "1")
 	lib.F바이트_복사_문자열(g.Idx[:], 질의값.M연속키)
 
+	f속성값_초기화(g)
+
 	return g
 }
 

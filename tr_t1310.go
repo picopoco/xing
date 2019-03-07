@@ -181,6 +181,8 @@ func NewT1310InBlock(질의값 *S질의값_현물_전일당일_분틱_조회_t13
 		lib.F바이트_복사_문자열(g.Time[:], "          ")
 	}
 
+	f속성값_초기화(g)
+
 	return g
 }
 

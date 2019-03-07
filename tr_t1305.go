@@ -215,6 +215,8 @@ func NewT1305InBlock(질의값 *S질의값_현물_기간별_조회_t1305) (g *T1
 		lib.F바이트_복사_문자열(g.Date[:], "       ")
 	}
 
+	f속성값_초기화(g)
+
 	return g
 }
 

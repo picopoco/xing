@@ -95,6 +95,15 @@ type S현물_호가_조회_응답 struct {
 	M동시호가_구분     T동시호가_구분
 }
 
+func NewT1101InBlock(질의값 *lib.S질의값_단일_종목) (g *T1101InBlock) {
+	g = new(T1101InBlock)
+	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M종목코드)
+
+	f속성값_초기화(g)
+
+	return g
+}
+
 func New현물_호가_조회_응답(b []byte) (s *S현물_호가_조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { s = nil }}.S실행()
 

@@ -157,6 +157,16 @@ type S거래원_정보_t1102 struct {
 	M비율      float64
 }
 
+
+func NewT1102InBlock(질의값 *lib.S질의값_단일_종목) (g *T1102InBlock) {
+	g = new(T1102InBlock)
+	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M종목코드)
+
+	f속성값_초기화(g)
+
+	return g
+}
+
 func New거래원_정보_모음_t1102(수량 int) []*S거래원_정보_t1102 {
 	거래원_정보_모음 := make([]*S거래원_정보_t1102, 수량)
 

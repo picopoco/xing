@@ -203,6 +203,8 @@ func NewT8412InBlock(질의값 *S질의값_현물_차트_분_t8412) (g *T8412InB
 	lib.F바이트_복사_문자열(g.Cts_time[:], 질의값.M연속시간)
 	lib.F바이트_복사_문자열(g.Comp_yn[:], lib.F조건부_문자열(질의값.M압축여부, "Y", "N"))
 
+	f속성값_초기화(g)
+
 	return g
 }
 

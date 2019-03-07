@@ -195,8 +195,10 @@ func NewT8428InBlock(질의값 *S질의값_증시주변자금추이_t8428) (g *T
 	lib.F바이트_복사_정수(g.Cnt[:], 질의값.M수량)
 
 	if lib.F2문자열_공백제거(질의값.M연속키) == "" {
-		lib.F바이트_복사_문자열(g.KeyDate[:], "        ")
+		lib.F바이트_배열_공백문자열_채움(g.KeyDate)
 	}
+
+	f속성값_초기화(g)
 
 	return g
 }

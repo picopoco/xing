@@ -40,5 +40,5 @@ import (
 func TestF현물_전일_당일_매매일지_수수료_t0151(t *testing.T) {
 	t.Parallel()
 
-	t.FailNow()
+	t.SkipNow()
 }

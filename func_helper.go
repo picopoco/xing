@@ -40,6 +40,7 @@ import (
 	"fmt"
 	"github.com/ghts/lib"
 	"github.com/mitchellh/go-ps"
+	"reflect"
 	"unsafe"
 
 	"strings"
@@ -448,4 +449,22 @@ func f자료형_크기_비교_확인() (에러 error) {
 	lib.F조건부_패닉(unsafe.Sizeof(JIFOutBlock{}) != unsafe.Sizeof(C.JIFOutBlock{}), "JIFOutBlock 크기 불일치")
 
 	return nil
+}
+
+
+func f속성값_초기화(질의값 interface{}) interface{} {
+	값 := reflect.ValueOf(질의값).Elem()
+
+	for i:=0; i<값.NumField();i++{
+		switch {
+		case !strings.HasPrefix(값.Type().Field(i).Name, "X_"),
+			값.Field(i).Kind() != reflect.Uint8,
+			!값.Field(i).CanSet():
+			continue
+		}
+
+		값.Field(i).SetUint(0x20)
+	}
+
+	return 값.Interface()
 }

@@ -137,6 +137,8 @@ func NewT1404InBlock(질의값 *S질의값_관리종목_조회_t1404) (g *T1404I
 	lib.F바이트_복사_문자열(g.Jongchk[:], strconv.Itoa(int(질의값.M관리_질의_구분)))
 	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M연속키)
 
+	f속성값_초기화(g)
+
 	return g
 }
 

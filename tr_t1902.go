@@ -188,6 +188,8 @@ func NewT1902InBlock(질의값 *lib.S질의값_단일종목_연속키) (g *T1902
 		lib.F바이트_복사_문자열(g.Time[:], 질의값.M연속키)
 	}
 
+	f속성값_초기화(g)
+
 	return g
 }
 

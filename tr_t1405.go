@@ -130,6 +130,8 @@ func NewT1405InBlock(질의값 *S질의값_투자경고_조회_t1405) (g *T1405I
 	lib.F바이트_복사_문자열(g.Jongchk[:], strconv.Itoa(int(질의값.M투자경고_질의_구분)))
 	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M연속키)
 
+	f속성값_초기화(g)
+
 	return g
 }
 

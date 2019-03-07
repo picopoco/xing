@@ -33,7 +33,18 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-import "time"
+import (
+	"github.com/ghts/lib"
+	"time"
+)
+
+type S질의값_현물_시간대별_체결_t1301 struct {
+	M종목코드 string
+	M특이거래량 int
+	M시작시간 string
+	M종료시간 string
+	M연속키 string
+}
 
 // t1301 현물 시간대별 체결 응답
 type S현물_시간대별_체결_응답 struct {
@@ -82,3 +93,18 @@ type S현물_시간대별_체결_응답_반복값_모음 struct {
 func (s *S현물_시간대별_체결_응답_반복값_모음) G반복값_모음_TR데이터() I반복값_모음_TR데이터 {
 	return s
 }
+
+func NewT1301InBlock(질의값 *S질의값_현물_시간대별_체결_t1301) (g *T1301InBlock) {
+	g = new(T1301InBlock)
+
+	lib.F바이트_복사_문자열(g.Shcode[:], 질의값.M종목코드)
+	lib.F바이트_복사_정수(g.Cvolume[:], 질의값.M특이거래량)
+	lib.F바이트_복사_문자열(g.Starttime[:], 질의값.M시작시간)
+	lib.F바이트_복사_문자열(g.Endtime[:], 질의값.M종료시간)
+	lib.F바이트_복사_문자열(g.Time[:], 질의값.M연속키)
+
+	f속성값_초기화(g)
+
+	return g
+}
+
