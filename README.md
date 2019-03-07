@@ -6,7 +6,7 @@
   - 실제 Xing API 호출은 xing_C32 패키지에 위임, 결과물만 전달받아서 사용.
   
 #
-이렇게까지 복잡하게 해야했나??
+왜 이렇게까지 나누어야 했나?
   - 64비트에서는 메모리 제한에서 자유로우므로, 대용량 데이터 처리에 유리하다.
   - 동시성 처리에 강한 Go언어는 64비트에서만 데이터 레이스(Data Race) 감지기가 제공된다.  
   - 그러나, 64비트에서는 32비트 전용 Xing API DLL을 직접 호출할 수 없다.
@@ -23,9 +23,9 @@
 설치법
 
     go get github.com/ghts/lib
-    go get github.com/ghts/xing
+    go get github.com/ghts/xing_common
     go get github.com/ghts/xing_C32
-    
+    go get github.com/ghts/xing 
    
 #   
 사용법
