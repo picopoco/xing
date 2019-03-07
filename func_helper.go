@@ -71,7 +71,7 @@ func F2전일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 	전일 := F전일()
 
 	전일_시각 := time.Date(전일.Year(), 전일.Month(), 전일.Day(),
-		시각.Hour(), 시각.Minute(), 시각.Second(), 0, 시각.Location())
+		시각.Hour(), 시각.Minute(), 시각.Second(), 시각.Nanosecond(), 시각.Location())
 
 	return 전일_시각, nil
 }
@@ -93,7 +93,7 @@ func F2당일_시각(포맷 string, 값 interface{}) (time.Time, error) {
 	당일 := F당일()
 
 	당일_시각 := time.Date(당일.Year(), 당일.Month(), 당일.Day(),
-		시각.Hour(), 시각.Minute(), 시각.Second(), 0, 시각.Location())
+		시각.Hour(), 시각.Minute(), 시각.Second(), 시각.Nanosecond(), 시각.Location())
 
 	return 당일_시각, nil
 }
