@@ -7,7 +7,7 @@
 이렇게까지 복잡하게 해야했나??
   - 64비트에서는 메모리 제한에서 자유로우므로, 대용량 데이터 처리에 유리하다.
   - 동시성 처리에 강한 Go언어는 64비트에서만 데이터 레이스(Data Race) 감지기가 제공된다.  
-  - 그러나, 64비트에서는 32비트 DLL을 직접 호출할 수 없다.
+  - 그러나, 64비트에서는 32비트 전용 Xing API DLL을 직접 호출할 수 없다.
   - 별도의 32비트 전용 모듈(xing_C32)에게 DLL호출을 위임한 후 결과물을 받아보는 것으로 해결.
   - 네트워크 전송 기능은 nanomsg의 Go언어 구현체인 mangos패키지로 간편하게 해결.
   
@@ -39,10 +39,18 @@
         (... 이하 Xing API 호출 ...)
     }
 
-TR 호출 예제 : https://github.com/ghts/xing 에서 'tr_*_test.go' 파일 참조.
+TR 호출 예제 : https://github.com/ghts/xing 에서 'tr_<TR코드>_test.go' 파일 참조.  
+- t0167 (시간 조회) : https://github.com/ghts/xing/blob/master/tr_t0167_test.go
+- t0425 (주식 체결/미체결 조회) : https://github.com/ghts/xing/blob/master/tr_t0425_test.go
+- t1101 (주식 호가 조회) : https://github.com/ghts/xing/blob/master/tr_t1101_test.go
+- t1102 (주식 현재가 조회) : https://github.com/ghts/xing/blob/master/tr_t1102_test.go
+- t1305 (기간별 주가) : https://github.com/ghts/xing/blob/master/tr_t1305_test.go
+- t8436 (주식 종목 조회) : https://github.com/ghts/xing/blob/master/tr_t8436_test.go
+- CSPAT00600 (주식 정상 주문) : https://github.com/ghts/xing/blob/master/tr_CSPAT00600_test.go
+- CSPAT00700 (주식 정정 주문) : https://github.com/ghts/xing/blob/master/tr_CSPAT00700_test.go
+- CSPAT00800 (주식 취소 주문) : https://github.com/ghts/xing/blob/master/tr_CSPAT00800_test.go  
 
 문서 : https://godoc.org/github.com/ghts/xing
- 
 
 #
 참고 링크.
