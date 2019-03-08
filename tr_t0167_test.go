@@ -46,7 +46,7 @@ func TestT0167_시각_조회(t *testing.T) {
 	lib.F테스트_참임(t, lib.F확인(F접속됨()).(bool))
 
 	for i := 0; i < 5; i++ {
-		시각, 에러 := (<-TR_t0167_시각_조회()).G값()
+		시각, 에러 := (<-TrT0167_시각_조회()).G값()
 
 		lib.F테스트_에러없음(t, 에러)
 		lib.F테스트_같음(t, 시각.Year(), time.Now().Year())

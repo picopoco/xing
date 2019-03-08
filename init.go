@@ -252,7 +252,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 	}
 
 	for i := 0; i < 100; i++ {
-		시각, 에러 := (<-TR_t0167_시각_조회()).G값()
+		시각, 에러 := (<-TrT0167_시각_조회()).G값()
 
 		if 에러 != nil || 시각.Equal(time.Time{}) {
 			continue
