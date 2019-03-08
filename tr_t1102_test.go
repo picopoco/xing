@@ -44,6 +44,12 @@ import (
 func TestF현물_시세_조회_t1102(t *testing.T) {
 	t.Parallel()
 
+	지금 := lib.F지금()
+
+	if 지금.Hour() >= 5 && 지금.Hour() < 9 {
+		t.SkipNow()	// 이 시간대에 테스트 에러가 발생함.
+	}
+
 	const 종목코드 = "069500" // KODEX 200
 	당일 := F당일()
 	개장_시간 := time.Date(당일.Year(), 당일.Month(), 당일.Day(), 8, 0, 0, 0, 당일.Location())

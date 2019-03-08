@@ -167,7 +167,7 @@ func f초기화_Go루틴() {
 		go 고루틴(ch초기화)
 	}
 
-	for _ = range 고루틴_모음 {
+	for range 고루틴_모음 {
 		<-ch초기화
 	}
 }

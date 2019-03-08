@@ -33,9 +33,6 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-// #include "../xing_common/types_c.h"
-import "C"
-
 import (
 	"github.com/ghts/lib"
 	"sync"
