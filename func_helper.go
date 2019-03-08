@@ -152,7 +152,7 @@ func f접속유지_도우미() {
 	for {
 		lib.F대기(13 * lib.P1초)
 
-		if _, 에러 := (<-F시각_조회_t0167()).G값(); 에러 == nil {
+		if _, 에러 := (<-TR_t0167_시각_조회()).G값(); 에러 == nil {
 			에러_연속_발생_횟수 = 0
 		} else {
 			에러_연속_발생_횟수++
@@ -343,4 +343,43 @@ func C32_재시작() (에러 error) {
 	return nil
 }
 
+func f전송_권한_획득(TR코드 string) {
+	switch TR코드 {
+	case "", xt.RT현물_주문_접수_SC0, xt.RT현물_주문_체결_SC1, xt.RT현물_주문_정정_SC2, xt.RT현물_주문_취소_SC3, xt.RT현물_주문_거부_SC4,
+		xt.RT코스피_호가_잔량_H1, xt.RT코스피_시간외_호가_잔량_H2, xt.RT코스피_체결_S3, xt.RT코스피_예상_체결_YS3,
+		xt.RT코스피_ETF_NAV_I5, xt.RT주식_VI발동해제_VI, xt.RT시간외_단일가VI발동해제_DVI, xt.RT장_운영정보_JIF:
+		return
+	}
 
+	F접속_확인()
+	f10분당_전송_제한_확인(TR코드)
+	f초당_전송_제한_확인(TR코드)
+}
+
+func f10분당_전송_제한_확인(TR코드 string) lib.I전송_권한 {
+	전송_권한, 존재함 := tr코드별_10분당_전송_제한[TR코드]
+
+	switch {
+	case !존재함:
+		return nil // 해당 TR코드 관련 제한이 존재하지 않음.
+	case 전송_권한.TR코드() != TR코드:
+		panic("예상하지 못한 경우.")
+	}
+
+	return 전송_권한.G획득()
+}
+
+func f초당_전송_제한_확인(TR코드 string) lib.I전송_권한 {
+	전송_권한, 존재함 := tr코드별_초당_전송_제한[TR코드]
+
+	switch {
+	case !존재함:
+		panic(lib.New에러("전송제한을 찾을 수 없음 : '%v'", TR코드))
+	case 전송_권한.TR코드() != TR코드:
+		panic("예상하지 못한 경우.")
+	case 전송_권한.G남은_수량() > 100:
+		panic("전송 한도가 너무 큼. 1초당 한도와 10분당 한도를 혼동한 듯함.")
+	}
+
+	return 전송_권한.G획득()
+}

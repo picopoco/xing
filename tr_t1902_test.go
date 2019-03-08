@@ -41,18 +41,18 @@ import (
 	"time"
 )
 
-func TestETF_시간별_추이_t1902(t *testing.T) {
+func TestT1902_ETF_시간별_추이(t *testing.T) {
 	t.Parallel() // 병렬 테스트 에러 발생함.
 
 	지금 := lib.F지금()
 
 	if 지금.Hour() >= 5 && 지금.Hour() < 9 {
-		t.SkipNow()	// 이 시간대에 테스트 에러가 발생함.
+		t.SkipNow() // 이 시간대에 테스트 에러가 발생함.
 	}
 
 	종목코드 := "069500" // 코덱스200
 
-	값_모음, 에러 := ETF_시간별_추이_t1902(종목코드, 100)
+	값_모음, 에러 := TR_t1902_ETF_시간별_추이(종목코드, 100)
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_다름(t, len(값_모음), 0)
 

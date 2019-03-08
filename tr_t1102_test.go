@@ -41,20 +41,20 @@ import (
 	"time"
 )
 
-func TestF현물_시세_조회_t1102(t *testing.T) {
+func TestT1102_현물_시세_조회(t *testing.T) {
 	t.Parallel()
 
 	지금 := lib.F지금()
 
 	if 지금.Hour() >= 5 && 지금.Hour() < 9 {
-		t.SkipNow()	// 이 시간대에 테스트 에러가 발생함.
+		t.SkipNow() // 이 시간대에 테스트 에러가 발생함.
 	}
 
 	const 종목코드 = "069500" // KODEX 200
 	당일 := F당일()
 	개장_시간 := time.Date(당일.Year(), 당일.Month(), 당일.Day(), 8, 0, 0, 0, 당일.Location())
 
-	값, 에러 := F현물_시세_조회_t1102(종목코드)
+	값, 에러 := TR_t1102_현물_시세_조회(종목코드)
 	lib.F테스트_에러없음(t, 에러)
 
 	lib.F체크포인트(값)

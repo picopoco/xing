@@ -40,12 +40,12 @@ import (
 	"testing"
 )
 
-func TestF주식종목조회_API용_t8436(t *testing.T) {
+func TestT8436_주식종목_조회(t *testing.T) {
 	t.Parallel()
 
 	시장_구분 := ([]lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥})[lib.F임의_범위_이내_정수값(0, 2)]
 
-	값_모음, 에러 := F주식종목조회_t8436(시장_구분)
+	값_모음, 에러 := TR_t8436_주식종목_조회(시장_구분)
 	lib.F테스트_에러없음(t, 에러)
 	lib.F테스트_참임(t, len(값_모음) > 0, len(값_모음))
 

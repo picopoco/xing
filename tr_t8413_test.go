@@ -40,7 +40,7 @@ import (
 	"time"
 )
 
-func TestF현물_차트_일주월_t8413(t *testing.T) {
+func TestT8413_현물_차트_일주월(t *testing.T) {
 	t.Parallel()
 
 	const 종목코드 = "069500" // 코덱스200
@@ -48,7 +48,7 @@ func TestF현물_차트_일주월_t8413(t *testing.T) {
 
 	시작일 := 당일.G값().AddDate(-1, 0, 0)
 
-	값_모음, 에러 := F현물_차트_일주월_t8413(종목코드, 시작일, 당일.G값(), xt.P일주월_일, 2300)
+	값_모음, 에러 := TR_t8413_현물_차트_일주월(종목코드, 시작일, 당일.G값(), xt.P일주월_일, 2300)
 	lib.F테스트_에러없음(t, 에러)
 
 	for i, 값 := range 값_모음 {

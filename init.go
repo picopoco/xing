@@ -33,7 +33,6 @@ along with GHTS.  If not, see <http://www.gnu.org/licenses/>. */
 
 package xing
 
-
 // #include "../xing_common/types_c.h"
 import "C"
 import (
@@ -253,7 +252,7 @@ func tr동작_확인(ch완료 chan lib.T신호) {
 	}
 
 	for i := 0; i < 100; i++ {
-		시각, 에러 := (<-F시각_조회_t0167()).G값()
+		시각, 에러 := (<-TR_t0167_시각_조회()).G값()
 
 		if 에러 != nil || 시각.Equal(time.Time{}) {
 			continue
@@ -405,7 +404,6 @@ func f초기화_TR전송_제한() (에러 error) {
 
 	return nil
 }
-
 
 func f자료형_크기_비교_확인() (에러 error) {
 	lib.S예외처리{M에러: &에러}.S실행()

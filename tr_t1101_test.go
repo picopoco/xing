@@ -41,12 +41,12 @@ import (
 	"time"
 )
 
-func TestF현물_호가_조회_t1101(t *testing.T) {
+func TestT1101_현물_호가_조회(t *testing.T) {
 	t.Parallel()
 
 	const 종목코드 = "069500" // 코덱스200
 
-	값, 에러 := F현물_호가_조회_t1101(종목코드)
+	값, 에러 := TR_t1101_현물_호가_조회(종목코드)
 	lib.F테스트_에러없음(t, 에러)
 
 	lib.F체크포인트(값)

@@ -40,13 +40,13 @@ import (
 	"time"
 )
 
-func TestF현물_차트_분_t8412(t *testing.T) {
+func TestT8412_현물_차트_분(t *testing.T) {
 	t.Parallel()
 
 	const 종목코드 = "069500" // 코덱스200
 	var 이전_일자_시각 time.Time
 
-	값_모음, 에러 := F현물_차트_30초_t8412(종목코드, 전일.G값(), 전일.G값(), 3000)
+	값_모음, 에러 := TR_t8412_현물_차트_분(종목코드, 전일.G값(), 전일.G값(), 3000)
 	lib.F테스트_에러없음(t, 에러)
 
 	for _, 값 := range 값_모음 {

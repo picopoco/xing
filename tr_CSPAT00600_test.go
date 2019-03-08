@@ -41,12 +41,12 @@ import (
 	"time"
 )
 
-func TestS질의값_정상_주문(t *testing.T) {
+func TestCSPAT00600_현물_정상_주문_질의값(t *testing.T) {
 	_, ok := interface{}(new(xt.S질의값_정상_주문_CSPAT00600)).(lib.I질의값)
 	lib.F테스트_참임(t, ok)
 }
 
-func TestCSPAT00600현물_정상_주문(t *testing.T) {
+func TestCSPAT00600_현물_정상_주문(t *testing.T) {
 	if !F한국증시_정규시장_거래시간임() {
 		t.SkipNow()
 	}
@@ -86,7 +86,7 @@ func TestCSPAT00600현물_정상_주문(t *testing.T) {
 	질의값_매수.M대출일 = ""
 
 	for i := 0; i < 반복_횟수; i++ {
-		응답값, 에러 := F현물_정상주문_CSPAT00600(질의값_매수)
+		응답값, 에러 := TR_CSPAT00600_현물_정상주문(질의값_매수)
 
 		lib.F테스트_에러없음(t, 에러)
 		lib.F테스트_다름(t, 응답값.M응답1, nil)
@@ -153,7 +153,7 @@ func TestCSPAT00600현물_정상_주문(t *testing.T) {
 	질의값_매도.M대출일 = ""
 
 	for i := 0; i < 반복_횟수; i++ {
-		응답값, 에러 := F현물_정상주문_CSPAT00600(질의값_매도)
+		응답값, 에러 := TR_CSPAT00600_현물_정상주문(질의값_매도)
 
 		lib.F테스트_에러없음(t, 에러)
 		lib.F테스트_다름(t, 응답값.M응답1, nil)

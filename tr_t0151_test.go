@@ -37,7 +37,7 @@ import (
 	"testing"
 )
 
-func TestF현물_전일_당일_매매일지_수수료_t0151(t *testing.T) {
+func TestT0151_현물_전일_당일_매매일지_수수료(t *testing.T) {
 	t.Parallel()
 
 	t.SkipNow()

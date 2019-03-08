@@ -61,7 +61,7 @@ func TestF계좌번호_모음(t *testing.T) {
 	}
 }
 
-func TestF계좌_XX(t *testing.T) {
+func TestF계좌_관련_함수(t *testing.T) {
 	t.Parallel()
 
 	계좌_수량, 에러 := F계좌_수량()
@@ -114,9 +114,8 @@ func TestC32_재시작(t *testing.T) {
 	lib.F테스트_에러없음(t, C32_재시작())
 }
 
-func TestF초기화_Go_C_자료형_크기_비교(t *testing.T) {
+func TestGo_C_자료형_크기_비교(t *testing.T) {
 	t.Parallel()
 
 	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
 }
-

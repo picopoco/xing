@@ -41,7 +41,7 @@ import (
 	"time"
 )
 
-func F현물_정상주문_CSPAT00600(질의값 *xt.S질의값_정상_주문_CSPAT00600) (응답값 *xt.S현물_정상_주문_응답, 에러 error) {
+func TR_CSPAT00600_현물_정상주문(질의값 *xt.S질의값_정상_주문_CSPAT00600) (응답값 *xt.S현물_정상_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -55,7 +55,7 @@ func F현물_정상주문_CSPAT00600(질의값 *xt.S질의값_정상_주문_CSPA
 	return 응답값, nil
 }
 
-func F현물_정정주문_CSPAT00700(질의값 *xt.S질의값_정정_주문_CSPAT00700) (응답값 *xt.S현물_정정_주문_응답, 에러 error) {
+func TR_CSPAT00700_현물_정정주문_(질의값 *xt.S질의값_정정_주문_CSPAT00700) (응답값 *xt.S현물_정정_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -79,7 +79,7 @@ func F현물_정정주문_CSPAT00700(질의값 *xt.S질의값_정정_주문_CSPA
 	return nil, lib.New에러("정정 주문 TR 실행 실패.")
 }
 
-func F현물_취소주문_CSPAT00800(질의값 *xt.S질의값_취소_주문_CSPAT00800) (응답값 *xt.S현물_취소_주문_응답, 에러 error) {
+func TR_CSPAT00800_현물_취소주문(질의값 *xt.S질의값_취소_주문_CSPAT00800) (응답값 *xt.S현물_취소_주문_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -103,7 +103,7 @@ func F현물_취소주문_CSPAT00800(질의값 *xt.S질의값_취소_주문_CSPA
 	return nil, lib.New에러("취소 주문 TR 실행 실패.")
 }
 
-func F시각_조회_t0167() (ch응답 chan *xt.S시각_조회_응답_t0167) {
+func TR_t0167_시각_조회() (ch응답 chan *xt.S시각_조회_응답_t0167) {
 
 	F접속_확인()
 
@@ -136,7 +136,7 @@ func f시각_조회_작업(인수 interface{}) {
 	ch응답 <- xt.New시각_조회_응답_t0167(값, nil)
 }
 
-func F현물_체결_미체결_조회_t0425(계좌번호, 비밀번호, 종목코드 string, 체결_구분 lib.T체결_구분,
+func TR_t0425_현물_체결_미체결_조회(계좌번호, 비밀번호, 종목코드 string, 체결_구분 lib.T체결_구분,
 	매도_매수_구분 lib.T매도_매수_구분) (응답값_모음 []*xt.S현물_체결_미체결_조회_응답_반복값_t0425, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -176,7 +176,7 @@ func F현물_체결_미체결_조회_t0425(계좌번호, 비밀번호, 종목코
 	return 응답값_모음, nil
 }
 
-func F현물_호가_조회_t1101(종목코드 string) (응답값 *xt.S현물_호가_조회_응답, 에러 error) {
+func TR_t1101_현물_호가_조회(종목코드 string) (응답값 *xt.S현물_호가_조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -195,7 +195,7 @@ func F현물_호가_조회_t1101(종목코드 string) (응답값 *xt.S현물_호
 	return 응답값, nil
 }
 
-func F현물_시세_조회_t1102(종목코드 string) (응답값 *xt.S현물_시세조회_응답, 에러 error) {
+func TR_t1102_현물_시세_조회(종목코드 string) (응답값 *xt.S현물_시세조회_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -214,7 +214,7 @@ func F현물_시세_조회_t1102(종목코드 string) (응답값 *xt.S현물_시
 	return 응답값, nil
 }
 
-func F기간별_주가_조회_t1305(종목코드 string, 일주월_구분 xt.T일주월_구분, 추가_옵션_모음 ...interface{}) (
+func TR_t1305_기간별_주가_조회(종목코드 string, 일주월_구분 xt.T일주월_구분, 추가_옵션_모음 ...interface{}) (
 	응답값_모음 []*xt.S현물_기간별_조회_응답_반복값_t1305, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -298,7 +298,7 @@ func F기간별_주가_조회_t1305(종목코드 string, 일주월_구분 xt.T�
 	return 응답값_모음, nil
 }
 
-func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_구분 xt.T당일전일_구분, 분틱_구분 xt.T분틱_구분,
+func TR_t1310_현물_당일전일_분틱_조회(종목코드 string, 당일전일_구분 xt.T당일전일_구분, 분틱_구분 xt.T분틱_구분,
 	종료시각 time.Time, 수량_옵션 ...int) (응답값_모음 []*xt.S현물_전일당일분틱조회_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -368,8 +368,7 @@ func F현물_당일전일_분틱_조회_t1310(종목코드 string, 당일전일_
 	return 응답값_모음, nil
 }
 
-
-func F관리종목_조회_t1404(시장_구분 lib.T시장구분, 관리_질의_구분 xt.T관리_질의_구분) (응답값_모음 []*xt.S관리종목_조회_응답_반복값_t1404, 에러 error) {
+func TR_t1404_관리종목_조회(시장_구분 lib.T시장구분, 관리_질의_구분 xt.T관리_질의_구분) (응답값_모음 []*xt.S관리종목_조회_응답_반복값_t1404, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	응답값_모음 = make([]*xt.S관리종목_조회_응답_반복값_t1404, 0)
@@ -406,7 +405,7 @@ func F관리종목_조회_t1404(시장_구분 lib.T시장구분, 관리_질의_�
 	return 응답값_모음, nil
 }
 
-func F투자경고_조회_t1405(시장_구분 lib.T시장구분, 투자경고_질의_구분 xt.T투자경고_질의_구분) (응답값_모음 []*xt.S투자경고_조회_응답_반복값_t1405, 에러 error) {
+func TR_t1405_투자경고_조회(시장_구분 lib.T시장구분, 투자경고_질의_구분 xt.T투자경고_질의_구분) (응답값_모음 []*xt.S투자경고_조회_응답_반복값_t1405, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	응답값_모음 = make([]*xt.S투자경고_조회_응답_반복값_t1405, 0)
@@ -441,7 +440,7 @@ func F투자경고_조회_t1405(시장_구분 lib.T시장구분, 투자경고_�
 	return 응답값_모음, nil
 }
 
-func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...interface{}) (응답값_모음 []*xt.S_ETF시간별_추이_응답_반복값, 에러 error) {
+func TR_t1902_ETF_시간별_추이(종목코드 string, 추가_옵션_모음 ...interface{}) (응답값_모음 []*xt.S_ETF시간별_추이_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	var 수량 int
@@ -531,7 +530,7 @@ func ETF_시간별_추이_t1902(종목코드 string, 추가_옵션_모음 ...int
 }
 
 // HTS 3302 화면. t3320 은 참고자료로서 정보의 정확성이나 완전성은 보장하기는 어렵습니다. 숫자 엉망이다.
-func F기업정보_요약_t3320(종목코드 string) (응답값 *xt.S기업정보_요약_응답, 에러 error) {
+func TR_t3320_F기업정보_요약(종목코드 string) (응답값 *xt.S기업정보_요약_응답, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값 = nil }}.S실행()
 
 	F접속_확인()
@@ -556,7 +555,7 @@ func F기업정보_요약_t3320(종목코드 string) (응답값 *xt.S기업정�
 }
 
 // HTS 3303 화면
-func F재무_순위_종합_t3341(시장구분 lib.T시장구분, 재무순위_구분 xt.T재무순위_구분,
+func TR_t3341_재무_순위_종합(시장구분 lib.T시장구분, 재무순위_구분 xt.T재무순위_구분,
 	추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S재무순위_응답_반복값_t3341, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -620,7 +619,7 @@ func F재무_순위_종합_t3341(시장구분 lib.T시장구분, 재무순위_�
 	return 응답값_모음, nil
 }
 
-func F현물_차트_틱_t8411(종목코드 string, 시작일자, 종료일자 time.Time, 추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S현물_차트_틱_응답_반복값, 에러 error) {
+func TR_t8411_현물_차트_틱(종목코드 string, 시작일자, 종료일자 time.Time, 추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S현물_차트_틱_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F확인(F종목코드_검사(종목코드))
@@ -686,7 +685,7 @@ func F현물_차트_틱_t8411(종목코드 string, 시작일자, 종료일자 ti
 	return 응답값_모음, nil
 }
 
-func F현물_차트_30초_t8412(종목코드 string, 시작일자, 종료일자 time.Time, 추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S현물_차트_분_응답_반복값, 에러 error) {
+func TR_t8412_현물_차트_분(종목코드 string, 시작일자, 종료일자 time.Time, 추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S현물_차트_분_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F확인(F종목코드_검사(종목코드))
@@ -752,7 +751,7 @@ func F현물_차트_30초_t8412(종목코드 string, 시작일자, 종료일자 
 	return 응답값_모음, nil
 }
 
-func F현물_차트_일주월_t8413(종목코드 string, 시작일자, 종료일자 time.Time, 주기구분 xt.T일주월_구분,
+func TR_t8413_현물_차트_일주월(종목코드 string, 시작일자, 종료일자 time.Time, 주기구분 xt.T일주월_구분,
 	추가_인수_모음 ...interface{}) (응답값_모음 []*xt.S현물_차트_일주월_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
@@ -816,7 +815,7 @@ func F현물_차트_일주월_t8413(종목코드 string, 시작일자, 종료일
 }
 
 // HTS 1503 화면
-func F증시주변자금추이_t8428(시장_구분 lib.T시장구분, 추가_옵션_모음 ...interface{}) (응답값_모음 []*xt.S증시_주변자금추이_응답_반복값, 에러 error) {
+func TR_t8428_증시주변자금추이(시장_구분 lib.T시장구분, 추가_옵션_모음 ...interface{}) (응답값_모음 []*xt.S증시_주변자금추이_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	lib.F조건부_패닉(
@@ -883,7 +882,7 @@ func F증시주변자금추이_t8428(시장_구분 lib.T시장구분, 추가_옵
 	return 응답값_모음, nil
 }
 
-func F주식종목조회_t8436(시장_구분 lib.T시장구분) (응답값_모음 []*xt.S현물_종목조회_응답_반복값, 에러 error) {
+func TR_t8436_주식종목_조회(시장_구분 lib.T시장구분) (응답값_모음 []*xt.S현물_종목조회_응답_반복값, 에러 error) {
 	defer lib.S예외처리{M에러: &에러, M함수: func() { 응답값_모음 = nil }}.S실행()
 
 	var 시장구분_문자열 string

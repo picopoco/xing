@@ -41,7 +41,7 @@ import (
 	"testing"
 )
 
-func TestF재무_순위_종합_t3341(t *testing.T) {
+func TestT3341_재무_순위_종합(t *testing.T) {
 	t.Parallel()
 
 	시장구분_모음 := []lib.T시장구분{lib.P시장구분_전체, lib.P시장구분_코스피, lib.P시장구분_코스닥}
@@ -56,7 +56,7 @@ func TestF재무_순위_종합_t3341(t *testing.T) {
 	const 수량 = 100
 	실수값 := lib.F2실수_단순형
 
-	값_모음, 에러 := F재무_순위_종합_t3341(시장구분, 재무순위_구분, 수량)
+	값_모음, 에러 := TR_t3341_재무_순위_종합(시장구분, 재무순위_구분, 수량)
 	lib.F테스트_에러없음(t, 에러)
 
 	for _, 값 := range 값_모음 {

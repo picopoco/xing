@@ -40,12 +40,12 @@ import (
 	"testing"
 )
 
-func TestF기업정보_요약_t3320(t *testing.T) {
+func TestT3320_F기업정보_요약(t *testing.T) {
 	t.Parallel()
 
 	종목코드 := "051910" // LG전자
 
-	값, 에러 := F기업정보_요약_t3320(종목코드)
+	값, 에러 := TR_t3320_F기업정보_요약(종목코드)
 	lib.F테스트_에러없음(t, 에러)
 
 	값1 := 값.M응답1
