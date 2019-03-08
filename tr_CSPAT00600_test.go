@@ -42,7 +42,7 @@ import (
 )
 
 func TestCSPAT00600_현물_정상_주문_질의값(t *testing.T) {
-	_, ok := interface{}(new(xt.S질의값_정상_주문_CSPAT00600)).(lib.I질의값)
+	_, ok := interface{}(new(xt.CSPAT00600_현물_정상_주문_질의값)).(lib.I질의값)
 	lib.F테스트_참임(t, ok)
 }
 
@@ -71,7 +71,7 @@ func TestCSPAT00600_현물_정상_주문(t *testing.T) {
 	계좌번호, 에러 := F계좌_번호(0)
 	lib.F테스트_에러없음(t, 에러)
 
-	질의값_매수 := xt.New질의값_정상_주문()
+	질의값_매수 := xt.NewCSPAT00600_현물_정상_주문_질의값()
 	질의값_매수.M구분 = xt.TR주문
 	질의값_매수.M코드 = xt.TR현물_정상_주문_CSPAT00600
 	질의값_매수.M계좌번호 = 계좌번호
@@ -138,7 +138,7 @@ func TestCSPAT00600_현물_정상_주문(t *testing.T) {
 		}
 	}
 
-	질의값_매도 := xt.New질의값_정상_주문()
+	질의값_매도 := xt.NewCSPAT00600_현물_정상_주문_질의값()
 	질의값_매도.M구분 = xt.TR주문
 	질의값_매도.M코드 = xt.TR현물_정상_주문_CSPAT00600
 	질의값_매도.M계좌번호 = 계좌번호

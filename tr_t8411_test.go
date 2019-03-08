@@ -61,7 +61,7 @@ func TestT8411_F현물_차트_분틱(t *testing.T) {
 	}
 }
 
-func F테스트_현물_차트_틱_응답_반복값_t8411(t *testing.T, 값 *xt.S현물_차트_틱_응답_반복값, 종목코드 string) {
+func F테스트_현물_차트_틱_응답_반복값_t8411(t *testing.T, 값 *xt.T8411_현물_차트_틱_응답_반복값, 종목코드 string) {
 	lib.F테스트_같음(t, 값.M종목코드, 종목코드)
 	lib.F테스트_참임(t, 값.M일자_시각.Before(lib.F금일()) || 값.M일자_시각.Equal(lib.F금일()))
 	lib.F테스트_같음(t, 값.M시가, 값.M고가)
