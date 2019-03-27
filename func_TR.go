@@ -170,6 +170,10 @@ func TrT0425_현물_체결_미체결_조회(계좌번호, 비밀번호, 종목�
 		i응답값, 에러 := F질의_단일TR(질의값)
 		lib.F확인(에러)
 
+		if i응답값 == nil {
+			break
+		}
+
 		값, ok := i응답값.(*xt.T0425_현물_체결_미체결_조회_응답)
 		lib.F조건부_패닉(!ok, "예상하지 못한 자료형 : '%T'", i응답값)
 
@@ -972,7 +976,7 @@ func F질의_단일TR(질의값 lib.I질의값, 옵션_모음 ...interface{}) (�
 			return 값, nil
 		}
 	case <-time.After(타임아웃):
-		return nil, lib.New에러("타임아웃. '%v' '%v' '%v'", 질의값.TR코드(), 식별번호)
+		return nil, lib.New에러("타임아웃. '%v' '%v'", 질의값.TR코드(), 식별번호)
 	}
 }
 

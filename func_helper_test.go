@@ -114,8 +114,8 @@ func TestC32_재시작(t *testing.T) {
 	lib.F테스트_에러없음(t, C32_재시작())
 }
 
-func TestGo_C_자료형_크기_비교(t *testing.T) {
-	t.Parallel()
-
-	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
-}
+//func TestGo_C_자료형_크기_비교(t *testing.T) {
+//	t.Parallel()
+//
+//	lib.F테스트_에러없음(t, f자료형_크기_비교_확인())
+//}
