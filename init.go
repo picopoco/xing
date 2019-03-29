@@ -36,6 +36,7 @@ package xing
 import (
 	"github.com/ghts/lib"
 	"github.com/ghts/xing_common"
+	"runtime"
 
 	"fmt"
 	"time"
@@ -128,12 +129,21 @@ func f초기화_xing_C32() (에러 error) {
 	if !lib.F인터넷에_접속됨() {
 		lib.F문자열_출력("인터넷을 확인하십시오.")
 		return
-	} else if 프로세스ID := xing_C32_실행_중(); 프로세스ID >= 0 {
-		lib.F문자열_출력("xing_C32 가 이미 실행 중입니다.")
-		return nil
 	}
 
-	lib.F확인(lib.F외부_프로세스_실행(xing_C32_경로))
+	switch runtime.GOOS {
+	case "windows":
+		if 프로세스ID := xing_C32_실행_중(); 프로세스ID >= 0 {
+			lib.F문자열_출력("xing_C32 가 이미 실행 중입니다.")
+			return nil
+		}
+
+		lib.F확인(lib.F외부_프로세스_실행(xing_C32_경로))
+	default:
+		lib.F문자열_출력("*********************************************\n"+
+			"현재 OS(%v)에서는 'xing_C32'를 수동으로 실행해야 합니다.\n"+
+			"*********************************************", runtime.GOOS)
+	}
 
 	return nil
 }
